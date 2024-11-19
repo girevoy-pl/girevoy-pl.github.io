@@ -1,0 +1,82 @@
+/* Encapsulation using specific prefixes */
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300;900&display=swap");
+
+body {
+  font-family: 'Dosis', sans-serif;
+  overflow-y: auto;
+}
+
+.about-header {
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .about-header-container h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #333;
+    font-weight: 900;
+  }
+  
+  .about-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Dosis', sans-serif;
+    color: #555;
+    overflow: hidden;
+  }
+  
+  .about-section {
+    margin-bottom: 40px;
+  }
+  
+  .about-section h2 {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 10px;
+    font-weight: 900;
+  }
+  
+  .about-section p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+  
+  .about-section ul {
+    font-size: 1.25rem;
+    padding-left: 20px;
+  }
+  
+  .about-section ul li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+  }
+  
+  .about-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px;
+    font-size: 0.9rem;
+    color: #999;
+    border-top: 1px solid #ddd;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    .about-section p {
+        font-size: 1rem;
+    }
+  }
