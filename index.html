@@ -47,75 +47,55 @@
 </head>
 <body>
 
-    <!-- Cookie Consent Popup -->
-    <div id="cookie-consent-popup">
-        <div id="popup-content">
-            <p>Ta strona używa plików cookie do analizy ruchu. <a href="/polityka-prywatnosci">Dowiedz się więcej</a>.</p>
-            <button id="accept-cookies">Akceptuj</button>
-            <button id="reject-cookies">Odrzuć</button>
-        </div>
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" style="display: none;">
+        <span>Ta strona używa plików cookie do analizy ruchu. <a href="/polityka-prywatnosci">Dowiedz się więcej</a>.</span>
+        <button id="accept-cookies">Akceptuj</button>
     </div>
 
-    <!-- Overlay to block webpage interaction -->
-    <div id="overlay"></div>
-
-    <!-- Webpage Content -->
+    <!-- Main Content -->
     <div id="wrapper">
-        <header id="header">
-            <h1>Ciesz się ciężarem</h1>
-            <nav>
-                <ul>
-                    <li><a href="https://girevoy-pl.github.io/about.html" class="icon solid fa-circle-info" id="about-link" disabled><span class="label">O nas</span></a></li>
-                    <li><a href="https://girevoy-pl.github.io/calendar.html" class="icon solid fa-calendar-days" id="calendar-link" disabled><span class="label">Kalendarz</span></a></li>
-                    <li><a href="mailto:elblag@girevoy.pl" class="icon solid fa-envelope" id="email-link" disabled><span class="label">Email</span></a></li>
-                    <li><a href="https://wttr.in/Elblag" class="icon solid fa-cloud-sun" id="weather-link" disabled><span class="label">Pogoda</span></a></li>
-                </ul>
-            </nav>
-        </header>
-
+        <div id="bg"></div>
+        <div id="overlay"></div>
         <div id="main">
-            <!-- Your content here -->
-        </div>
-    </div>
 
+            <!-- Header -->
+            <header id="header">
+                <h1>Ciesz się ciężarem</h1>
+                <p>Grupa kettlebell &nbsp;&bull;&nbsp; Girevoy Sport &nbsp;&bull;&nbsp; Elbląg</p>
+                <nav>
+                    <ul>
+                        <li><a href="https://girevoy-pl.github.io/about.html" class="icon solid fa-circle-info"><span class="label">O nas</span></a></li>
+                        <li><a href="https://girevoy-pl.github.io/calendar.html" class="icon solid fa-calendar-days"><span class="label">Kalendarz</span></a></li>
+                        <li><a href="mailto:elblag@girevoy.pl" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                        <li><a href="https://wttr.in/Elblag" class="icon solid fa-cloud-sun"><span class="label">Pogoda</span></a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <!-- Footer -->
+            <footer id="footer">
+                <span class="copyright">&copy; Girevoy Sport Elbląg 2024. - <a href="http://html5up.net">HTML5 UP</a>.</span>
+            </footer>
+
+    <!-- Google Analytics script will be loaded after consent -->
     <script>
-        // Check if cookies are accepted
+        // Check for consent in cookies
         if (!document.cookie.split('; ').find(row => row.startsWith('cookiesAccepted='))) {
-            // Show consent popup and overlay
-            document.getElementById('cookie-consent-popup').style.display = 'flex';
-            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('cookie-consent-banner').style.display = 'flex';
         } else {
-            document.getElementById('cookie-consent-popup').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('cookie-consent-banner').style.display = 'none';
         }
 
-        // Event listener for accepting cookies
-        document.getElementById('accept-cookies').addEventListener('click', function () {
+        // Accept cookies and load Google Analytics
+        document.getElementById('accept-cookies').addEventListener('click', function() {
             // Save consent in cookies for 90 days
             document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 90;
-            // Hide the consent popup and overlay
-            document.getElementById('cookie-consent-popup').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-            // Enable the links after consent
-            enableLinks();
-            // Load Google Analytics script
+            document.getElementById('cookie-consent-banner').style.display = 'none';
+
+            // Load Google Analytics after consent
             loadGoogleAnalytics();
         });
-
-        // Event listener for rejecting cookies
-        document.getElementById('reject-cookies').addEventListener('click', function () {
-            // Block further actions, maybe redirect to a different page
-            alert('Strona nie będzie ładowana.');
-            window.location.href = 'https://www.example.com'; // Optional: Redirect user away from the page
-        });
-
-        // Function to enable links after consent
-        function enableLinks() {
-            document.getElementById('about-link').removeAttribute('disabled');
-            document.getElementById('calendar-link').removeAttribute('disabled');
-            document.getElementById('email-link').removeAttribute('disabled');
-            document.getElementById('weather-link').removeAttribute('disabled');
-        }
 
         // Function to load Google Analytics script
         function loadGoogleAnalytics() {
@@ -123,14 +103,14 @@
             script.src = "https://www.googletagmanager.com/gtag/js?id=G-BQZ54DGX70";
             script.async = true;
             document.head.appendChild(script);
-            script.onload = function () {
+
+            script.onload = function() {
                 window.dataLayer = window.dataLayer || [];
                 function gtag() { dataLayer.push(arguments); }
                 gtag('js', new Date());
-                gtag('config', 'G-BQZ54DGX70');
+                gtag('config', 'G-BQZ54DGX70', { 'anonymize_ip': true });
             };
         }
     </script>
-
 </body>
 </html>
