@@ -15,6 +15,7 @@
     <meta name="keywords" content="Zajęcia Kettlebell Elbląg, Girevoy Sport Elbląg, TRX Elbląg, Spinning rowerowy Elbląg, Kettlebell Classes Elblag, Klub Kettlebell Elbąg, Grupa Kettlebell Elbląg" />
     <meta name="author" content="Girevoy Sport Elbląg" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/banner.css">
     <link rel="icon" href="/assets/css/images/icon.png" type="image/png" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <script>
@@ -48,11 +49,32 @@
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-BQZ54DGX70');
+        function enableAnalytics() {
+            gtag('js', new Date());
+            gtag('config', 'G-BQZ54DGX70', { 'anonymize_ip': true });
+        }
     </script>
 </head>
 <body class="">
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner">
+        <span>
+            Ta strona używa plików cookie do analizy ruchu. Klikając "Akceptuj", wyrażasz zgodę na używanie przez nas plików cookie. <a href="/polityka-prywatnosci">Dowiedz się więcej</a>.
+        </span>
+        <button id="accept-cookies">Akceptuj</button>
+    </div>
+    <script>
+        // JavaScript to handle cookie acceptance
+        document.getElementById('accept-cookies').addEventListener('click', function () {
+            document.getElementById('cookie-consent-banner').style.display = 'none';
+            document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 365; // Cookie valid for 1 year
+        });
+        // Hide the banner if cookies already accepted
+        if (document.cookie.split('; ').find(row => row.startsWith('cookiesAccepted='))) {
+            document.getElementById('cookie-consent-banner').style.display = 'none';
+        }
+    </script>
+
     <div id="wrapper">
         <div id="bg"></div>
         <div id="overlay"></div>
@@ -81,4 +103,3 @@
     </div>
 </body>
 </html>
-
