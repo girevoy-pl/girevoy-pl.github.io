@@ -39,5 +39,6 @@ if (!userHasConsentedToCookies()) {
     });
 } else {
     // Jeśli użytkownik już zaakceptował cookies, ładowanie Google Analytics
+    console.log("Cookie consent already given");
     enableAnalytics();
 }
