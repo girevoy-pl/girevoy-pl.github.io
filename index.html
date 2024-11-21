@@ -9,69 +9,93 @@
 -->
 <html lang="pl">
 <head>
-    <meta charset="UTF-8"> <!-- Ustawienie charset -->
+    <title>Zajęcia kettlebell Girevoy Sport Elbląg - fitness</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="description" content="Dołącz do zajęć fitness kettlebell Girevoy Sport w Elblągu. Popraw siłę i wytrzymałość pod okiem profesjonalnego trenera w trakcie workoutu." />
-    <meta name="keywords" content="Zajęcia Kettlebell Elbląg, Kettle Elbląg, Girevoy Sport Elbląg, TRX Elbląg, Spinning rowerowy Elbląg, Kettlebell Classes Elblag, Klub Kettlebell Elbąg, Grupa Kettlebell Elbląg" />
+    <meta name="keywords" content="Zajęcia Kettlebell Elbląg, Girevoy Sport Elbląg, Kettlebell Elbląg" />
     <meta name="author" content="Girevoy Sport Elbląg" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/banner.css">
     <link rel="icon" href="/assets/css/images/icon.png" type="image/png" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
-    <!-- Cookies -->
-    <script src="assets/js/cookies.js"></script>
-    <script src="assets/js/fallback.js"></script>
 
     <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "SportsActivityLocation",
-            "name": "Zajęcia Kettlebell Elbląg, Kettle Elbląg, Girevoy Sport Elbląg, TRX Elbląg, Spinning rowerowy Elbląg, Kettlebell Classes Elblag, Klub Kettlebell Elbąg, Grupa Kettlebell Elbląg",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Elbląg",
-                "addressRegion": "PL",
-                "streetAddress": "Robotnicza 236",
-                "postalCode": "82-300",
-                "addressCountry": "Poland"
-            },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "54.1561",
-                "longitude": "19.4045"
-            },
-            "url": "https://www.girevoy.pl"
-        }
+    {
+        "@context": "https://schema.org",
+        "@type": "SportsActivityLocation",
+        "name": "Zajęcia Kettlebell Elbląg, Kettlebell Elbląg, Kettle Elbląg, Girevoy Sport Elbląg, TRX Elbląg, Spinning rowerowy Elbląg, Kettlebell Classes Elblag, Klub Kettlebell Elbąg, Grupa Kettlebell Elbląg, Ciesz sie ciężarem, Ciesz się ciężarem Elbląg",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Elbląg",
+            "addressRegion": "PL",
+            "streetAddress": "Robotnicza 236",
+            "postalCode": "82-300",
+            "addressCountry": "Poland"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "54.1561",
+            "longitude": "19.4045"
+        },
+        "url": "https://www.girevoy.pl"
+    }
     </script>
 </head>
+<body>
 
-    <body class="">
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" style="display: none;">
+        <span>Ta strona używa plików cookie do analizy ruchu. <a href="/polityka-prywatnosci">Dowiedz się więcej</a>.</span>
+        <button id="accept-cookies">Akceptuj</button>
+    </div>
+
+    <!-- Main Content -->
     <div id="wrapper">
-        <div id="bg"></div>
-        <div id="overlay"></div>
         <div id="main">
-
-            <!-- Header -->
             <header id="header">
                 <h1>Ciesz się ciężarem</h1>
-                <p>Grupa kettlebell &nbsp;&bull;&nbsp; Girevoy Sport &nbsp;&bull;&nbsp; Elbląg</p>
-                <nav>
-                    <ul>
-                        <li><a href="https://girevoy-pl.github.io/about.html" class="icon solid fa-circle-info"><span class="label">O nas</span></a></li>
-                        <li><a href="https://girevoy-pl.github.io/calendar.html" class="icon solid fa-calendar-days"><span class="label">Kalendarz</span></a></li>
-                        <li><a href="mailto:elblag@girevoy.pl" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-                        <li><a href="https://wttr.in/Elblag" class="icon solid fa-cloud-sun"><span class="label">Pogoda</span></a></li>
-                    </ul>
-                </nav>
+                <p>Grupa kettlebell &bull; Girevoy Sport &bull; Elbląg</p>
             </header>
 
             <!-- Footer -->
             <footer id="footer">
-                <span class="copyright">&copy; Girevoy Sport Elbląg 2024. - <a href="http://html5up.net">HTML5 UP</a>.</span>
+                <span class="copyright">&copy; Girevoy Sport Elbląg 2024</span>
             </footer>
-
         </div>
     </div>
+
+    <!-- Google Analytics script will be loaded after consent -->
+    <script>
+        // Check for consent in cookies
+        if (!document.cookie.split('; ').find(row => row.startsWith('cookiesAccepted='))) {
+            document.getElementById('cookie-consent-banner').style.display = 'flex';
+        } else {
+            document.getElementById('cookie-consent-banner').style.display = 'none';
+        }
+
+        // Accept cookies and load Google Analytics
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+            // Save consent in cookies for 90 days
+            document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 90;
+            document.getElementById('cookie-consent-banner').style.display = 'none';
+
+            // Load Google Analytics after consent
+            loadGoogleAnalytics();
+        });
+
+        // Function to load Google Analytics script
+        function loadGoogleAnalytics() {
+            const script = document.createElement('script');
+            script.src = "https://www.googletagmanager.com/gtag/js?id=G-BQZ54DGX70";
+            script.async = true;
+            document.head.appendChild(script);
+
+            script.onload = function() {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-BQZ54DGX70', { 'anonymize_ip': true });
+            };
+        }
+    </script>
 </body>
 </html>
