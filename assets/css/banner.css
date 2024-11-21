@@ -1,0 +1,62 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* Cookie Banner Styling */
+#cookie-consent-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #333; /* Matches the site’s aesthetic */
+    color: #fff;
+    padding: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 15pt;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.75em;
+    z-index: 1000;
+    border-top: 2px solid #fff; /* Subtle detail to match overall design */
+}
+
+/* Link Styling for Cookie Banner */
+#cookie-consent-banner a {
+    color: #ffa; /* Soft highlight color for links */
+    border-bottom: dotted 1px;
+    text-decoration: none;
+}
+
+#cookie-consent-banner a:hover {
+    border-color: transparent;
+}
+
+/* Button Styling */
+#cookie-consent-banner button {
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 15pt;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    line-height: 1.5em;
+    -moz-transition: background-color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Button Hover Effect */
+#cookie-consent-banner button:hover {
+    background: #218838;
+}
