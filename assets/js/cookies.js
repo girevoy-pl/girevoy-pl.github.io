@@ -1,5 +1,25 @@
-// Wyświetlanie bannera
-if (!document.cookie.split('; ').find(row => row.startsWith('cookiesAccepted='))) {
+// Sprawdzanie, czy użytkownik zaakceptował cookies
+function userHasConsentedToCookies() {
+    return document.cookie.split('; ').find(row => row.startsWith('cookiesAccepted='));
+}
+
+// Funkcja ładowania Google Analytics
+function enableAnalytics() {
+    const script = document.createElement('script');
+    script.src = "https://www.googletagmanager.com/gtag/js?id=G-BQZ54DGX70";
+    script.async = true;
+    document.head.appendChild(script);
+
+    script.onload = function () {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-BQZ54DGX70', { 'anonymize_ip': true });
+    };
+}
+
+// Wyświetlanie bannera, jeśli użytkownik jeszcze nie zaakceptował cookies
+if (!userHasConsentedToCookies()) {
     const banner = document.createElement('div');
     banner.id = 'cookie-consent-banner';
     banner.innerHTML = `
@@ -10,26 +30,14 @@ if (!document.cookie.split('; ').find(row => row.startsWith('cookiesAccepted='))
     `;
     document.body.appendChild(banner);
 
+    // Zdarzenie kliknięcia przycisku "Akceptuj"
     document.getElementById('accept-cookies').addEventListener('click', function () {
-        document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 90; // 90 days
-        banner.style.display = 'none';
-        loadGoogleAnalytics();
+        // Zapisujemy zgodę w pliku cookie na 90 dni
+        document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 90; // 90 dni
+        banner.style.display = 'none'; // Ukrywamy banner
+        enableAnalytics(); // Ładujemy Google Analytics po zaakceptowaniu
     });
 } else {
-    loadGoogleAnalytics();
-}
-
-// Funkcja ładowania Google Analytics
-function loadGoogleAnalytics() {
-    const script = document.createElement('script');
-    script.src = "https://www.googletagmanager.com/gtag/js?id=G-BQZ54DGX70";
-    script.async = true;
-    document.head.appendChild(script);
-
-    script.onload = function () {
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-BQZ54DGX70');
-    };
+    // Jeśli użytkownik już zaakceptował cookies, ładowanie Google Analytics
+    enableAnalytics();
 }
