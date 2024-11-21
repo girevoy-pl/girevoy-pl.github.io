@@ -9,6 +9,7 @@
 -->
 <html lang="pl">
 <head>
+    <meta charset="UTF-8" />
     <title>Zajęcia kettlebell Girevoy Sport Elbląg - fitness</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="description" content="Dołącz do zajęć fitness kettlebell Girevoy Sport w Elblągu. Popraw siłę i wytrzymałość pod okiem profesjonalnego trenera w trakcie workoutu." />
@@ -19,10 +20,21 @@
     <link rel="icon" href="/assets/css/images/icon.png" type="image/png" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+    <!-- Cookies -->
+    <script src="assets/js/cookies.js"></script>
+
+    <!-- Common JS -->
+    <script src="assets/js/common.js"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BQZ54DGX70"></script>
     <script>
-        window.onload = function() { document.body.classList.remove('is-preload'); }
-        window.ontouchmove = function() { return false; }
-        window.onorientationchange = function() { document.body.scrollTop = 0; }
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        function enableAnalytics() {
+            gtag('js', new Date());
+            gtag('config', 'G-BQZ54DGX70', { 'anonymize_ip': true });
+        }
     </script>
 
     <script type="application/ld+json">
@@ -46,22 +58,8 @@
         "url": "https://www.girevoy.pl"
     }
     </script>
-
-    <!-- Cookies -->
-    <script src="assets/js/cookies.js"></script>
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BQZ54DGX70"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        function enableAnalytics() {
-            gtag('js', new Date());
-            gtag('config', 'G-BQZ54DGX70', { 'anonymize_ip': true });
-        }
-    </script>
-
 </head>
+
 <body class="">
     <div id="wrapper">
         <div id="bg"></div>
