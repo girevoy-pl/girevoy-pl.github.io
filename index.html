@@ -47,13 +47,13 @@
 </head>
 <body>
 
-    <!-- Cookie Consent Banner -->
-    <div id="cookie-consent-banner">
-        <span>
-            Ta strona używa plików cookie do analizy ruchu. <a href="/polityka-prywatnosci">Dowiedz się więcej</a>.
-        </span>
-        <button id="accept-cookies">Akceptuj</button>
-        <button id="reject-cookies">Odrzuć</button>
+    <!-- Cookie Consent Popup -->
+    <div id="cookie-consent-popup">
+        <div id="popup-content">
+            <p>Ta strona używa plików cookie do analizy ruchu. <a href="/polityka-prywatnosci">Dowiedz się więcej</a>.</p>
+            <button id="accept-cookies">Akceptuj</button>
+            <button id="reject-cookies">Odrzuć</button>
+        </div>
     </div>
 
     <!-- Overlay to block webpage interaction -->
@@ -81,11 +81,11 @@
     <script>
         // Check if cookies are accepted
         if (!document.cookie.split('; ').find(row => row.startsWith('cookiesAccepted='))) {
-            // Show consent banner and overlay
-            document.getElementById('cookie-consent-banner').style.display = 'flex';
+            // Show consent popup and overlay
+            document.getElementById('cookie-consent-popup').style.display = 'flex';
             document.getElementById('overlay').style.display = 'block';
         } else {
-            document.getElementById('cookie-consent-banner').style.display = 'none';
+            document.getElementById('cookie-consent-popup').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }
 
@@ -93,8 +93,8 @@
         document.getElementById('accept-cookies').addEventListener('click', function () {
             // Save consent in cookies for 90 days
             document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 90;
-            // Hide the consent banner and overlay
-            document.getElementById('cookie-consent-banner').style.display = 'none';
+            // Hide the consent popup and overlay
+            document.getElementById('cookie-consent-popup').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
             // Enable the links after consent
             enableLinks();
