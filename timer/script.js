@@ -125,24 +125,9 @@ prepareSlider.addEventListener('input', updateSliderValues);
 // Update initial values
 updateSliderValues();
 
-// Screen Wake Lock API Support Check
-const isSupported = 'wakeLock' in navigator;
-const wakeLockStatus = document.getElementById('is-supported');
-const lockStatus = document.getElementById('is-locked');
-const toggleLockButton = document.getElementById('toggle-lock');
-
-// Initialize state for wake lock
+// Screen Wake Lock API
 let wakeLock = null;
 
-// Display the support status
-if (isSupported) {
-  wakeLockStatus.innerText = 'Yes';
-} else {
-  wakeLockStatus.innerText = 'No';
-  toggleLockButton.disabled = true;
-}
-
-// Function to request the screen wake lock
 async function requestWakeLock() {
   try {
     wakeLock = await navigator.wakeLock.request('screen');
@@ -152,7 +137,6 @@ async function requestWakeLock() {
   }
 }
 
-// Function to release the screen wake lock
 function releaseWakeLock() {
   if (wakeLock) {
     wakeLock.release();
@@ -160,23 +144,7 @@ function releaseWakeLock() {
   }
 }
 
-// Automatically request the wake lock once the page is in use
-document.addEventListener('DOMContentLoaded', () => {
-  if (isSupported) {
-    requestWakeLock();
-  }
-});
-
-// Toggle button click event (for manual control)
-toggleLockButton.addEventListener('click', () => {
-  if (wakeLock) {
-    releaseWakeLock();
-  } else {
-    requestWakeLock();
-  }
-});
-
-// Event listener for "Start Exercise" button
+// Event listener for "Keep Current Settings" button
 document.getElementById('start-btn').addEventListener('click', function () {
   const exerciseMinute = parseInt(minuteSlider.value);
   const exerciseSecond = parseInt(secondSlider.value);
@@ -197,50 +165,87 @@ document.getElementById('start-btn').addEventListener('click', function () {
   currentRound = 1; // Start with round 1
 
   // Calculate the interval for the buzz sound based on reps and total round time
-  const buzzInterval = totalRoundTime / reps;  // Calculate buzz interval based on the total round time and reps
+  const buzzInterval = totalRoundTime / reps;  // Calculate buzz interval based on the total round time and number of reps
+  let nextBuzzTime = buzzInterval; // Set initial buzz time
+  let totalBuzzCount = 0;
 
-  // Start preparation countdown
-  const prepareInterval = setInterval(() => {
-    updateTimerDisplay(remainingTime, currentRound, preparationBeepCount);
+  // Stop any existing timer if button clicked
+  clearInterval(timerInterval);
 
-    if (remainingTime <= 0) {
-      clearInterval(prepareInterval); // End preparation phase
-      longBeep.play(); // Long beep for preparation completion
-      startExerciseRounds(totalRoundTime, buzzInterval, rounds);
-    } else {
-      preparationBeepCount++;
-      beep.play(); // Beep every second during preparation phase
-    }
+  let elapsedTime = 0; // Track the total elapsed time in the current round
+  let isPreparationPhase = true; // Track whether we're in the preparation phase
 
-    remainingTime--;
-  }, 1000);
-});
+  // Start the timer
+  preparationBeepCount = 0; // Reset the beep count for preparation
 
-// Function to start the rounds after preparation phase
-function startExerciseRounds(totalRoundTime, buzzInterval, rounds) {
-  currentRound = 1; // Start with the first round
-  roundCounterElement = document.createElement('div');
-  roundCounterElement.id = 'round-counter';
-  document.body.appendChild(roundCounterElement);
-  roundCounterElement.textContent = `Round: ${currentRound} of ${rounds}`;
+  // Request the wake lock when the timer starts
+  requestWakeLock();
 
-  // Start round timer
-  const roundInterval = setInterval(() => {
-    updateTimerDisplay(totalRoundTime, currentRound, Math.floor(totalRoundTime / buzzInterval));
+  timerInterval = setInterval(() => {
+    // Update timer display with total buzz count
+    updateTimerDisplay(remainingTime, currentRound, totalBuzzCount);
 
-    if (totalRoundTime <= 0) {
-      clearInterval(roundInterval); // End round
-      currentRound++;
-
-      if (currentRound <= rounds) {
-        totalRoundTime = totalRoundTime; // Reset for the next round
-        roundCounterElement.textContent = `Round: ${currentRound} of ${rounds}`;
+    if (isPreparationPhase) {
+      // Handle preparation countdown
+      if (remainingTime > 0) {
+        // Beep during preparation phase (3s, 2s, 1s remaining)
+        if (remainingTime <= 3 && preparationBeepCount < 3) {
+          beep.play();
+          preparationBeepCount++;
+        }
+        remainingTime--;
       } else {
-        clearInterval(roundInterval); // Finish after last round
-        buzz.play(); // Final buzz sound at the end of all rounds
+        // Switch to exercise phase after preparation
+        isPreparationPhase = false;
+        remainingTime = totalRoundTime; // Set round time for exercise phase
+        elapsedTime = 0; // Reset elapsed time
+        nextBuzzTime = buzzInterval; // Reset buzz interval for round
+        
+        // Play the long beep sound at the start of the first round
+        longBeep.play();
+      }
+    } else {
+      // Exercise phase
+      if (remainingTime > 0) {
+        elapsedTime += 1; // Increase elapsed time by 1 second
+        if (elapsedTime >= nextBuzzTime) {
+          buzz.play(); // Play buzz sound
+          totalBuzzCount++; // Increment the total buzz count
+          nextBuzzTime += buzzInterval; // Schedule the next buzz
+        }
+        remainingTime--;
+      } else if (remainingTime === 0 && currentRound < rounds) {
+        // End of the current round (not the last one)
+        beep.play(); // Play beep after this round
+        currentRound++;
+        remainingTime = totalRoundTime; // Reset time for next round
+        elapsedTime = 0; // Reset elapsed time
+        nextBuzzTime = buzzInterval; // Reset buzz time for the new round
+      } else if (remainingTime === 0 && currentRound === rounds) {
+        // Last round finished
+        longBeep.play(); // Long beep to indicate the end of the workout
+        clearInterval(timerInterval); // Stop the timer
+
+        // Release the wake lock when the timer ends
+        releaseWakeLock();
+
+        updateTimerDisplay(0, currentRound, totalBuzzCount); // Display 00:00 with total buzz count
       }
     }
+  }, 1000); // Run every second
 
-    totalRoundTime--;
-  }, 1000);
+  // Prevent iPhone sleep by simulating touch events
+  setInterval(simulateTouchEvent, 3000); // Simulate a touch event every 3 seconds
+});
+
+// Function to simulate a touch event to prevent the screen from going to sleep
+function simulateTouchEvent() {
+  const touchEvent = new Event('touchstart', { bubbles: true });
+  document.dispatchEvent(touchEvent);
 }
+
+// Button to stop the current exercise and randomize a new one
+document.getElementById('exercise-btn').addEventListener('click', function () {
+  clearInterval(timerInterval);  // Stop the current timer
+  randomizeExercise();  // Randomize a new exercise
+});
