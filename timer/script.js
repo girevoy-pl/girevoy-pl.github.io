@@ -164,8 +164,11 @@ document.getElementById('start-btn').addEventListener('click', function () {
   remainingTime = prepareTime;
   currentRound = 1; // Start with round 1
 
-  // Calculate the interval for the buzz sound based on reps and total round time
-  const buzzInterval = totalRoundTime / reps;  // Calculate buzz interval based on the total round time and number of reps
+  // Calculate the total exercise time (in seconds)
+  let totalExerciseTime = exerciseMinute * 60 + exerciseSecond;
+
+  // Calculate the interval for the buzz sound based on 60 / amount of reps
+  const buzzInterval = 60 / reps;  // Calculate buzz interval based on 60 seconds divided by number of reps
   let nextBuzzTime = buzzInterval; // Set initial buzz time
   let totalBuzzCount = 0;
 
