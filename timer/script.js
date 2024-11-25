@@ -108,6 +108,25 @@ prepareSlider.addEventListener('input', updateSliderValues);
 // Update initial values
 updateSliderValues();
 
+// Screen Wake Lock API
+let wakeLock = null;
+
+async function requestWakeLock() {
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    console.log("Screen wake lock acquired.");
+  } catch (err) {
+    console.error("Failed to acquire wake lock: ", err);
+  }
+}
+
+function releaseWakeLock() {
+  if (wakeLock) {
+    wakeLock.release();
+    console.log("Screen wake lock released.");
+  }
+}
+
 // Event listener for "Keep Current Settings" button
 document.getElementById('start-btn').addEventListener('click', function () {
   const exerciseMinute = parseInt(minuteSlider.value);
@@ -138,6 +157,10 @@ document.getElementById('start-btn').addEventListener('click', function () {
 
   // Start the timer
   preparationBeepCount = 0; // Reset the beep count for preparation
+
+  // Request the wake lock when the timer starts
+  requestWakeLock();
+
   timerInterval = setInterval(() => {
     // Update timer display with total buzz count
     updateTimerDisplay(remainingTime, currentRound, totalBuzzCount);
@@ -180,6 +203,10 @@ document.getElementById('start-btn').addEventListener('click', function () {
         // Last round finished
         longBeep.play(); // Long beep to indicate the end of the workout
         clearInterval(timerInterval); // Stop the timer
+
+        // Release the wake lock when the timer ends
+        releaseWakeLock();
+
         updateTimerDisplay(0, currentRound, totalBuzzCount); // Display 00:00 with total buzz count
       }
     }
@@ -190,6 +217,9 @@ document.getElementById('start-btn').addEventListener('click', function () {
 document.getElementById('exercise-btn').addEventListener('click', function () {
   clearInterval(timerInterval);  // Stop the current timer
   randomizeExercise();  // Randomize a new exercise
+
+  // Release the wake lock if exercise is stopped
+  releaseWakeLock();
 });
 
 // Update timer display function to include buzz count
