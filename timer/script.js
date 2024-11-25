@@ -1,19 +1,24 @@
-// dzialajacy kod na pc
-// Beep sound and long beep sound
+// Beep sound, long beep sound, and buzz sound
 const beep = new Audio('beep-sound.mp3'); // Regular beep sound
 const longBeep = new Audio('long-beep-sound.mp3'); // Long beep sound
+const buzz = new Audio('buzz-sound.mp3'); // Buzz sound for reps
 
-// Slider elements for exercise time, rounds, and preparation time
+// Slider elements for exercise time, rounds, reps, and preparation time
 const minuteSlider = document.getElementById('minute-slider');
 const secondSlider = document.getElementById('second-slider');
+const repsSlider = document.getElementById('reps-slider');
 const roundsSlider = document.getElementById('rounds-slider');
 const prepareSlider = document.getElementById('prepare-slider');
 
+// Timer and round counter elements
+const timerDisplay = document.getElementById('timer');
+let roundCounterElement;
+
 // Function to update the timer display
-function updateTimerDisplay(time) {
+function updateTimerDisplay(time, round) {
   const minutesLeft = Math.floor(time / 60);
   const secondsLeft = time % 60;
-  document.getElementById('timer').textContent = `${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft}`;
+  timerDisplay.textContent = `${round} | ${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft}`;
 }
 
 // Initialize the exercise
@@ -34,6 +39,7 @@ function randomizeExercise() {
     const [defaultMinute, defaultSecond] = currentExercise.defaultTime.split(':');
     minuteSlider.value = defaultMinute;
     secondSlider.value = defaultSecond;
+    repsSlider.value = currentExercise.defaultReps || 5; // Default to 5 reps if not set
     roundsSlider.value = currentExercise.defaultRounds;
   }
 
@@ -43,19 +49,19 @@ function randomizeExercise() {
 
 // Exercise data with default time and rounds
 const exercises = [
-  { name: 'Snatch 1KB', defaultTime: '03:00', defaultRounds: 4 },
-  { name: 'Jerk 1KB', defaultTime: '03:00', defaultRounds: 4 },
-  { name: 'LC 1KB', defaultTime: '03:00', defaultRounds: 4 },
-  { name: 'Jerk 2KB', defaultTime: '03:00', defaultRounds: 3 },
-  { name: 'LC 2KB', defaultTime: '03:00', defaultRounds: 3 },
-  { name: 'Push-ups', defaultTime: '02:00', defaultRounds: 3 },
-  { name: 'Jumping Jacks', defaultTime: '02:00', defaultRounds: 3 },
-  { name: 'Clean 1KB', defaultTime: '03:00', defaultRounds: 4 },
-  { name: 'Clean 2KB', defaultTime: '03:00', defaultRounds: 3 },
-  { name: 'Clean&press 1KB', defaultTime: '03:00', defaultRounds: 4 },
-  { name: 'Clean&press 2KB', defaultTime: '03:00', defaultRounds: 3 },
-  { name: 'Push press 1KB', defaultTime: '03:00', defaultRounds: 4 },
-  { name: 'Push press 2KB', defaultTime: '03:00', defaultRounds: 3 }
+  { name: 'Snatch 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
+  { name: 'Jerk 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
+  { name: 'LC 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
+  { name: 'Jerk 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 },
+  { name: 'LC 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 },
+  { name: 'Push-ups', defaultTime: '02:00', defaultRounds: 3, defaultReps: 10 },
+  { name: 'Jumping Jacks', defaultTime: '02:00', defaultRounds: 3, defaultReps: 10 },
+  { name: 'Clean 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
+  { name: 'Clean 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 },
+  { name: 'Clean&press 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
+  { name: 'Clean&press 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 },
+  { name: 'Push press 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
+  { name: 'Push press 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 }
 ];
 
 // Function to get a random exercise from the list
@@ -76,15 +82,17 @@ window.onload = function () {
 
 // Function to update slider text with current values
 function updateSliderValues() {
-  document.getElementById('minute-value').textContent = minuteSlider.value;
-  document.getElementById('second-value').textContent = secondSlider.value;
-  document.getElementById('rounds-value').textContent = roundsSlider.value;
-  document.getElementById('prepare-value').textContent = prepareSlider.value;
+  document.querySelector("label[for='minute-slider']").textContent = `Minutes: ${minuteSlider.value}`;
+  document.querySelector("label[for='second-slider']").textContent = `Seconds: ${secondSlider.value}`;
+  document.querySelector("label[for='reps-slider']").textContent = `Reps: ${repsSlider.value}`;
+  document.querySelector("label[for='rounds-slider']").textContent = `Rounds: ${roundsSlider.value}`;
+  document.querySelector("label[for='prepare-slider']").textContent = `Prepare Time: ${prepareSlider.value}`;
 }
 
 // Sliders event listeners
 minuteSlider.addEventListener('input', updateSliderValues);
 secondSlider.addEventListener('input', updateSliderValues);
+repsSlider.addEventListener('input', updateSliderValues);
 roundsSlider.addEventListener('input', updateSliderValues);
 prepareSlider.addEventListener('input', updateSliderValues);
 
@@ -92,15 +100,10 @@ prepareSlider.addEventListener('input', updateSliderValues);
 updateSliderValues();
 
 // Event listener for "Keep Current Settings" button
-document.getElementById('keep-settings-btn').addEventListener('click', function () {
-  customSettingsActive = !customSettingsActive;
-  this.style.backgroundColor = customSettingsActive ? 'red' : ''; // Change color to red when active
-});
-
-// Start button logic
 document.getElementById('start-btn').addEventListener('click', function () {
   const exerciseMinute = parseInt(minuteSlider.value);
   const exerciseSecond = parseInt(secondSlider.value);
+  const reps = parseInt(repsSlider.value);
   const rounds = parseInt(roundsSlider.value);
   const prepareTime = Math.max(parseInt(prepareSlider.value), 5); // Ensure minimum preparation time of 5s
 
@@ -109,40 +112,67 @@ document.getElementById('start-btn').addEventListener('click', function () {
 
   // Prepare phase (countdown before rounds start)
   remainingTime = prepareTime;
-  currentRound = 0;
+  currentRound = 1; // Start with round 1
+
+  // Calculate the exact interval in seconds between each buzz sound
+  const buzzInterval = totalRoundTime / reps; 
+  let nextBuzzTime = buzzInterval; // Track the exact timing for the next buzz
+
+  // Total buzz count
+  let totalBuzzCount = 0;
 
   // Stop any existing timer if button clicked
   clearInterval(timerInterval);
 
-  // Start the countdown for the preparation phase
+  let elapsedTime = 0; // Track the total elapsed time in the current round
+  let isPreparationPhase = true; // Track whether we're in the preparation phase
+
+  // Start the timer
   preparationBeepCount = 0; // Reset the beep count for preparation
   timerInterval = setInterval(() => {
-    updateTimerDisplay(remainingTime);
+    // Update timer display with total buzz count
+    updateTimerDisplay(remainingTime, currentRound, totalBuzzCount);
 
-    if (remainingTime > 0) {
-      // Beep during preparation phase (3s, 2s, 1s remaining)
-      if (remainingTime <= 3 && preparationBeepCount < 3) {
-        beep.play();
-        preparationBeepCount++;
+    if (isPreparationPhase) {
+      // Handle preparation countdown
+      if (remainingTime > 0) {
+        // Beep during preparation phase (3s, 2s, 1s remaining)
+        if (remainingTime <= 3 && preparationBeepCount < 3) {
+          beep.play();
+          preparationBeepCount++;
+        }
+        remainingTime--;
+      } else if (remainingTime === 0) {
+        // End of preparation phase
+        longBeep.play(); // Long beep to signal the start of the first round
+        isPreparationPhase = false; // Switch to exercise phase
+        remainingTime = totalRoundTime; // Set remaining time to the round duration
+        elapsedTime = 0; // Reset elapsed time
+        nextBuzzTime = buzzInterval; // Reset buzz time for the first round
       }
-      remainingTime--;
-    } else if (remainingTime === 0 && preparationBeepCount === 3) {
-      longBeep.play(); // Long beep to signal the start of the first round
-      remainingTime = totalRoundTime; // Set remaining time to round duration
-      preparationBeepCount++; // Mark preparation as done
-    } else if (remainingTime > 0) {
-      // Handle round countdown
-      remainingTime--;
-    } else if (remainingTime === 0 && currentRound < rounds - 1) {
-      // End of the current round (not the last one)
-      beep.play(); // Play beep after this round
-      currentRound++;
-      remainingTime = totalRoundTime; // Reset time for next round
-    } else if (remainingTime === 0 && currentRound === rounds - 1) {
-      // Last round finished
-      longBeep.play();
-      clearInterval(timerInterval); // Stop the timer
-      updateTimerDisplay(0); // Display 00:00
+    } else {
+      // Exercise phase
+      if (remainingTime > 0) {
+        elapsedTime += 1; // Increase elapsed time by 1 second
+        if (elapsedTime >= nextBuzzTime) {
+          buzz.play(); // Play buzz sound
+          totalBuzzCount++; // Increment the total buzz count
+          nextBuzzTime += buzzInterval; // Schedule the next buzz
+        }
+        remainingTime--;
+      } else if (remainingTime === 0 && currentRound < rounds) {
+        // End of the current round (not the last one)
+        beep.play(); // Play beep after this round
+        currentRound++;
+        remainingTime = totalRoundTime; // Reset time for next round
+        elapsedTime = 0; // Reset elapsed time
+        nextBuzzTime = buzzInterval; // Reset buzz time for the new round
+      } else if (remainingTime === 0 && currentRound === rounds) {
+        // Last round finished
+        longBeep.play(); // Long beep to indicate the end of the workout
+        clearInterval(timerInterval); // Stop the timer
+        updateTimerDisplay(0, currentRound, totalBuzzCount); // Display 00:00 with total buzz count
+      }
     }
   }, 1000); // Run every second
 });
@@ -152,3 +182,10 @@ document.getElementById('exercise-btn').addEventListener('click', function () {
   clearInterval(timerInterval);  // Stop the current timer
   randomizeExercise();  // Randomize a new exercise
 });
+
+// Update timer display function to include buzz count
+function updateTimerDisplay(time, round, buzzCount = 0) {
+  const minutesLeft = Math.floor(time / 60);
+  const secondsLeft = time % 60;
+  timerDisplay.textContent = `${round} | ${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft} | ${buzzCount}`;
+}
