@@ -24,10 +24,10 @@ const timerDisplay = document.getElementById('timer');
 let roundCounterElement;
 
 // Function to update the timer display
-function updateTimerDisplay(time, round, buzzCount = 0) {
+function updateTimerDisplay(time, round) {
   const minutesLeft = Math.floor(time / 60);
   const secondsLeft = time % 60;
-  timerDisplay.textContent = `${round} | ${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft} | ${buzzCount}`;
+  timerDisplay.textContent = `${round} | ${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft}`;
 }
 
 // Initialize the exercise
@@ -168,7 +168,6 @@ document.getElementById('start-btn').addEventListener('click', function () {
           buzz.play(); // Play buzz sound
           totalBuzzCount++; // Increment the total buzz count
           nextBuzzTime += buzzInterval; // Schedule the next buzz
-          simulateTouchEvent(); // Simulate touch event to keep the screen on
         }
         remainingTime--;
       } else if (remainingTime === 0 && currentRound < rounds) {
@@ -176,18 +175,19 @@ document.getElementById('start-btn').addEventListener('click', function () {
         beep.play(); // Play beep after this round
         currentRound++;
         remainingTime = totalRoundTime; // Reset time for next round
-        elapsedTime = 0; // Reset elapsed time for the new round
-        nextBuzzTime = buzzInterval; // Reset the buzz time
+        elapsedTime = 0; // Reset elapsed time
+        nextBuzzTime = buzzInterval; // Reset buzz time for the new round
       } else if (remainingTime === 0 && currentRound === rounds) {
-        // End of the final round
-        longBeep.play(); // Play long beep for finishing the workout
+        // Last round finished
+        longBeep.play(); // Long beep to indicate the end of the workout
         clearInterval(timerInterval); // Stop the timer
+        updateTimerDisplay(0, currentRound, totalBuzzCount); // Display 00:00 with total buzz count
       }
     }
-  }, 1000); // Timer runs every second
+  }, 1000); // Run every second
 
   // Prevent iPhone sleep by simulating touch events
-  setInterval(simulateTouchEvent, 30000); // Simulate a touch event every 30 seconds
+  setInterval(simulateTouchEvent, 3000); // Simulate a touch event every 3 seconds
 
 });
 
@@ -195,4 +195,17 @@ document.getElementById('start-btn').addEventListener('click', function () {
 function simulateTouchEvent() {
   const touchEvent = new Event('touchstart', { bubbles: true });
   document.dispatchEvent(touchEvent);
+}
+
+// Button to stop the current exercise and randomize a new one
+document.getElementById('exercise-btn').addEventListener('click', function () {
+  clearInterval(timerInterval);  // Stop the current timer
+  randomizeExercise();  // Randomize a new exercise
+});
+
+// Update timer display function to include buzz count
+function updateTimerDisplay(time, round, buzzCount = 0) {
+  const minutesLeft = Math.floor(time / 60);
+  const secondsLeft = time % 60;
+  timerDisplay.textContent = `${round} | ${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft} | ${buzzCount}`;
 }
