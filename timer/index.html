@@ -8,7 +8,9 @@
 </head>
 <body>
   <div class="container">
-    <h1>Timer</h1>
+    <div class="timer">
+      <span id="timer">00:00</span>
+    </div>
 
     <!-- Exercise Name (Randomized) -->
     <button id="exercise-btn" class="exercise-btn">Loading Exercise...</button>
@@ -29,6 +31,13 @@
       <span id="second-value">30</span> sec
     </div>
 
+    <!-- Reps Slider -->
+    <div class="slider-container">
+      <label for="reps-slider">Reps</label>
+      <input type="range" id="reps-slider" min="1" max="60" value="1" class="slider">
+      <span id="reps-value">1</span> reps
+    </div>
+
     <!-- Rounds and Preparation -->
     <div class="slider-container">
       <label for="rounds-slider">Rounds</label>
@@ -44,10 +53,6 @@
 
     <!-- Start Button -->
     <button id="start-btn">Start Exercise</button>
-
-    <div class="timer">
-      <span id="timer">00:00</span>
-    </div>
   </div>
 
   <script src="script.js"></script>
