@@ -109,25 +109,6 @@ prepareSlider.addEventListener('input', updateSliderValues);
 // Update initial values
 updateSliderValues();
 
-// Screen Wake Lock API
-let wakeLock = null;
-
-async function requestWakeLock() {
-  try {
-    wakeLock = await navigator.wakeLock.request('screen');
-    console.log("Screen wake lock acquired.");
-  } catch (err) {
-    console.error("Failed to acquire wake lock: ", err);
-  }
-}
-
-function releaseWakeLock() {
-  if (wakeLock) {
-    wakeLock.release();
-    console.log("Screen wake lock released.");
-  }
-}
-
 // Event listener for "Keep Current Settings" button
 document.getElementById('start-btn').addEventListener('click', function () {
   const exerciseMinute = parseInt(minuteSlider.value);
@@ -158,10 +139,6 @@ document.getElementById('start-btn').addEventListener('click', function () {
 
   // Start the timer
   preparationBeepCount = 0; // Reset the beep count for preparation
-
-  // Request the wake lock when the timer starts
-  requestWakeLock();
-
   timerInterval = setInterval(() => {
     // Update timer display with total buzz count
     updateTimerDisplay(remainingTime, currentRound, totalBuzzCount);
@@ -184,42 +161,38 @@ document.getElementById('start-btn').addEventListener('click', function () {
         nextBuzzTime = buzzInterval; // Reset buzz time for the first round
       }
     } else {
-      // Handle exercise phase
+      // Exercise phase
       if (remainingTime > 0) {
-        // Handle buzz sound
+        elapsedTime += 1; // Increase elapsed time by 1 second
         if (elapsedTime >= nextBuzzTime) {
           buzz.play(); // Play buzz sound
           totalBuzzCount++; // Increment the total buzz count
           nextBuzzTime += buzzInterval; // Schedule the next buzz
+          simulateTouchEvent(); // Simulate touch event to keep the screen on
         }
         remainingTime--;
-        elapsedTime++;
       } else if (remainingTime === 0 && currentRound < rounds) {
-        // End of the current round
+        // End of the current round (not the last one)
         beep.play(); // Play beep after this round
         currentRound++;
         remainingTime = totalRoundTime; // Reset time for next round
-        elapsedTime = 0; // Reset elapsed time
-        nextBuzzTime = buzzInterval; // Reset buzz time for the new round
+        elapsedTime = 0; // Reset elapsed time for the new round
+        nextBuzzTime = buzzInterval; // Reset the buzz time
       } else if (remainingTime === 0 && currentRound === rounds) {
-        // Last round finished
-        longBeep.play(); // Long beep to indicate the end of the workout
+        // End of the final round
+        longBeep.play(); // Play long beep for finishing the workout
         clearInterval(timerInterval); // Stop the timer
-
-        // Release the wake lock when the timer ends
-        releaseWakeLock();
-
-        updateTimerDisplay(0, currentRound, totalBuzzCount); // Display 00:00 with total buzz count
       }
     }
-  }, 1000); // Run every second
+  }, 1000); // Timer runs every second
+
+  // Prevent iPhone sleep by simulating touch events
+  setInterval(simulateTouchEvent, 30000); // Simulate a touch event every 30 seconds
+
 });
 
-// Button to stop the current exercise and randomize a new one
-document.getElementById('exercise-btn').addEventListener('click', function () {
-  clearInterval(timerInterval);  // Stop the current timer
-  randomizeExercise();  // Randomize a new exercise
-
-  // Release the wake lock if exercise is stopped
-  releaseWakeLock();
-});
+// Function to simulate a touch event to prevent the screen from going to sleep
+function simulateTouchEvent() {
+  const touchEvent = new Event('touchstart', { bubbles: true });
+  document.dispatchEvent(touchEvent);
+}
