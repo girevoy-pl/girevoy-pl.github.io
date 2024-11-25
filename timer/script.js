@@ -24,10 +24,10 @@ const timerDisplay = document.getElementById('timer');
 let roundCounterElement;
 
 // Function to update the timer display
-function updateTimerDisplay(time, round) {
+function updateTimerDisplay(time, round, buzzCount = 0) {
   const minutesLeft = Math.floor(time / 60);
   const secondsLeft = time % 60;
-  timerDisplay.textContent = `${round} | ${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft}`;
+  timerDisplay.textContent = `${round} | ${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft} | ${buzzCount}`;
 }
 
 // Initialize the exercise
@@ -183,17 +183,18 @@ document.getElementById('start-btn').addEventListener('click', function () {
         nextBuzzTime = buzzInterval; // Reset buzz time for the first round
       }
     } else {
-      // Exercise phase
+      // Handle exercise phase
       if (remainingTime > 0) {
-        elapsedTime += 1; // Increase elapsed time by 1 second
+        // Handle buzz sound
         if (elapsedTime >= nextBuzzTime) {
           buzz.play(); // Play buzz sound
           totalBuzzCount++; // Increment the total buzz count
           nextBuzzTime += buzzInterval; // Schedule the next buzz
         }
         remainingTime--;
+        elapsedTime++;
       } else if (remainingTime === 0 && currentRound < rounds) {
-        // End of the current round (not the last one)
+        // End of the current round
         beep.play(); // Play beep after this round
         currentRound++;
         remainingTime = totalRoundTime; // Reset time for next round
@@ -221,10 +222,3 @@ document.getElementById('exercise-btn').addEventListener('click', function () {
   // Release the wake lock if exercise is stopped
   releaseWakeLock();
 });
-
-// Update timer display function to include buzz count
-function updateTimerDisplay(time, round, buzzCount = 0) {
-  const minutesLeft = Math.floor(time / 60);
-  const secondsLeft = time % 60;
-  timerDisplay.textContent = `${round} | ${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft} | ${buzzCount}`;
-}
