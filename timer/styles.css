@@ -108,6 +108,12 @@ span {
   margin-top: 10px;
 }
 
+#keep-settings-btn.active {
+  background-color: red;
+  color: white;
+  border: 1px solid #005500;
+}
+
 #keep-settings-btn:hover {
   background-color: #ec971f;
 }
