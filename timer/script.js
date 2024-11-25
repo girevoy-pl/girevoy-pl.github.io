@@ -2,6 +2,10 @@
 const beep = new Audio('beep-sound.mp3'); // Regular beep sound
 const longBeep = new Audio('long-beep-sound.mp3'); // Long beep sound
 
+// Load the audio files to ensure they are ready to play when needed
+beep.load();
+longBeep.load();
+
 // Slider elements for exercise time, rounds, and preparation time
 const minuteSlider = document.getElementById('minute-slider');
 const secondSlider = document.getElementById('second-slider');
