@@ -58,13 +58,14 @@ function randomizeExercise() {
 
 // Exercise data with default time and rounds
 const exercises = [
+  { name: 'Push-ups', defaultTime: '02:00', defaultRounds: 2, defaultReps: 20 },
+  { name: 'Jumping Jacks', defaultTime: '02:00', defaultRounds: 2, defaultReps: 33 },
+  { name: 'Burpees', defaultTime: '02:00', defaultRounds: 2, defaultReps: 17 },
   { name: 'Snatch 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 23 },
   { name: 'Jerk 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 15 },
   { name: 'LC 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 13 },
   { name: 'Jerk 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 14 },
   { name: 'LC 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 12 },
-  { name: 'Push-ups', defaultTime: '02:00', defaultRounds: 3, defaultReps: 10 },
-  { name: 'Jumping Jacks', defaultTime: '02:00', defaultRounds: 3, defaultReps: 10 },
   { name: 'Clean 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 16 },
   { name: 'Clean 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 14 },
   { name: 'Clean&press 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 13 },
