@@ -1,7 +1,16 @@
-// Beep sound, long beep sound, and buzz sound
-const beep = new Audio('beep-sound.mp3'); // Regular beep sound
-const longBeep = new Audio('long-beep-sound.mp3'); // Long beep sound
-const buzz = new Audio('buzz-sound.mp3'); // Buzz sound for reps
+// Beep sound, long beep sound, and buzz sound using Howler.js
+const beep = new Howl({
+  src: ['beep-sound.mp3'],
+  preload: true
+}); // Regular beep sound
+const longBeep = new Howl({
+  src: ['long-beep-sound.mp3'],
+  preload: true
+}); // Long beep sound
+const buzz = new Howl({
+  src: ['buzz-sound.mp3'],
+  preload: true
+}); // Buzz sound for reps
 
 // Slider elements for exercise time, rounds, reps, and preparation time
 const minuteSlider = document.getElementById('minute-slider');
@@ -49,19 +58,19 @@ function randomizeExercise() {
 
 // Exercise data with default time and rounds
 const exercises = [
-  { name: 'Snatch 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
-  { name: 'Jerk 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
-  { name: 'LC 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
-  { name: 'Jerk 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 },
-  { name: 'LC 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 },
+  { name: 'Snatch 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 23 },
+  { name: 'Jerk 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 15 },
+  { name: 'LC 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 13 },
+  { name: 'Jerk 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 14 },
+  { name: 'LC 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 12 },
   { name: 'Push-ups', defaultTime: '02:00', defaultRounds: 3, defaultReps: 10 },
   { name: 'Jumping Jacks', defaultTime: '02:00', defaultRounds: 3, defaultReps: 10 },
-  { name: 'Clean 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
-  { name: 'Clean 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 },
-  { name: 'Clean&press 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
-  { name: 'Clean&press 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 },
-  { name: 'Push press 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 6 },
-  { name: 'Push press 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 5 }
+  { name: 'Clean 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 16 },
+  { name: 'Clean 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 14 },
+  { name: 'Clean&press 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 13 },
+  { name: 'Clean&press 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 12 },
+  { name: 'Push press 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 15 },
+  { name: 'Push press 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 12 }
 ];
 
 // Function to get a random exercise from the list
