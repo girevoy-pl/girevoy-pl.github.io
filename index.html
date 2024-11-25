@@ -1,56 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+    Aerial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+
+    icon.png - source - flaticon - https://www.flaticon.com/authors/leremy
+    bg.jpg   - source - unsplash - https://unsplash.com/@timages_tim_day
+-->
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kettlebell Girevoy Sport - Timer</title>
-  <script src="https://cdn.jsdelivr.net/npm/howler"></script>
-  <link rel="stylesheet" href="styles.css">
+    <title>Trening kettlebell Girevoy Sport Elbląg - fitness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="Dołącz do zajęć fitness kettlebell Girevoy Sport w Elblągu. Popraw siłę i wytrzymałość pod okiem profesjonalnego trenera w trakcie workoutu." />
+    <meta name="keywords" content="Zajęcia Kettlebell Elbląg, Kettlebell Elbląg, Kettle Elbląg, Trening Kettlebell Elbląg, Girevoy Sport Elbląg, TRX Elbląg, Spinning rowerowy Elbląg, Kettlebell Classes Elblag, Klub Kettlebell Elbąg, Grupa Kettlebell Elbląg, Ciesz sie ciężarem, Ciesz się ciężarem Elbląg" />
+    <meta name="author" content="Girevoy Sport Elbląg" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/banner.css">
+    <link rel="icon" href="/assets/css/images/icon.png" type="image/png" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <script>
+        window.onload = function() { document.body.classList.remove('is-preload'); }
+        window.ontouchmove = function() { return false; }
+        window.onorientationchange = function() { document.body.scrollTop = 0; }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SportsActivityLocation",
+        "name": "Zajęcia Kettlebell Elbląg, Kettlebell Elbląg, Kettle Elbląg, Trening Kettlebell Elbląg, Girevoy Sport Elbląg, TRX Elbląg, Spinning rowerowy Elbląg, Kettlebell Classes Elblag, Klub Kettlebell Elbąg, Grupa Kettlebell Elbląg, Ciesz sie ciężarem, Ciesz się ciężarem Elbląg",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Elbląg",
+            "addressRegion": "PL",
+            "streetAddress": "Robotnicza 236",
+            "postalCode": "82-300",
+            "addressCountry": "Poland"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "54.1561",
+            "longitude": "19.4045"
+        },
+        "url": "https://www.girevoy.pl"
+    }
+    </script>
 </head>
 <body>
-  <div class="container">
-    <div class="timer">
-      <span id="current-round"></span> <span id="timer">00:00</span>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" style="display: none;">
+        <span>Ta strona używa plików cookie do analizy ruchu. <a href="/polityka-prywatnosci">Dowiedz się więcej</a>.</span>
+        <button id="accept-cookies">Akceptuj</button>
     </div>
 
-    <!-- Exercise Name (Randomized) -->
-    <button id="exercise-btn" class="exercise-btn">Loading Exercise...</button>
+    <!-- Main Content -->
+    <div id="wrapper">
+        <div id="bg"></div>
+        <div id="overlay"></div>
+        <div id="main">
 
-    <!-- Keep Custom Settings Button -->
-    <button id="keep-settings-btn" class="exercise-btn">Keep Custom Settings</button>
+            <!-- Header -->
+            <header id="header">
+                <h1>Ciesz się ciężarem</h1>
+                <p>Grupa kettlebell &nbsp;&bull;&nbsp; Girevoy Sport &nbsp;&bull;&nbsp; Elbląg</p>
+                <nav>
+                    <ul>
+                        <li><a href="https://girevoy-pl.github.io/about.html" class="icon solid fa-circle-info"><span class="label">O nas</span></a></li>
+                        <li><a href="https://girevoy-pl.github.io/calendar.html" class="icon solid fa-calendar-days"><span class="label">Kalendarz</span></a></li>
+                        <li><a href="https://www.girevoy.pl/timer/" class="icon solid fa-hourglass-end"><span class="label">Timer</span></a></li>
+                        <!--<li><a href="mailto:elblag@girevoy.pl" class="icon solid fa-envelope"><span class="label">Email</span></a></li>-->
+                        <li><a href="https://www.youtube.com/@girevoy-pl" class="icon brands fa-youtube"><span class="label">Youtube</span></a></li>
+                        <li><a href="https://photos.app.goo.gl/qTpXq4RuP8eSSYbM6" class="icon solid fa-image"><span class="label">Galeria</span></a></li>
+                    </ul>
+                </nav>
+            </header>
 
-    <!-- Exercise Time Sliders -->
-    <div class="slider-container">
-      <label for="minute-slider">Minutes: <span id="minute-value">1</span></label>
-      <input type="range" id="minute-slider" min="0" max="60" value="1" class="slider">
-    </div>
+            <!-- Footer -->
+            <footer id="footer">
+                <span class="copyright">&copy; Girevoy Sport Elbląg 2024. - <a href="http://html5up.net">HTML5 UP</a>.</span>
+            </footer>
 
-    <div class="slider-container">
-      <label for="second-slider">Seconds: <span id="second-value">30</span></label>
-      <input type="range" id="second-slider" min="0" max="59" value="30" class="slider">
-    </div>
+    <!-- Google Analytics script will be loaded after consent -->
+    <script>
+        // Check for consent in cookies
+        if (!document.cookie.split('; ').find(row => row.startsWith('cookiesAccepted='))) {
+            document.getElementById('cookie-consent-banner').style.display = 'flex';
+        } else {
+            document.getElementById('cookie-consent-banner').style.display = 'none';
+        }
 
-    <!-- Reps Slider -->
-    <div class="slider-container">
-      <label for="reps-slider">Reps in a round: <span id="reps-value">1</span></label>
-      <input type="range" id="reps-slider" min="1" max="40" value="1" class="slider">
-    </div>
+        // Accept cookies and load Google Analytics
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+            // Save consent in cookies for 90 days
+            document.cookie = "cookiesAccepted=true; path=/; max-age=" + 60 * 60 * 24 * 90;
+            document.getElementById('cookie-consent-banner').style.display = 'none';
 
-    <!-- Rounds and Preparation -->
-    <div class="slider-container">
-      <label for="rounds-slider">Rounds: <span id="rounds-value">1</span></label>
-      <input type="range" id="rounds-slider" min="1" max="10" value="1" class="slider">
-    </div>
+            // Load Google Analytics after consent
+            loadGoogleAnalytics();
+        });
 
-    <div class="slider-container">
-      <label for="prepare-slider">Preparation Time: <span id="prepare-value">5</span></label>
-      <input type="range" id="prepare-slider" min="5" max="30" value="5" class="slider">
-    </div>
+        // Function to load Google Analytics script
+        function loadGoogleAnalytics() {
+            const script = document.createElement('script');
+            script.src = "https://www.googletagmanager.com/gtag/js?id=G-BQZ54DGX70";
+            script.async = true;
+            document.head.appendChild(script);
 
-    <!-- Start Button -->
-    <button id="start-btn">Start Exercise</button>
-  </div>
-
-  <script src="script.js"></script>
+            script.onload = function() {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-BQZ54DGX70', { 'anonymize_ip': true });
+            };
+        }
+    </script>
 </body>
 </html>
