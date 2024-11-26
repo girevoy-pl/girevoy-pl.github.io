@@ -22,7 +22,7 @@
 			<button id="stateButton" onclick="onStateClicked()">trace state</button>
 		</div>
 		<a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
-		<p><small>To convert the webm video run the ffmpeg in terminal - <a title="ffmpeg - h264" target="_blank" href="https://trac.ffmpeg.org/wiki/Encode/H.264">(H.264)</a> | <a title="ffmpeg - h265" target="_blank" href="https://trac.ffmpeg.org/wiki/Encode/H.265">(H.265)</a></small></p>
+		<p><small>To convert the webm video run the ffmpeg in terminal - <a title="ffmpeg - h264" target="_blank" href="https://trac.ffmpeg.org/wiki/Encode/H.264">(H.264)</a> | <a title="ffmpeg - h265" target="_blank" href="https://trac.ffmpeg.org/wiki/Encode/H.265">(H.265)</a> <a title="ffmpeg - audio merge" target="_blank" href="https://json2video.com/how-to/ffmpeg-course/ffmpeg-add-audio-to-video.html">(audio merge)</a></small></p>
 		<p>ffmpeg -i video_1514250.webm -c:v libx264 -c:a aac h264.mp4</p>
 		<p>ffmpeg -i video_1514250.webm -c:v libx265 -c:a aac h265.mp4</p>
 		<video id="playback" controls autoplay></video> <br>
