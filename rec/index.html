@@ -22,10 +22,31 @@
 			<button id="stateButton" onclick="onStateClicked()">trace state</button>
 		</div>
 		<a id="downloadLink" download="mediarecorder.webm" name="mediarecorder.webm" href></a>
-		<p><small>To convert the webm video run the ffmpeg in terminal - <a title="ffmpeg - h264" target="_blank" href="https://trac.ffmpeg.org/wiki/Encode/H.264">(H.264)</a> | <a title="ffmpeg - h265" target="_blank" href="https://trac.ffmpeg.org/wiki/Encode/H.265">(H.265)</a> <a title="ffmpeg - audio merge" target="_blank" href="https://json2video.com/how-to/ffmpeg-course/ffmpeg-add-audio-to-video.html">(audio merge)</a> <a title="audio_samples" target="_blank" href="https://www.chosic.com/download-audio/45457/">(audio samples)</a></small></p>
+		<p><small>To convert the webm video run the ffmpeg in terminal - <a title="ffmpeg - AV1" target="_blank" href="https://trac.ffmpeg.org/wiki/Encode/AV1">(AV1)</a> | <a title="ffmpeg - h265" target="_blank" href="https://trac.ffmpeg.org/wiki/Encode/H.265">(H.265)</a> | <a title="ffmpeg - h264" target="_blank" href="https://trac.ffmpeg.org/wiki/Encode/H.264">(H.264)</a> | <a title="ffmpeg - audio merge" target="_blank" href="https://json2video.com/how-to/ffmpeg-course/ffmpeg-add-audio-to-video.html">(audio merge)</a> | <a title="audio_samples" target="_blank" href="https://www.chosic.com/download-audio/45457/">(audio samples)</a></small></p>
 		<p>ffmpeg -i video_1514250.webm -c:v libx264 -c:a aac h264.mp4</p>
 		<p>ffmpeg -i video_1514250.webm -c:v libx265 -c:a aac h265.mp4</p>
 		<p>ffmpeg -i h265.mp4 -stream_loop -1 -i True-Patriot.mp3 -c:v copy -shortest -map 0:v -map 1:a -y h265_audio.mp4</p>
+		<p>
+		rec/
+		├── script.sh                  # Your script runs from here
+		├── video1.webm                # Input .webm files
+		├── video2.webm
+		├── music/
+		│   └── True-Patriot.mp3       # MP3 file to loop
+		└── out/
+    		├── video1_compressed_with_audio.mp4  # Output .mp4 files with new audio
+    		└── video2_compressed_with_audio.mp4
+			
+		for A in *.webm; do \ <br>
+  		ffmpeg -i "$A" -stream_loop -1 -i "music/True-Patriot.mp3" \ <br>
+  		-c:v libx264 -crf 24 -preset medium -pix_fmt yuv420p \ <br>
+  		-vf "hue=s=0,scale=960:540,pad=960:544:0:2" \ <br>
+  		-c:a libopus -b:a 48k -vbr on -compression_level 10 \ <br>
+  		-map 0:v -map 1:a -shortest \ <br>
+  		-movflags +faststart \ <br>
+  		"out/$(date +'%Y%m%d')_$(basename "${A%.webm}_h264_avc_bw_qHD_a.mp4")"; \ <br>
+		done <br>
+		</p>
 		<video id="playback" controls autoplay></video> <br>
 	</div>
 
