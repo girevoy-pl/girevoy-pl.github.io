@@ -110,9 +110,9 @@ window.onload = function () {
 function updateSliderValues() {
   document.querySelector("label[for='minute-slider']").textContent = `Minutes: ${minuteSlider.value}`;
   document.querySelector("label[for='second-slider']").textContent = `Seconds: ${secondSlider.value}`;
-  document.querySelector("label[for='reps-slider']").textContent = `Reps: ${repsSlider.value}`;
+  document.querySelector("label[for='reps-slider']").textContent = `RPM: ${repsSlider.value}`;
   document.querySelector("label[for='rounds-slider']").textContent = `Rounds: ${roundsSlider.value}`;
-  document.querySelector("label[for='prepare-slider']").textContent = `Prepare Time: ${prepareSlider.value}`;
+  document.querySelector("label[for='prepare-slider']").textContent = `Preparation Time: ${prepareSlider.value}`;
 }
 
 // Sliders event listeners
