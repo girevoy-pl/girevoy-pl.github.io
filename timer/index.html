@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Girevoy Sport - Kettlebell Timer</title>
+  <script src="https://cdn.jsdelivr.net/npm/howler"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="timer">
+      <span id="current-round"></span> <span id="timer">00:00</span>
+    </div>
+
+    <!-- Exercise Name (Randomized) -->
+    <button id="exercise-btn" class="exercise-btn">Loading Exercise...</button>
+
+    <!-- Keep Custom Settings Button -->
+    <button id="keep-settings-btn" class="exercise-btn">Keep Custom Settings</button>
+
+    <!-- Exercise Time Sliders -->
+    <div class="slider-container">
+      <label for="minute-slider">Minutes: <span id="minute-value">1</span></label>
+      <input type="range" id="minute-slider" min="0" max="60" value="1" class="slider">
+    </div>
+
+    <div class="slider-container">
+      <label for="second-slider">Seconds: <span id="second-value">30</span></label>
+      <input type="range" id="second-slider" min="0" max="59" value="30" class="slider">
+    </div>
+
+    <!-- Reps Slider -->
+    <div class="slider-container">
+      <label for="reps-slider">RPM: <span id="reps-value">1</span></label>
+      <input type="range" id="reps-slider" min="1" max="40" value="1" class="slider">
+    </div>
+
+    <!-- Rounds and Preparation -->
+    <div class="slider-container">
+      <label for="rounds-slider">Rounds: <span id="rounds-value">1</span></label>
+      <input type="range" id="rounds-slider" min="1" max="10" value="1" class="slider">
+    </div>
+
+    <div class="slider-container">
+      <label for="prepare-slider">Preparation Time: <span id="prepare-value">5</span></label>
+      <input type="range" id="prepare-slider" min="5" max="30" value="5" class="slider">
+    </div>
+
+    <!-- Start Button -->
+    <button id="start-btn">Start Exercise</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
