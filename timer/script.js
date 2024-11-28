@@ -64,7 +64,7 @@ function randomizeExercise() {
     const [defaultMinute, defaultSecond] = currentExercise.defaultTime.split(':');
     minuteSlider.value = defaultMinute;
     secondSlider.value = defaultSecond;
-    Slider.value = currentExercise.default || 5; // Default to 5  if not set
+    repsSlider.value = currentExercise.defaultReps || 5; // Default to 5 reps if not set
     roundsSlider.value = currentExercise.defaultRounds;
   }
 
@@ -74,14 +74,14 @@ function randomizeExercise() {
 
 // Exercise data with default time and rounds
 const exercises = [
-  { name: 'Push-ups', defaultTime: '02:00', defaultRounds: 2, default: 20 },
-  { name: 'Jumping Jacks', defaultTime: '02:00', defaultRounds: 2, default: 33 },
-  { name: 'Burpees', defaultTime: '02:00', defaultRounds: 2, default: 17 },
-  { name: 'Snatch 1KB', defaultTime: '03:00', defaultRounds: 4, default: 23 },
-  { name: 'Jerk 1KB', defaultTime: '03:00', defaultRounds: 4, default: 15 },
-  { name: 'Jerk 2KB', defaultTime: '03:00', defaultRounds: 3, default: 13 },
-  { name: 'LC 1KB', defaultTime: '03:00', defaultRounds: 4, default: 13 },
-  { name: 'LC 2KB', defaultTime: '03:00', defaultRounds: 3, default: 12 },
+  { name: 'Push-ups', defaultTime: '02:00', defaultRounds: 2, defaultReps: 20 },
+  { name: 'Jumping Jacks', defaultTime: '02:00', defaultRounds: 2, defaultReps: 33 },
+  { name: 'Burpees', defaultTime: '02:00', defaultRounds: 2, defaultReps: 17 },
+  { name: 'Snatch 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 23 },
+  { name: 'Jerk 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 15 },
+  { name: 'Jerk 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 13 },
+  { name: 'LC 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 13 },
+  { name: 'LC 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 12 },
   { name: 'Clean 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 16 },
   { name: 'Clean 2KB', defaultTime: '03:00', defaultRounds: 3, defaultReps: 14 },
   { name: 'Clean&press 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 13 },
@@ -110,9 +110,9 @@ window.onload = function () {
 function updateSliderValues() {
   document.querySelector("label[for='minute-slider']").textContent = `Minutes: ${minuteSlider.value}`;
   document.querySelector("label[for='second-slider']").textContent = `Seconds: ${secondSlider.value}`;
-  document.querySelector("label[for='reps-slider']").textContent = `RPM: ${repsSlider.value}`;
+  document.querySelector("label[for='reps-slider']").textContent = `Reps: ${repsSlider.value}`;
   document.querySelector("label[for='rounds-slider']").textContent = `Rounds: ${roundsSlider.value}`;
-  document.querySelector("label[for='prepare-slider']").textContent = `Preparation Time: ${prepareSlider.value}`;
+  document.querySelector("label[for='prepare-slider']").textContent = `Prepare Time: ${prepareSlider.value}`;
 }
 
 // Sliders event listeners
