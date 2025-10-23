@@ -75,6 +75,7 @@ const roundSettings=$('roundSettings');
 
 let schedule=[], totalRounds=4, roundIndex=0, phase='prep', phaseSeconds=10, phaseTotal=10;
 let running=false, lastTick=null, raf=null, prepActive=true, midTicked=false, midEnabled=true, muted=false, reverseMode=false;
+let userInteracted=false;
 
 // Default 4 rounds
 const defaultSchedule=[
@@ -132,7 +133,8 @@ function nextStep(){
 function finishAll(){running=false; cancelAnimationFrame(raf); phaseLabel.textContent='DONE'; status.textContent='Complete!'; digits.textContent='00:00'; bar.style.width='100%'; playSound('long');}
 
 function tick(ts){
-  if(!running || prepActive){lastTick=ts; return;} if(!lastTick) lastTick=ts;
+  if(!running) { lastTick = ts; return; }
+  if(!lastTick) lastTick = ts;
   const delta=(ts-lastTick)/1000; lastTick=ts; const prev=Math.ceil(phaseSeconds);
   phaseSeconds=Math.max(0,phaseSeconds-delta); const now=Math.ceil(phaseSeconds);
   if(!midTicked && phase==='work' && phaseTotal>0 && phaseSeconds<=phaseTotal/2 && midEnabled){playSound('short'); midTicked=true;}
@@ -140,12 +142,18 @@ function tick(ts){
   raf=requestAnimationFrame(tick);
 }
 
-function prepCountdown(){setPhase('prep');}
-
-function startLoop(){running=true; lastTick=performance.now(); raf=requestAnimationFrame(tick);}
-
-// Timer click
-screen.addEventListener('click',()=>{running=!running; if(running){lastTick=performance.now(); raf=requestAnimationFrame(tick);} status.textContent=running?'Running':'Paused';});
+// Timer click: start/pause and unlock audio
+screen.addEventListener('click',()=>{
+    if(!userInteracted){
+        // Unlock Howler
+        beepShort.play(); beepShort.stop();
+        beepLong.play(); beepLong.stop();
+        userInteracted=true;
+    }
+    running=!running;
+    if(running){ lastTick = performance.now(); raf = requestAnimationFrame(tick); }
+    status.textContent = running ? 'Running' : 'Paused';
+});
 
 // Buttons
 tickToggle.addEventListener('click',()=>{midEnabled=!midEnabled; tickToggle.classList.toggle('active',midEnabled);});
