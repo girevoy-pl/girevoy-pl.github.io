@@ -4,98 +4,98 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mobile Interval Timer</title>
+<script src="https://cdn.jsdelivr.net/npm/howler"></script>
 <style>
 :root {
   --bg:#F6F7FB;
   --text:#22194D;
-  --prep:#FFF3E0;
-  --work:#FFEBEE;
-  --rest:#E8F5E9;
-  --prepbar:#FFA500;
-  --workbar:#FF5252;
-  --restbar:#4CAF50;
+  --prep:#FFAC1C;
+  --work:#FC1500;
+  --rest:#69FC00;
+  --active:#5DADD5;
 }
 * { box-sizing: border-box; margin:0; padding:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; }
 body { background:var(--bg); color:var(--text); display:flex; flex-direction:column; min-height:100vh; }
 main { flex:1; display:flex; flex-direction:column; align-items:center; padding:16px; width:100%; max-width:500px; margin:0 auto; }
-.screen { border-radius:16px; padding:20px; width:100%; text-align:center; margin-bottom:16px; transition:background 0.3s; }
+.screen { border-radius:16px; padding:20px; width:100%; text-align:center; margin-bottom:16px; transition:background 0.3s; cursor:pointer; user-select:none; }
 .digits { font-size:6rem; font-weight:900; margin:10px 0; }
 .phase-label { font-weight:800; font-size:1.2rem; margin-bottom:6px; }
 .status { font-weight:600; margin-bottom:12px; }
 .bar-container { width:100%; background:#e7eef5; border-radius:12px; height:20px; overflow:hidden; margin-bottom:16px; }
 .bar-fill { width:0%; height:100%; transition: width 0.15s linear; }
-.controls { display:flex; gap:10px; margin-bottom:16px; width:100%; justify-content:center; flex-wrap:wrap; }
-.btn { border:0; border-radius:999px; padding:14px 0; font-weight:700; cursor:pointer; text-align:center; flex:1; }
-.btn-big { font-size:1.2rem; flex:2; }
-.btn-primary { background:#5DADD5; color:#fff; }
-.btn-dark { background:#22194D; color:#fff; }
-.btn-ghost { background:#fff; color:#22194D; border:1px solid #cfd6df; }
-.toggle { border:1px solid #cfd6df; border-radius:999px; padding:10px 14px; font-weight:600; background:#fff; cursor:pointer; transition:all 0.2s; }
-.toggle.active { background:#5DADD5; border-color:#5DADD5; color:#fff; }
-.round-settings { width:100%; }
+.btn-group { display:flex; justify-content:center; flex-wrap:wrap; margin-bottom:16px; gap:8px; }
+.btn, .toggle { border:0; border-radius:999px; padding:12px 16px; font-weight:700; cursor:pointer; text-align:center; flex:1; }
+.toggle { border:1px solid #cfd6df; background:#fff; transition:0.2s; }
+.toggle.active { background:var(--active); color:#fff; border-color:var(--active); }
+.round-settings { width:100%; margin-top:16px; }
 .round-row { display:flex; gap:10px; align-items:center; padding:10px; background:#fff; border-radius:10px; border:1px solid #eef4f7; margin-bottom:8px; }
 .round-row strong { min-width:60px; display:block; }
 .round-row input { width:60px; border:1px solid #cfd6df; border-radius:8px; text-align:center; padding:4px; }
 .footer-text { font-size:0.85rem; color:#666; text-align:center; margin-top:auto; margin-bottom:16px; }
-@media(max-width:520px){ .btn-big { flex:1 1 100%; } .controls { flex-wrap:wrap; } .round-row { flex-wrap:wrap; gap:6px; } }
+input[type=range] { width:100%; margin:0 6px; }
 </style>
 </head>
 <body>
 <main>
   <div id="screen" class="screen prep">
     <div class="phase-label" id="phase-label">GET READY</div>
-    <div class="digits" id="digits">00:00</div>
+    <div class="digits" id="digits">00:10</div>
     <div class="status" id="status">Ready</div>
     <div class="bar-container"><div id="barFill" class="bar-fill"></div></div>
   </div>
 
-  <div class="controls">
-    <button id="startBtn" class="btn btn-primary btn-big">Start</button>
-    <button id="pauseBtn" class="btn btn-dark">Pause</button>
-    <button id="resetBtn" class="btn btn-ghost">Reset</button>
-    <button id="muteBtn" class="btn btn-ghost toggle active">Mute: OFF</button>
-  </div>
-
-  <div style="display:flex;justify-content:center;width:100%;margin-bottom:12px;">
+  <div class="btn-group">
+    <button id="muteBtn" class="toggle active">Mute: OFF</button>
     <button id="tickToggle" class="toggle active">Halfway Alert: ON</button>
+    <button id="reverseBtn" class="toggle">Reverse: OFF</button>
+    <button id="resetBtn" class="toggle">Reset</button>
   </div>
 
-  <div style="display:flex;gap:10px;margin-bottom:12px;align-items:center;">
-    <div>Rounds:<input id="roundsInput" type="number" min="1" value="3"></div>
-    <div>Prep(sec):<input id="prepInput" type="number" min="0" value="5"></div>
-    <button id="saveBtn" class="btn btn-ghost">Save</button>
-    <button id="loadBtn" class="btn btn-ghost">Load</button>
+  <div style="width:100%; margin-bottom:16px;">
+    <label>Rounds: <span id="roundsVal">4</span></label>
+    <input id="roundsSlider" type="range" min="4" max="12" value="4">
+  </div>
+  <div style="width:100%; margin-bottom:16px;">
+    <label>Prep Time (sec): <span id="prepVal">10</span></label>
+    <input id="prepSlider" type="range" min="5" max="15" value="10">
   </div>
 
   <div id="roundSettings" class="round-settings"></div>
-
-  <div class="footer-text">Customize your rounds below. Settings are saved locally.</div>
+  <div class="footer-text">Tap the timer to Start/Pause. Customize rounds below.</div>
 </main>
 
 <script>
 (function(){
-const $ = id=>document.getElementById(id);
+const $=id=>document.getElementById(id);
 const screen=$('screen'), digits=$('digits'), phaseLabel=$('phase-label'), status=$('status'), bar=$('barFill');
-const startBtn=$('startBtn'), pauseBtn=$('pauseBtn'), resetBtn=$('resetBtn');
-const tickToggle=$('tickToggle'), muteBtn=$('muteBtn');
-const roundsInput=$('roundsInput'), prepInput=$('prepInput');
-const roundSettings=$('roundSettings'), saveBtn=$('saveBtn'), loadBtn=$('loadBtn');
+const tickToggle=$('tickToggle'), muteBtn=$('muteBtn'), reverseBtn=$('reverseBtn'), resetBtn=$('resetBtn');
+const roundsSlider=$('roundsSlider'), prepSlider=$('prepSlider');
+const roundsVal=$('roundsVal'), prepVal=$('prepVal');
+const roundSettings=$('roundSettings');
 
-const LS_KEY='intervalTimerSettings_v2';
-let schedule=[], totalRounds=3, roundIndex=0, phase='prep', phaseSeconds=0, phaseTotal=0;
-let running=false, lastTick=null, raf=null, prepActive=true, midTicked=false, midEnabled=true, muted=false;
+let schedule=[], totalRounds=4, roundIndex=0, phase='prep', phaseSeconds=10, phaseTotal=10;
+let running=false, lastTick=null, raf=null, prepActive=true, midTicked=false, midEnabled=true, muted=false, reverseMode=false;
 
-function ctx(){if(!window.audioCtx) window.audioCtx=new (window.AudioContext||window.webkitAudioContext)(); return window.audioCtx;}
-function playBeep(d=0.2,f=600,v=0.8){if(muted) return; try{const c=ctx(), now=c.currentTime,g=c.createGain();g.connect(c.destination);g.gain.setValueAtTime(0.0001,now);g.gain.linearRampToValueAtTime(v,now+0.01);g.gain.exponentialRampToValueAtTime(0.0001,now+d);const o=c.createOscillator();o.type='sine';o.frequency.setValueAtTime(f,now);o.connect(g);o.start(now);o.stop(now+d);}catch(e){}}
-function vibrate(ms){if(!muted && 'vibrate' in navigator) try{navigator.vibrate(ms);}catch(e){}}
+// Default 4 rounds
+const defaultSchedule=[
+  {work:60,rest:60},
+  {work:120,rest:120},
+  {work:180,rest:120},
+  {work:240,rest:180}
+];
+
+// Howler.js sounds
+const beepShort=new Howl({src:['https://freesound.org/data/previews/66/66717_931655-lq.mp3'], volume:0.7});
+const beepLong=new Howl({src:['https://freesound.org/data/previews/66/66717_931655-lq.mp3'], volume:1.0});
+function playSound(type){if(muted) return; if(type==='short') beepShort.play(); else beepLong.play();}
 
 function formatTime(s){s=Math.max(0,Math.floor(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
-function updateBar(){const pct=phaseTotal?((phaseTotal-phaseSeconds)/phaseTotal)*100:0;bar.style.width=pct+'%';}
+function updateBar(){const pct=phaseTotal?((phaseTotal-phaseSeconds)/phaseTotal)*100:0; bar.style.width=pct+'%';}
 
 function renderRoundInputs(){
-  roundSettings.innerHTML=''; totalRounds=Math.max(1,parseInt(roundsInput.value)||1);
+  roundSettings.innerHTML=''; totalRounds=Math.max(4,parseInt(roundsSlider.value)||4);
   for(let i=0;i<totalRounds;i++){
-    const val=schedule[i]||{work:30,rest:15};
+    const val=defaultSchedule[i]||{work:60,rest:60};
     const div=document.createElement('div'); div.className='round-row';
     div.innerHTML=`<strong>R${i+1}</strong>
       Work:<input type="number" min="1" id="w${i}" value="${val.work}">
@@ -105,72 +105,60 @@ function renderRoundInputs(){
 }
 
 function readSchedule(){
-  schedule=[]; totalRounds=Math.max(1,parseInt(roundsInput.value)||1);
+  schedule=[]; totalRounds=Math.max(4,parseInt(roundsSlider.value)||4);
   for(let i=0;i<totalRounds;i++){
-    const w=parseInt($('w'+i)?.value)||30, r=parseInt($('r'+i)?.value)||0;
+    const w=parseInt($('w'+i)?.value)||60, r=parseInt($('r'+i)?.value)||60;
     schedule.push({work:w,rest:r});
   }
 }
 
-function saveSettings(){
-  readSchedule();
-  const data={rounds:totalRounds,prep:parseInt(prepInput.value)||0,schedule:schedule,mid:midEnabled};
-  localStorage.setItem(LS_KEY,JSON.stringify(data)); status.textContent='Settings saved'; setTimeout(()=>status.textContent='Ready',1000);
-}
-function loadSettings(){
-  try{
-    const raw=localStorage.getItem(LS_KEY); if(!raw){status.textContent='No saved settings';setTimeout(()=>status.textContent='Ready',1000);return;}
-    const data=JSON.parse(raw); roundsInput.value=data.rounds||3; prepInput.value=data.prep||5; midEnabled=data.mid; tickToggle.classList.toggle('active',midEnabled); tickToggle.textContent=midEnabled?'Halfway Alert: ON':'Halfway Alert: OFF'; schedule=data.schedule||[]; renderRoundInputs();
-  }catch(e){status.textContent='Load failed';setTimeout(()=>status.textContent='Ready',1000);}
-}
-
 function setPhase(p){
-  phase=p; midTicked=false; prepActive=(p==='prep'); const cur=schedule[roundIndex]||{work:30,rest:15};
-  if(p==='prep'){phaseSeconds=parseInt(prepInput.value)||0; phaseTotal=phaseSeconds; screen.style.background='var(--prep)'; bar.style.background='var(--prepbar)'; phaseLabel.textContent='GET READY'; status.textContent='Starting soon...';}
-  else if(p==='work'){phaseSeconds=cur.work; phaseTotal=cur.work; screen.style.background='var(--work)'; bar.style.background='var(--workbar)'; phaseLabel.textContent='WORK'; status.textContent='Go!';}
-  else {phaseSeconds=cur.rest; phaseTotal=cur.rest; screen.style.background='var(--rest)'; bar.style.background='var(--restbar)'; phaseLabel.textContent='REST'; status.textContent='Recover';}
+  phase=p; midTicked=false; prepActive=(p==='prep'); const cur=schedule[roundIndex]||{work:60,rest:60};
+  if(p==='prep'){phaseSeconds=parseInt(prepSlider.value)||10; phaseTotal=phaseSeconds; screen.style.background='#FFAC1C'; bar.style.background='#FFAC1C'; phaseLabel.textContent='GET READY'; status.textContent='Starting soon...';}
+  else if(p==='work'){phaseSeconds=cur.work; phaseTotal=cur.work; screen.style.background='#FC1500'; bar.style.background='#FC1500'; phaseLabel.textContent='WORK'; status.textContent='Go!';}
+  else {phaseSeconds=cur.rest; phaseTotal=cur.rest; screen.style.background='#69FC00'; bar.style.background='#69FC00'; phaseLabel.textContent='REST'; status.textContent='Recover';}
   digits.textContent=formatTime(phaseSeconds); updateBar();
 }
 
 function nextStep(){
   if(phase==='work' && (schedule[roundIndex]?.rest||0)>0){setPhase('rest'); return;}
-  if(roundIndex+1<totalRounds){roundIndex++; setPhase('work');}else finishAll();
+  if(reverseMode){
+    if(roundIndex>0){roundIndex--; setPhase('work');}else finishAll();
+  }else{
+    if(roundIndex+1<totalRounds){roundIndex++; setPhase('work');}else finishAll();
+  }
 }
 
-function finishAll(){running=false; cancelAnimationFrame(raf); phaseLabel.textContent='DONE'; status.textContent='Complete!'; digits.textContent='00:00'; bar.style.width='100%'; playBeep(0.4,600); startBtn.disabled=false; pauseBtn.disabled=true; resetBtn.disabled=false;}
+function finishAll(){running=false; cancelAnimationFrame(raf); phaseLabel.textContent='DONE'; status.textContent='Complete!'; digits.textContent='00:00'; bar.style.width='100%'; playSound('long');}
 
 function tick(ts){
   if(!running || prepActive){lastTick=ts; return;} if(!lastTick) lastTick=ts;
   const delta=(ts-lastTick)/1000; lastTick=ts; const prev=Math.ceil(phaseSeconds);
   phaseSeconds=Math.max(0,phaseSeconds-delta); const now=Math.ceil(phaseSeconds);
-  if(!midTicked && phase==='work' && phaseTotal>0 && phaseSeconds<=phaseTotal/2 && midEnabled){playBeep(0.16,880); vibrate(40); midTicked=true;}
-  if(now!==prev){digits.textContent=formatTime(now); if(now>0&&now<=3){playBeep(0.12,700); vibrate(15);} if(now===0){playBeep(0.4,1000); vibrate(30); setTimeout(nextStep,650);} updateBar();}
+  if(!midTicked && phase==='work' && phaseTotal>0 && phaseSeconds<=phaseTotal/2 && midEnabled){playSound('short'); midTicked=true;}
+  if(now!==prev){digits.textContent=formatTime(now); if(now>0&&now<=3){playSound('short');} if(now===0){playSound('long'); setTimeout(nextStep,650);} updateBar();}
   raf=requestAnimationFrame(tick);
 }
 
-function prepCountdown(){
-  setPhase('prep'); let p=parseInt(prepInput.value)||0;
-  if(p<=0){setPhase('work'); startLoop(); return;}
-  const iv=setInterval(()=>{p--; digits.textContent=formatTime(p); updateBar(); if(p>0&&p<=3){playBeep(0.12,700); vibrate(20);} if(p<=0){clearInterval(iv); playBeep(0.4,1000); vibrate([30]); setPhase('work'); startLoop();}},1000);
-}
+function prepCountdown(){setPhase('prep');}
 
-function startLoop(){running=true; lastTick=performance.now(); raf=requestAnimationFrame(tick); startBtn.disabled=true; pauseBtn.disabled=false; resetBtn.disabled=false; saveSettings();}
+function startLoop(){running=true; lastTick=performance.now(); raf=requestAnimationFrame(tick);}
 
-startBtn.addEventListener('click',()=>{readSchedule(); roundIndex=0; prepCountdown();});
-pauseBtn.addEventListener('click',()=>{running=false; startBtn.disabled=false; pauseBtn.disabled=true; status.textContent='Paused';});
-resetBtn.addEventListener('click',()=>{running=false; cancelAnimationFrame(raf); roundIndex=0; setPhase('prep'); digits.textContent=formatTime(parseInt(prepInput.value)||0); startBtn.disabled=false; pauseBtn.disabled=true; resetBtn.disabled=true;});
-tickToggle.addEventListener('click',()=>{midEnabled=!midEnabled; tickToggle.classList.toggle('active',midEnabled); tickToggle.textContent=midEnabled?'Halfway Alert: ON':'Halfway Alert: OFF';});
-muteBtn.addEventListener('click',()=>{muted=!muted; muteBtn.textContent=muted?'Mute: ON':'Mute: OFF'; muteBtn.classList.toggle('active',!muted);});
-roundsInput.addEventListener('change',renderRoundInputs);
-saveBtn.addEventListener('click',saveSettings);
-loadBtn.addEventListener('click',loadSettings);
+// Timer click
+screen.addEventListener('click',()=>{running=!running; if(running){lastTick=performance.now(); raf=requestAnimationFrame(tick);} status.textContent=running?'Running':'Paused';});
 
-function init(){
-  try{
-    const raw=localStorage.getItem(LS_KEY); if(raw){const data=JSON.parse(raw); roundsInput.value=data.rounds||3; prepInput.value=data.prep||5; schedule=data.schedule||[]; midEnabled=data.mid; tickToggle.classList.toggle('active',midEnabled); tickToggle.textContent=midEnabled?'Halfway Alert: ON':'Halfway Alert: OFF';}
-  }catch(e){}
-  renderRoundInputs(); setPhase('prep'); pauseBtn.disabled=true; resetBtn.disabled=true;
-}
+// Buttons
+tickToggle.addEventListener('click',()=>{midEnabled=!midEnabled; tickToggle.classList.toggle('active',midEnabled);});
+muteBtn.addEventListener('click',()=>{muted=!muted; muteBtn.classList.toggle('active',!muted);});
+reverseBtn.addEventListener('click',()=>{reverseMode=!reverseMode; reverseBtn.classList.toggle('active',reverseMode); resetTimer();});
+resetBtn.addEventListener('click',resetTimer);
+
+// Sliders
+roundsSlider.addEventListener('input',()=>{roundsVal.textContent=roundsSlider.value; renderRoundInputs(); readSchedule(); resetTimer();});
+prepSlider.addEventListener('input',()=>{prepVal.textContent=prepSlider.value; resetTimer();});
+
+function resetTimer(){running=false; cancelAnimationFrame(raf); roundIndex=reverseMode?totalRounds-1:0; setPhase('prep'); digits.textContent=formatTime(parseInt(prepSlider.value)||10); status.textContent='Ready'; readSchedule();}
+function init(){schedule=JSON.parse(JSON.stringify(defaultSchedule)); renderRoundInputs(); resetTimer();}
 init();
 })();
 </script>
