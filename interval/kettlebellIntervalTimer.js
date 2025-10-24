@@ -54,8 +54,8 @@ function updateBar(){ barFill.style.width=(phaseTotal?((phaseTotal-phaseSeconds)
 
 function updatePhaseUI(){
   if(phase==='prep'){ screen.style.background='var(--prep)'; barFill.style.background='var(--prep)'; phaseLabel.textContent='GET READY'; status.textContent='Starting soon...'; }
-  else if(phase==='work'){ screen.style.background='var(--work)'; barFill.style.background='var(--work)'; phaseLabel.textContent='WORK'; status.textContent='Go!'; }
-  else{ screen.style.background='var(--rest)'; barFill.style.background='var(--rest)'; phaseLabel.textContent='REST'; status.textContent='Recover'; }
+  else if(phase==='work'){ screen.style.background='var(--work)'; barFill.style.background='var(--work)'; phaseLabel.textContent='WORK'; status.textContent='Savor the load'; }
+  else{ screen.style.background='var(--rest)'; barFill.style.background='var(--rest)'; phaseLabel.textContent='RELAX'; status.textContent='Keep calm and rest'; }
   digits.textContent=fmt(phaseSeconds); updateBar(); updateRoundIndicator();
 }
 
