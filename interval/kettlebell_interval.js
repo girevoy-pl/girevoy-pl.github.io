@@ -27,7 +27,7 @@ let defaultSchedules={
   C7:[{work:60,rest:60},{work:120,rest:120},{work:180,rest:180},{work:240,rest:180},{work:180,rest:180},{work:120,rest:120},{work:60,rest:60}]
 };
 
-let presetKeys=['C0','C1','C2','C3','C4','C5','C6','C7'], currentPreset=1;
+let presetKeys=['C0','C1','C2','C3','C4','C5','C6','C7'], currentPreset=0;
 
 let schedule=[], totalRounds=3, roundIndex=0, reverseMode=false, muted=false, halfwayEnabled=true, loopMode=false;
 let phase='prep', phaseSeconds=parseInt(prepSlider.value,10)||10, phaseTotal=phaseSeconds, running=false, lastTick=null, prepDone=false, midTicked=false;
@@ -201,6 +201,7 @@ presetBtn.addEventListener('click',()=>{
   const key=presetKeys[currentPreset];
   //presetBtn.textContent='Preset: '+key+' | '+presetNames[key]; // show preset description
   presetBtn.textContent=presetNames[key]; // show preset description
+  //presetBtn.textContent = 'Preset: ' + key;
   schedule=JSON.parse(JSON.stringify(defaultSchedules[key]));
   roundsSlider.value=schedule.length; roundsVal.textContent=schedule.length;
   renderRoundInputs(); readSchedule(); resetTimer();
@@ -224,7 +225,8 @@ function resetTimer(){
 }
 
 // ------------------------ Init ------------------------
-function init(){ renderRoundInputs(); readSchedule(); resetTimer(); presetBtn.textContent='Preset: '+presetKeys[currentPreset]+' | '+presetNames[presetKeys[currentPreset]]; }
+//function init(){ renderRoundInputs(); readSchedule(); resetTimer(); presetBtn.textContent='Preset: '+presetKeys[currentPreset]+' | '+presetNames[presetKeys[currentPreset]]; }
+function init(){ renderRoundInputs(); readSchedule(); resetTimer(); presetBtn.textContent=presetNames[presetKeys[currentPreset]]; }
 init();
 
 })();
