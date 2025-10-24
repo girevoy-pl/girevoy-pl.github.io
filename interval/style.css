@@ -18,6 +18,34 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px;w
 .bar-container{width:100%;background:#e7eef5;border-radius:12px;height:16px;overflow:hidden;margin-bottom:12px}
 .bar-fill{width:0%;height:100%;transition:width .12s linear}
 .controls{display:flex;gap:8px;margin-bottom:12px;width:100%;justify-content:center;flex-wrap:wrap}
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* space between rows */
+  width: 100%;
+  max-width: 400px; /* optional max width */
+  margin: 0 auto;
+}
+
+.controls .row {
+  display: flex;
+  gap: 8px; /* space between buttons */
+  flex-wrap: wrap; /* allows wrapping on small screens */
+  justify-content: flex-start;
+}
+
+.controls button.toggle {
+  flex: 1 1 auto; /* buttons grow/shrink as needed */
+  min-width: 80px; /* ensures buttons are not too small */
+  padding: 8px 12px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Optional: make preset button span full row */
+.controls .row:last-child button {
+  flex: 1 1 100%;
+}
 .toggle{border:1px solid #cfd6df;border-radius:999px;padding:10px 14px;font-weight:700;background:#fff;cursor:pointer;transition:all .12s;min-width:84px;text-align:center}
 .toggle.active{background:var(--active);border-color:var(--active);color:#fff}
 .range-row{width:100%;margin-bottom:12px}
