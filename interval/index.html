@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mobile Interval Timer</title>
+<title>Girevoy Sport - Kettlebell Interval Timer</title>
 <script src="https://cdn.jsdelivr.net/npm/howler"></script>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -19,16 +19,20 @@
     <div class="small-hint" id="nextHint" aria-live="polite"></div>
   </div>
 
-  <div class="controls" role="group" aria-label="Controls">
+<div class="controls" role="group" aria-label="Controls">
+  <div class="row">
     <button id="loopBtn" class="toggle" aria-pressed="false">Loop</button>
     <button id="reverseBtn" class="toggle" aria-pressed="false">Reverse</button>
     <button id="skipBtn" class="toggle" aria-pressed="false">Skip</button>
-    <!-- <button id="halfBtn" class="toggle active" aria-pressed="true">Halfway</button> -->
+  </div>
+  <div class="row">
     <button id="muteBtn" class="toggle" aria-pressed="false">Mute</button>
     <button id="resetBtn" class="toggle" aria-pressed="false">Reset</button>
-    <button id="presetBtn" class="toggle" aria-pressed="false">Preset: C1</button>
-    <!--- <button id="manualBtn" class="toggle" aria-pressed="false">Manual : OFF</button> -->
   </div>
+  <div class="row">
+    <button id="presetBtn" class="toggle" aria-pressed="false">Preset: C0</button>
+  </div>
+</div>
 
   <div class="range-row">
     <label for="roundsSlider">Rounds: <span id="roundsVal">3</span></label>
