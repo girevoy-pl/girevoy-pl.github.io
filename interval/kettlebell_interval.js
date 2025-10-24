@@ -5,17 +5,31 @@ const muteBtn=$('muteBtn'), halfBtn=$('halfBtn'), reverseBtn=$('reverseBtn'), sk
 const roundsSlider=$('roundsSlider'), prepSlider=$('prepSlider'), roundsVal=$('roundsVal'), prepVal=$('prepVal');
 const roundSettings=$('roundSettings');
 
-
+const presetNames = {
+  C0: "C0 - Warm-up - 5x1W | 5x1R",
+  C1: "C1 - Endurance - 10x1W | 10x1R",
+  C2: "C2 - Power - 5x2W | 5x2R",
+  C3: "C3 - Strength - 3x3W | 3x3R",
+  C4: "C4 - Pyramid - 1,2,3,4",
+  C5: "C5 - Pentathlon - 5x6W | 5x5R",
+  C6: "C6 - Mixed Challenge - 1,2,3,2,1",
+  C7: "C7 - Climb & Descend - 1,2,3,4,3,2,1"
+};
 
 let defaultSchedules={
-  C1:[{work:60,rest:60},{work:120,rest:120},{work:180,rest:180},{work:240,rest:240}],
-  C2:[{work:60,rest:45},{work:120,rest:90},{work:180,rest:120},{work:240,rest:180}],
-  C3:[{work:60,rest:60},{work:120,rest:120},{work:180,rest:180},{work:120,rest:120},{work:60,rest:60}],
-  C4:[{work:60,rest:60},{work:120,rest:120},{work:180,rest:120},{work:240,rest:180},{work:180,rest:120},{work:120,rest:120},{work:60,rest:60}],
-  C5:[{work:360,rest:300},{work:360,rest:300},{work:360,rest:300},{work:360,rest:300},{work:360,rest:300}] };
-let presetKeys=['C1','C2','C3','C4', 'C5'], currentPreset=0;
+  C0:[{work:60,rest:60},{work:60,rest:60},{work:60,rest:60},{work:60,rest:60},{work:60,rest:60}],
+  C1:[{work:60,rest:60},{work:60,rest:60},{work:60,rest:60},{work:60,rest:60},{work:60,rest:60},{work:60,rest:60},{work:60,rest:60},{work:60,rest:60},{work:60,rest:60},{work:60,rest:60}],
+  C2:[{work:120,rest:120},{work:120,rest:120},{work:120,rest:120},{work:120,rest:120},{work:120,rest:120}],
+  C3:[{work:180,rest:180},{work:180,rest:180},{work:180,rest:180}],
+  C4:[{work:60,rest:45},{work:120,rest:90},{work:180,rest:120},{work:240,rest:180}],
+  C5:[{work:360,rest:300},{work:360,rest:300},{work:360,rest:300},{work:360,rest:300},{work:360,rest:300}],
+  C6:[{work:60,rest:45},{work:120,rest:90},{work:180,rest:120},{work:120,rest:120},{work:60,rest:45}],
+  C7:[{work:60,rest:60},{work:120,rest:120},{work:180,rest:180},{work:240,rest:180},{work:180,rest:180},{work:120,rest:120},{work:60,rest:60}]
+};
 
-let schedule=[], totalRounds=4, roundIndex=0, reverseMode=false, muted=false, halfwayEnabled=true, loopMode=false;
+let presetKeys=['C0','C1','C2','C3','C4','C5','C6','C7'], currentPreset=1;
+
+let schedule=[], totalRounds=3, roundIndex=0, reverseMode=false, muted=false, halfwayEnabled=true, loopMode=false;
 let phase='prep', phaseSeconds=parseInt(prepSlider.value,10)||10, phaseTotal=phaseSeconds, running=false, lastTick=null, prepDone=false, midTicked=false;
 let prepFirstRun = true;
 
@@ -29,8 +43,11 @@ function play(t){ if(muted) return; if(t==='short') shortSound.play(); else if(t
 function fmt(s){ s=Math.max(0,Math.floor(s)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
 
 function updateRoundIndicator(){ 
-  if(phase==='prep'){ roundIndicator.textContent='GET READY'; }
-  else { roundIndicator.textContent=`Round ${roundIndex+1} of ${totalRounds}`; }
+  if(phase==='prep'){ 
+    roundIndicator.textContent=presetNames[presetKeys[currentPreset]] || 'GET READY'; 
+  } else { 
+    roundIndicator.textContent=`Round ${roundIndex+1} of ${totalRounds}`; 
+  }
 }
 
 function updateBar(){ barFill.style.width=(phaseTotal?((phaseTotal-phaseSeconds)/phaseTotal)*100:0)+'%'; }
@@ -45,13 +62,13 @@ function updatePhaseUI(){
 // ------------------------ Render Sliders ------------------------
 function renderRoundInputs(){
   roundSettings.innerHTML='';
-  totalRounds=Math.max(4, parseInt(roundsSlider.value,10)||4);
+  totalRounds=Math.max(3, parseInt(roundsSlider.value,10)||3);
   for(let i=0;i<totalRounds;i++){
-    const cur = schedule[i] || defaultSchedules.C1[i] || {work:60,rest:60};
+    const cur = schedule[i] || defaultSchedules.C0[i] || {work:60,rest:60};
     const div = document.createElement('div'); div.className='round-row';
     div.innerHTML = `
       <strong>R${i+1}</strong>
-      <div class="slider-row">Work: <input type="range" min="1" max="360" value="${cur.work}" id="w${i}">
+      <div class="slider-row">Work: <input type="range" min="0" max="360" value="${cur.work}" id="w${i}">
         <div class="stepper">
           <button class="dec" data-i="${i}" data-type="work">-</button>
           <input type="number" id="wVal${i}" value="${cur.work}" readonly>
@@ -87,7 +104,7 @@ function renderRoundInputs(){
   }
 }
 
-function readSchedule(){ schedule=[]; totalRounds=Math.max(4,parseInt(roundsSlider.value,10)||4);
+function readSchedule(){ schedule=[]; totalRounds=Math.max(3,parseInt(roundsSlider.value,10)||3);
   for(let i=0;i<totalRounds;i++){ const w=$('w'+i), r=$('r'+i); schedule.push({work:w?parseInt(w.value,10)||60:60, rest:r?parseInt(r.value,10)||60:60}); } 
 }
 
@@ -182,7 +199,8 @@ resetBtn.addEventListener('click',()=>{
 presetBtn.addEventListener('click',()=>{
   currentPreset=(currentPreset+1)%presetKeys.length;
   const key=presetKeys[currentPreset];
-  presetBtn.textContent='Preset: '+key;
+  //presetBtn.textContent='Preset: '+key+' | '+presetNames[key]; // show preset description
+  presetBtn.textContent=presetNames[key]; // show preset description
   schedule=JSON.parse(JSON.stringify(defaultSchedules[key]));
   roundsSlider.value=schedule.length; roundsVal.textContent=schedule.length;
   renderRoundInputs(); readSchedule(); resetTimer();
@@ -206,7 +224,7 @@ function resetTimer(){
 }
 
 // ------------------------ Init ------------------------
-function init(){ renderRoundInputs(); readSchedule(); resetTimer(); }
+function init(){ renderRoundInputs(); readSchedule(); resetTimer(); presetBtn.textContent='Preset: '+presetKeys[currentPreset]+' | '+presetNames[presetKeys[currentPreset]]; }
 init();
 
 })();
