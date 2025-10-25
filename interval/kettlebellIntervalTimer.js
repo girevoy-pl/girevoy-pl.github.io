@@ -48,7 +48,7 @@
   // halfwayBeep: plays halfway through work/rest
   const halfwayBeep = new Howl({src:['https://cdn.freesound.org/previews/560/560188_6086693-lq.mp3'], volume:0.9});
   // endBeep: plays when entire session finishes
-  const endBeep = new Howl({src:['https://freesound.org/data/previews/66/66717_931655-lq.mp3'], volume:0.9});
+  const endBeep = new Howl({src:['https://cdn.freesound.org/previews/253/253886_3169537-lq.mp3'], volume:0.9});
 
   function vibrate(p){ if(navigator && 'vibrate' in navigator) navigator.vibrate(p); }
   function play(t){
