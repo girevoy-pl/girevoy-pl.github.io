@@ -62,9 +62,10 @@
   }
   </script>
 
-  <!-- ✅ App Resources & Styles -->
-  <script src="https://cdn.jsdelivr.net/npm/howler"></script>
-  <link rel="stylesheet" href="styles.css">
+  <!-- App Resources & Styles -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/howler"></script> -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
@@ -92,15 +93,15 @@
     <!-- Rounds and Preparation -->
     <div class="slider-container">
       <label for="rounds-slider">Rounds: <span id="rounds-value">1</span></label>
-      <input type="range" id="rounds-slider" min="1" max="10" value="1" class="slider">
+      <input type="range" id="rounds-slider" min="1" max="12" value="1" class="slider">
     </div>
     <div class="slider-container">
-      <label for="prepare-slider">Preparation Time: <span id="prepare-value">10</span></label>
-      <input type="range" id="prepare-slider" min="5" max="30" value="10" class="slider">
+      <label for="prepare-slider">Preparation Time: <span id="prepare-value">7</span></label>
+      <input type="range" id="prepare-slider" min="5" max="20" value="7" class="slider">
     </div>
     <!-- Start Button -->
     <button id="start-btn">Start Exercise</button>
   </div>
-  <script src="script.js"></script>
+  <script src="kettlebellTimer.js"></script>
 </body>
 </html>
