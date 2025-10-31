@@ -162,7 +162,7 @@ ul.exercise-list {
   color: var(--text);
   background-color: #f4f4f4;
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 6px 14px;
   min-width: 60px;
   text-align: center;
 }
@@ -260,6 +260,45 @@ ul.exercise-list {
   width: 100%;
   accent-color: var(--accent);
   height: 24px;
+}
+
+/* Stepper (exercise switcher) */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.stepper button {
+  width: 56px;            /* wider for thumb use */
+  height: 56px;           /* taller for thumb use */
+  border: none;
+  border-radius: 12px;    /* smoother, more tactile */
+  background: var(--accent);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.5rem;      /* larger + and - signs */
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.stepper button:hover {
+  background: var(--hover);
+  transform: scale(1.05);
+}
+
+.stepper button:active {
+  transform: scale(0.95);
+}
+
+.stepper input {
+  width: 90px;
+  text-align: center;
+  border: 1px solid #cfd6df;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1.25rem;
 }
 
 /* Footer */
