@@ -1,162 +1,240 @@
-// Your workouts JSON
-const workouts = [
-  {
-    "trainingID": 1,
-    "date": "2025-10-28T00:00:00Z",
-    "title": "30 Minute Full-Body Kettlebell Workout",
-    "titleUrl": "https://www.youtube.com/watch?v=Xk4czNl5jks",   // 👈 new field
-    "description": "For today's 30 minute, full-body workout, you only need two things: Yourself and a kettlebell. Can't get more basic than that!",
-    "objective": "INTERVALL | 40/20 | 4 Rounds",
-    "level": "Intermediate",
-    "weight": "20kg",
-    "time": "30m",
+/* === Unified Fonts & Theme === */
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300;900&display=swap");
 
-    // Each exercise is now an object with name + optional URL
-    "exercises": [
-      { "name": "Hang Row L", "url": "https://www.youtube.com/watch?v=example_row" },
-      { "name": "Jerk L", "url": "https://www.youtube.com/watch?v=example_jerk" },
-      { "name": "Half Snatch L", "url": "https://www.youtube.com/watch?v=example_snatch" },
-      { "name": "Switch Sides", "url": null },
-      { "name": "After Right side, then: Alt. Clean & Jerk", "url": "https://www.youtube.com/watch?v=example_cleanjerk" }
-    ],
+:root {
+  --bg: #F6F7FB;
+  --text: #22194D;
+  --prep: #FFAC1C;
+  --work: #FC1500;
+  --rest: #69FC00;
+  --active: #5DADD5;
+  --card-bg: #fff;
+  --border: #ddd;
+  --muted: #555;
+}
 
-    "finisher": "Heavy suitcase carry, 1 min per side",
-    "finisherUrl": "https://www.youtube.com/watch?v=example_suitcase"  // 👈 optional
-  },
+/* === Global Reset === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Dosis', sans-serif;
+}
 
-  {
-    "trainingID": 2,
-    "date": "2025-10-16T00:00:00Z",
-    "title": "Beginner Workout",
-    "titleUrl": "https://www.youtube.com/watch?v=6JWTccTm2xU",
-    "description": "A simple two-round beginner-friendly kettlebell workout focusing on full-body movements.",
-    "objective": "2 Rounds",
-    "level": "Beginner",
-    "weight": "12kg",
-    "time": "15m",
-    "exercises": [
-      { "name": "10x SH Deadlift per side", "url": "https://www.youtube.com/watch?v=example_deadlift" },
-      { "name": "10x Goblet Squat", "url": "https://www.youtube.com/watch?v=example_gobletsquat" },
-      { "name": "10x Swing", "url": "https://www.youtube.com/watch?v=example_swing" },
-      { "name": "10x Push Up / Modified Burpee (2nd round)", "url": "https://www.youtube.com/watch?v=example_pushup" },
-      { "name": "1 minute rest", "url": null }
-    ],
-    "finisher": "Suitcase Walk",
-    "finisherUrl": "https://www.youtube.com/watch?v=example_suitcasewalk"
-  },
+html, body {
+  height: 100%;
+}
 
-  {
-    "trainingID": 3,
-    "date": "2025-10-30T00:00:00Z",
-    "title": "The King’s Circuit",
-    "titleUrl": "https://www.youtube.com/watch?v=lsodl1DET6s",
-    "description": "A challenging full-body kettlebell circuit emphasizing strength, endurance, and symmetry through alternating sides.",
-    "objective": "Repeat 4 rounds (~28 minutes total)",
-    "weight": "16kg",
-    "time": "28m",
-    "exercises": [
-      { "name": "2 minutes Goblet Squat", "url": "https://www.youtube.com/watch?v=example_gobletsquat" },
-      { "name": "1 minute Clean & Jerk (left)", "url": "https://www.youtube.com/watch?v=example_cleanjerkleft" },
-      { "name": "1 minute Clean & Jerk (right)", "url": "https://www.youtube.com/watch?v=example_cleanjerkright" },
-      { "name": "1 minute Snatch (left)", "url": "https://www.youtube.com/watch?v=example_snatchleft" },
-      { "name": "1 minute Snatch (right)", "url": "https://www.youtube.com/watch?v=example_snatchright" },
-      { "name": "1 minute Rest", "url": null }
-    ],
-    "finisher": null
+body {
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* === Main Layout === */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* === Workout Display === */
+#workout-display {
+  width: 100%;
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  transition: background 0.25s, color 0.25s;
+}
+
+.round-indicator {
+  font-weight: 800;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.phase-label {
+  font-weight: 900;
+  font-size: 2rem; /* same as about-section h2 */
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.status {
+  font-weight: 400;
+  margin-bottom: 20px;
+  font-size: 1.25rem; /* aligned with about-section p */
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* === Workout Meta Data === */
+#workout-display p strong {
+  font-weight: 900;
+}
+
+#workout-display p {
+  font-size: 1.25rem; /* same as description and about text */
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+ul {
+  text-align: left;
+  margin: 10px 0 10px 20px;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+ul li {
+  list-style-type: disc;
+  margin-bottom: 5px;
+}
+
+/* === Controls Section === */
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* === Select Workout Label === */
+.controls label {
+  font-size: 1.25rem; /* same as button text */
+  font-weight: 900;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* === Slider === */
+.range-row {
+  width: 100%;
+  text-align: center;
+}
+
+.range-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--active);
+}
+
+/* === Stepper === */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.stepper button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background: var(--active);
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.stepper button:hover {
+  background: var(--work);
+}
+
+.stepper input {
+  width: 60px;
+  text-align: center;
+  border: 1px solid #cfd6df;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 16px;
+}
+
+/* === Generate Workout Button === */
+#generate-btn {
+  width: 100%;
+  max-width: 800px;
+  padding: 16px 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f4f4f4; /* same tone as about-header */
+  color: #333;
+  font-size: 1.25rem; /* same as section text */
+  font-weight: 900;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s, color 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#generate-btn:hover {
+  background: var(--active);
+  color: #fff;
+}
+
+#generate-btn:active {
+  transform: scale(0.98);
+}
+
+/* === Unified Links (same as About page) === */
+a {
+  color: var(--active);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+  color: var(--work);
+}
+
+/* === Footer === */
+.footer {
+  font-size: 0.9rem;
+  color: #999;
+  text-align: center;
+  margin-top: 40px;
+  padding: 10px;
+  border-top: 1px solid var(--border);
+}
+
+/* === Responsive Typography === */
+@media (max-width: 600px) {
+  .phase-label {
+    font-size: 1.5rem;
   }
-];
 
-// DOM elements
-const display = document.getElementById('workout-display');
-const slider = document.getElementById('workout-slider');
-const numberInput = document.getElementById('workout-number');
-const plusBtn = document.getElementById('plus-btn');
-const minusBtn = document.getElementById('minus-btn');
-const generateBtn = document.getElementById('generate-btn'); // 👈 Add this to your HTML
+  .status,
+  ul,
+  #workout-display p {
+    font-size: 1.25rem;
+  }
 
-// === Show a selected workout ===
-function showWorkout(index) {
-  const i = parseInt(index) - 1;
-  if (i < 0 || i >= workouts.length) return;
-
-  const w = workouts[i];
-
-  // Map exercises → clickable if URL exists
-  const exercisesHTML = w.exercises
-    .map(ex => 
-      `<li>${ex.url 
-        ? `<a href="${ex.url}" target="_blank" rel="noopener noreferrer">${ex.name}</a>`
-        : ex.name}</li>`
-    )
-    .join('');
-
-  // Finisher with optional link
-  const finisherHTML = w.finisher
-    ? `<p><strong>Finisher:</strong> ${
-        w.finisherUrl 
-          ? `<a href="${w.finisherUrl}" target="_blank" rel="noopener noreferrer">${w.finisher}</a>` 
-          : w.finisher
-      }</p>`
-    : "";
-
-  // Display block
-  display.innerHTML = `
-    <div class="round-indicator">#${w.trainingID}</div>
-    <h2 class="phase-label">${
-      w.titleUrl 
-        ? `<a href="${w.titleUrl}" target="_blank" rel="noopener noreferrer">${w.title}</a>` 
-        : w.title
-    }</h2>
-    <p class="status">${w.description}</p>
-    <div style="margin:10px 0;">
-      <p><strong>Objective:</strong> ${w.objective}</p>
-      <p><strong>Level:</strong> ${w.level || "N/A"}</p>
-      <p><strong>Weight:</strong> ${w.weight || "N/A"}</p>
-      <p><strong>Time:</strong> ${w.time || "N/A"}</p>
-    </div>
-    <ul style="text-align:left;margin:10px 0 10px 20px;">${exercisesHTML}</ul>
-    ${finisherHTML}
-  `;
-
-  // Subtle highlight effect
-  display.style.background = "var(--active)";
-  display.style.color = "#fff";
-  setTimeout(() => {
-    display.style.background = "#fff";
-    display.style.color = "var(--text)";
-  }, 300);
+  .controls label,
+  #generate-btn {
+    font-size: 1.1rem;
+  }
 }
-
-// === Controls synchronization ===
-function updateControls(value) {
-  numberInput.value = value;
-  slider.value = value;
-  showWorkout(value);
-}
-
-// === Event listeners ===
-slider.addEventListener("input", e => updateControls(e.target.value));
-
-numberInput.addEventListener("change", e => {
-  const val = Math.min(Math.max(1, e.target.value), workouts.length);
-  updateControls(val);
-});
-
-plusBtn.addEventListener("click", () => {
-  let val = parseInt(numberInput.value);
-  if (val < workouts.length) updateControls(val + 1);
-});
-
-minusBtn.addEventListener("click", () => {
-  let val = parseInt(numberInput.value);
-  if (val > 1) updateControls(val - 1);
-});
-
-// Generate random workout
-generateBtn.addEventListener("click", () => {
-  const randomIndex = Math.floor(Math.random() * workouts.length) + 1;
-  updateControls(randomIndex);
-});
-
-// Initialize
-showWorkout(1);
