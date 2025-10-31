@@ -262,33 +262,37 @@ ul.exercise-list {
   height: 24px;
 }
 
-/* Stepper (exercise switcher) */
+/* Stepper (exercise selector) */
 .stepper {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
+  margin-top: 8px;
 }
 
 .stepper button {
-  width: 56px;            /* wider for thumb use */
-  height: 56px;           /* taller for thumb use */
-  border: none;
-  border-radius: 12px;    /* smoother, more tactile */
-  background: var(--accent);
-  color: #fff;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f4f4f4;           /* same as Generate button */
+  color: var(--text);
   font-weight: 900;
-  font-size: 1.5rem;      /* larger + and - signs */
+  font-size: 1.5rem;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .stepper button:hover {
-  background: var(--hover);
+  background: var(--accent);
+  color: #fff;
   transform: scale(1.05);
 }
 
 .stepper button:active {
+  background: var(--hover);
   transform: scale(0.95);
 }
 
@@ -299,6 +303,8 @@ ul.exercise-list {
   border-radius: 8px;
   padding: 10px;
   font-size: 1.25rem;
+  color: var(--text);
+  background: var(--card-bg);
 }
 
 /* Footer */
