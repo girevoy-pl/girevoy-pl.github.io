@@ -44,11 +44,18 @@ main {
 /* Workout display */
 #workout-display {
   width: 100%;
-  background: var(--card-bg);
+  background: linear-gradient(180deg, #f9fafc 0%, #ffffff 100%);
   border-radius: 16px;
   border: 1px solid var(--border);
   overflow: hidden;
   margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+#workout-display:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
 }
 
 /* --- Title styled like about-header --- */
@@ -89,33 +96,19 @@ main {
   line-height: 1.6;
 }
 
-.workout-meta p {
-  font-size: 1.25rem;
-  color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 6px;
-}
-
-.workout-meta p strong {
-  font-weight: 900;
-  color: var(--text);
-}
-
-/* Unified look for meta and exercise list sections */
+/* Unified look for meta section (Objective, Level, etc.) */
 .workout-meta.aligned {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-/* Gives same visual feel as exercise-list */
 .workout-meta.bordered {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   margin: 1.5rem 0;
 }
 
-/* Individual row style */
 .meta-item {
   display: flex;
   align-items: baseline;
@@ -126,16 +119,14 @@ main {
   color: var(--muted);
 }
 
-/* Remove last divider */
 .meta-item:last-child {
   border-bottom: none;
 }
 
-/* Label and value alignment (like tab stops) */
 .meta-label {
   font-weight: 900;
   color: var(--text);
-  width: 60px; /* consistent alignment width */
+  width: 100px;
   flex-shrink: 0;
 }
 
@@ -145,7 +136,7 @@ main {
   line-height: 1.6;
 }
 
-/* Finisher inherits same style */
+/* Finisher same style */
 .workout-meta.finisher .meta-label {
   font-weight: 900;
 }
@@ -171,7 +162,6 @@ ul.exercise-list {
   border-bottom: none;
 }
 
-/* Number style */
 .exercise-time {
   font-size: 1.25rem;
   font-weight: 900;
@@ -183,7 +173,6 @@ ul.exercise-list {
   text-align: center;
 }
 
-/* Exercise name style — same feel as header, but smaller font */
 .exercise-desc {
   font-size: 1.25rem;
   font-weight: 700;
@@ -194,13 +183,14 @@ ul.exercise-list {
 }
 
 .exercise-desc a {
-  color: var(--accent);
+  color: inherit !important;
   text-decoration: none;
+  border-bottom: dotted 1px;
+  transition: border-color 0.2s ease-in-out;
 }
 
 .exercise-desc a:hover {
-  color: var(--hover);
-  text-decoration: underline;
+  border-color: transparent;
 }
 
 /* Generate button */
@@ -215,13 +205,15 @@ ul.exercise-list {
   font-weight: 900;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
   margin-bottom: 20px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
 }
 
 #generate-btn:hover {
   background: var(--accent);
   color: #fff;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.1);
 }
 
 /* Controls */
@@ -299,11 +291,80 @@ ul.exercise-list {
 
 a {
   border-bottom: dotted 1px;
-  color: inherit !important; /* force same color as text */
+  color: inherit !important;
   text-decoration: none;
   transition: border-color 0.2s ease-in-out;
 }
 
 a:hover {
   border-color: transparent;
+}
+
+/* 📱 Mobile Optimization */
+@media (max-width: 600px) {
+  main {
+    padding: 12px;
+  }
+
+  #workout-display {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .workout-content {
+    padding: 12px;
+  }
+
+  .meta-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .meta-label {
+    width: auto;
+    font-size: 1.1rem;
+  }
+
+  .meta-value {
+    font-size: 1.1rem;
+  }
+
+  ul.exercise-list {
+    margin: 1rem 0;
+  }
+
+  .exercise-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .exercise-time {
+    font-size: 1.1rem;
+    padding: 4px 10px;
+  }
+
+  .exercise-desc {
+    font-size: 1.1rem;
+    padding: 4px 10px;
+    width: 100%;
+  }
+
+  #generate-btn {
+    font-size: 1.1rem;
+    padding: 12px;
+    margin-bottom: 14px;
+  }
+
+  .range-label {
+    font-size: 1.1rem;
+  }
+
+  .footer {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
 }
