@@ -1,47 +1,153 @@
-:root{
-  --bg:#F6F7FB;
-  --text:#22194D;
-  --prep:#FFAC1C;
-  --work:#FC1500;
-  --rest:#69FC00;
-  --active:#5DADD5;
+/* === Font and Root Theme === */
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300;900&display=swap");
+
+:root {
+  --bg: #F6F7FB;
+  --text: #22194D;
+  --prep: #FFAC1C;
+  --work: #FC1500;
+  --rest: #69FC00;
+  --active: #5DADD5;
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
-html,body{height:100%}
-body{background:var(--bg);color:var(--text);display:flex;flex-direction:column;align-items:center;min-height:100vh}
-main{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px;width:100%;max-width:520px;margin:0 auto}
-.round-indicator{font-weight:800;font-size:1rem;margin-bottom:8px}
-.screen{border-radius:16px;padding:18px;width:100%;text-align:center;margin-bottom:12px;transition:background .25s;cursor:pointer;user-select:none;touch-action:manipulation}
-.phase-label{font-weight:800;font-size:1.1rem;margin-bottom:6px}
-.digits{font-size:4.5rem;font-weight:900;margin:6px 0}
-.status{font-weight:600;margin-bottom:12px;font-size:.95rem}
-.bar-container{width:100%;background:#e7eef5;border-radius:12px;height:16px;overflow:hidden;margin-bottom:12px}
-.bar-fill{width:0%;height:100%;transition:width .12s linear}
-.controls{display:flex;gap:8px;margin-bottom:12px;width:100%;justify-content:center;flex-wrap:wrap}
+
+/* === Global Reset & Typography === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Dosis', sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* === Main Container === */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* === Display Elements === */
+.round-indicator {
+  font-weight: 800;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.screen {
+  border-radius: 16px;
+  padding: 18px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 12px;
+  transition: background 0.25s;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.phase-label {
+  font-weight: 900;
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.digits {
+  font-size: 4.5rem;
+  font-weight: 900;
+  margin: 6px 0;
+}
+
+.status {
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* === Progress Bar === */
+.bar-container {
+  width: 100%;
+  background: #e7eef5;
+  border-radius: 12px;
+  height: 16px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.bar-fill {
+  width: 0%;
+  height: 100%;
+  transition: width 0.12s linear;
+}
+
+/* === Controls Layout === */
 .controls {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* space between rows */
+  gap: 10px;
   width: 100%;
-  max-width: 400px; /* optional max width */
+  max-width: 400px;
   margin: 0 auto;
 }
 
 .controls .row {
   display: flex;
-  gap: 8px; /* space between buttons */
-  flex-wrap: wrap; /* allows wrapping on small screens */
+  gap: 8px;
+  flex-wrap: wrap;
   justify-content: flex-start;
 }
 
 .controls button.toggle {
-  flex: 1 1 auto; /* buttons grow/shrink as needed */
-  min-width: 80px; /* ensures buttons are not too small */
+  flex: 1 1 auto;
+  min-width: 80px;
   padding: 8px 12px;
   font-size: 14px;
+  font-weight: 700;
   white-space: nowrap;
+  border: 1px solid #cfd6df;
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.12s;
+  color: var(--text);
 }
 
+.controls button.toggle:hover {
+  background: var(--active);
+  color: #fff;
+}
+
+.controls button.toggle.active {
+  background: var(--active);
+  border-color: var(--active);
+  color: #fff;
+}
+
+.controls .row:last-child button {
+  flex: 1 1 100%;
+}
+
+/* === Stepper === */
 .stepper {
   display: flex;
   align-items: center;
@@ -76,28 +182,100 @@ main{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px;w
   font-size: 16px;
 }
 
+/* === Slider === */
 .range-row input[type="range"] {
   width: 100%;
   accent-color: var(--active);
 }
 
-/* Optional: make preset button span full row */
-.controls .row:last-child button {
-  flex: 1 1 100%;
+/* === Round Settings === */
+.round-settings {
+  width: 100%;
+  margin-top: 8px;
 }
-.toggle{border:1px solid #cfd6df;border-radius:999px;padding:10px 14px;font-weight:700;background:#fff;cursor:pointer;transition:all .12s;min-width:84px;text-align:center}
-.toggle.active{background:var(--active);border-color:var(--active);color:#fff}
-.range-row{width:100%;margin-bottom:12px}
-.range-row label{display:block;margin-bottom:6px;font-weight:700}
-input[type=range]{width:100%;accent-color:var(--active)}
-.round-settings{width:100%;margin-top:8px}
-.round-row{display:flex;flex-direction:column;gap:6px;padding:10px;background:#fff;border-radius:10px;border:1px solid #eef4f7;margin-bottom:8px}
-.round-row strong{margin-bottom:4px;display:block}
-.slider-row{display:flex;gap:6px;align-items:center}
-.slider-row input[type=range]{flex:1}
-.stepper{display:flex;gap:4px;align-items:center}
-.stepper button{flex-shrink:0;width:32px;height:32px;border:none;border-radius:6px;background:var(--active);color:#fff;font-weight:700;font-size:16px;cursor:pointer}
-.stepper input{width:50px;text-align:center;border:1px solid #cfd6df;border-radius:6px;padding:4px}
-.footer{font-size:.85rem;color:#666;text-align:center;margin-top:auto;margin-bottom:12px}
-.small-hint{font-size:0.8rem;color:#666;margin-top:6px}
-@media(max-width:520px){.digits{font-size:3.4rem}}
+
+.round-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #eef4f7;
+  margin-bottom: 8px;
+}
+
+.round-row strong {
+  margin-bottom: 4px;
+  display: block;
+}
+
+.slider-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.slider-row input[type="range"] {
+  flex: 1;
+}
+
+/* === Footer & Small Text === */
+.footer {
+  font-size: 0.85rem;
+  color: #666;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: 12px;
+}
+
+.small-hint {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 6px;
+}
+
+/* === Unified Links (same as about.css style) === */
+a {
+  color: var(--active);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+  color: var(--work);
+}
+
+/* === Exercise List === */
+ul {
+  text-align: left;
+  margin: 10px 0 10px 20px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+ul li {
+  margin-bottom: 5px;
+}
+
+/* === Responsive Typography === */
+@media (max-width: 520px) {
+  .digits {
+    font-size: 3.4rem;
+  }
+
+  .phase-label {
+    font-size: 1.2rem;
+  }
+
+  .status {
+    font-size: 0.95rem;
+  }
+
+  ul {
+    font-size: 1rem;
+  }
+}
