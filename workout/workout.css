@@ -1,16 +1,16 @@
-/* === Unified Fonts & Theme === */
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300;900&display=swap");
 
 :root {
   --bg: #F6F7FB;
   --text: #22194D;
-  --prep: #FFAC1C;
-  --work: #FC1500;
-  --rest: #69FC00;
-  --active: #5DADD5;
+  --card-bg: #fff;
+  --border: #ddd;
+  --muted: #555;
+  --accent: #5DADD5;
+  --hover: #FC1500;
 }
 
-/* === Global Reset === */
+/* Base */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -27,12 +27,9 @@ body {
   color: var(--text);
   display: flex;
   flex-direction: column;
-  align-items: center;
   min-height: 100vh;
-  overflow-y: auto;
 }
 
-/* === Main Layout === */
 main {
   flex: 1;
   display: flex;
@@ -44,88 +41,225 @@ main {
   margin: 0 auto;
 }
 
-/* === Workout Display === */
+/* Workout display */
 #workout-display {
   width: 100%;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 16px;
-  padding: 24px;
-  text-align: center;
+  border: 1px solid var(--border);
+  overflow: hidden;
   margin-bottom: 20px;
-  border: 1px solid #ddd;
-  transition: background 0.25s, color 0.25s;
 }
 
-.round-indicator {
-  font-weight: 800;
-  font-size: 1rem;
-  margin-bottom: 8px;
+/* --- Title styled like about-header --- */
+.workout-header {
+  background-color: #f4f4f4;
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
 }
 
-.phase-label {
+.workout-header h2 {
   font-weight: 900;
-  font-size: 2rem; /* same as about-section h2 */
-  margin-bottom: 10px;
-  color: var(--text);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.workout-header a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.workout-header a:hover {
+  color: var(--hover);
+  text-decoration: underline;
+}
+
+/* Workout info */
+.workout-content {
+  padding: 20px;
+  text-align: left;
 }
 
 .status {
   font-weight: 400;
-  margin-bottom: 20px;
-  font-size: 1.25rem; /* aligned with about-section p */
-  color: #555;
-  line-height: 1.6;
-}
-
-ul {
-  text-align: left;
-  margin: 10px 0 10px 20px;
   font-size: 1.25rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
   line-height: 1.6;
-  color: #333;
 }
 
-ul li {
-  list-style-type: disc;
-  margin-bottom: 5px;
+.workout-meta p {
+  font-size: 1.25rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 6px;
 }
 
-/* === Controls Section === */
-.controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-/* === Select Workout Label === */
-.controls label {
-  font-size: 2rem; /* same as exercise title */
+.workout-meta p strong {
   font-weight: 900;
   color: var(--text);
 }
 
-/* === Slider === */
+/* Unified look for meta and exercise list sections */
+.workout-meta.aligned {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Gives same visual feel as exercise-list */
+.workout-meta.bordered {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin: 1.5rem 0;
+}
+
+/* Individual row style */
+.meta-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+  font-size: 1.25rem;
+  color: var(--muted);
+}
+
+/* Remove last divider */
+.meta-item:last-child {
+  border-bottom: none;
+}
+
+/* Label and value alignment (like tab stops) */
+.meta-label {
+  font-weight: 900;
+  color: var(--text);
+  width: 60px; /* consistent alignment width */
+  flex-shrink: 0;
+}
+
+.meta-value {
+  flex: 1;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Finisher inherits same style */
+.workout-meta.finisher .meta-label {
+  font-weight: 900;
+}
+
+/* Exercise list */
+ul.exercise-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.exercise-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.exercise-item:last-child {
+  border-bottom: none;
+}
+
+/* Number style */
+.exercise-time {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--text);
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  padding: 6px 12px;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Exercise name style — same feel as header, but smaller font */
+.exercise-desc {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background-color: #f4f4f4;
+  padding: 6px 12px;
+  border-radius: 8px;
+  flex-grow: 1;
+}
+
+.exercise-desc a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.exercise-desc a:hover {
+  color: var(--hover);
+  text-decoration: underline;
+}
+
+/* Generate button */
+#generate-btn {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f4f4f4;
+  color: #333;
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 20px;
+}
+
+#generate-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Controls */
+.controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
 .range-row {
   width: 100%;
   text-align: center;
 }
 
-.range-row input[type="range"] {
-  width: 100%;
-  accent-color: var(--active);
+.range-label {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  margin-bottom: 8px;
 }
 
-/* === Stepper === */
+.range-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  height: 24px;
+}
+
 .stepper {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin: 10px 0;
 }
 
 .stepper button {
@@ -133,90 +267,43 @@ ul li {
   height: 40px;
   border: none;
   border-radius: 8px;
-  background: var(--active);
+  background: var(--accent);
   color: #fff;
   font-weight: 700;
   font-size: 18px;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
 .stepper button:hover {
-  background: var(--work);
+  background: var(--hover);
 }
 
 .stepper input {
-  width: 60px;
+  width: 80px;
   text-align: center;
   border: 1px solid #cfd6df;
   border-radius: 6px;
-  padding: 6px;
+  padding: 8px;
   font-size: 16px;
 }
 
-/* === Generate Workout Button === */
-#generate-btn {
-  width: 100%; /* same as workout display */
-  max-width: 800px;
-  padding: 14px 0;
-  border: none;
-  border-radius: 12px;
-  background: var(--active);
-  color: #fff;
-  font-size: 1.25rem;
-  font-weight: 900;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-}
-
-#generate-btn:hover {
-  background: var(--work);
-}
-
-#generate-btn:active {
-  transform: scale(0.98);
-}
-
-/* === Unified Links (same as About page) === */
-a {
-  color: var(--active);
-  text-decoration: none;
-  font-weight: 700;
-  transition: color 0.2s, text-decoration 0.2s;
-}
-
-a:hover,
-a:focus {
-  text-decoration: underline;
-  color: var(--work);
-}
-
-/* === Footer === */
+/* Footer pinned bottom */
 .footer {
   font-size: 0.9rem;
   color: #999;
   text-align: center;
-  margin-top: 40px;
   padding: 10px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
 }
 
-/* === Responsive Typography === */
-@media (max-width: 600px) {
-  .phase-label {
-    font-size: 1.5rem;
-  }
+a {
+  border-bottom: dotted 1px;
+  color: inherit !important; /* force same color as text */
+  text-decoration: none;
+  transition: border-color 0.2s ease-in-out;
+}
 
-  .status,
-  ul {
-    font-size: 1.25rem;
-  }
-
-  .controls label {
-    font-size: 1.5rem;
-  }
-
-  #generate-btn {
-    font-size: 1.1rem;
-  }
+a:hover {
+  border-color: transparent;
 }
