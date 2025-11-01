@@ -233,6 +233,16 @@ document.getElementById('start-btn').addEventListener('click', function () {
   }, 1000);
 });
 
+// Update slider fill color dynamically
+document.querySelectorAll('.slider').forEach(slider => {
+  const updateFill = () => {
+    const val = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+    slider.style.setProperty('--value', `${val}%`);
+  };
+  slider.addEventListener('input', updateFill);
+  updateFill();
+});
+
 // -----------------------------
 // Exercise Change Button
 // -----------------------------
