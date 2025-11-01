@@ -127,7 +127,7 @@ button:active {
 /* Exercise Button */
 #exercise-btn {
   background-color: #DA6E00;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 #exercise-btn:hover {
@@ -152,7 +152,7 @@ button:active {
 /* Start Button */
 #start-btn {
   background-color: #61993B;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 #start-btn:hover {
