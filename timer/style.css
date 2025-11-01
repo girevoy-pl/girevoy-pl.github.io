@@ -64,7 +64,8 @@ span {
 }
 
 #start-btn {
-  background-color: #4CAF50;
+  /* background-color: #4CAF50; */
+  background-color: #61993B;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -76,11 +77,11 @@ span {
 }
 
 #start-btn:hover {
-  background-color: #45a049;
+  background-color: #587f40;
 }
 
 #exercise-btn {
-  background-color: #f0ad4e;
+  background-color: #DA6E00;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -92,12 +93,12 @@ span {
 }
 
 #exercise-btn:hover {
-  background-color: #ec971f;
+  background-color: #d05d28;
 }
 
 /* Keep Custom Settings Button */
 #keep-settings-btn {
-  background-color: #f0ad4e;
+  background-color: #DA6E00;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -111,19 +112,19 @@ span {
 #keep-settings-btn.active {
   background-color: red;
   color: white;
-  border: 1px solid #005500;
+  border: 1px solid #BA2721;
 }
 
 #keep-settings-btn:hover {
-  background-color: #ec971f;
+  background-color: #a72920;
 }
 
 #keep-settings-btn.pressed {
-  background-color: #d9534f; /* Red when pressed */
+  background-color: #BA2721; /* Red when pressed */
 }
 
 #keep-settings-btn.pressed:hover {
-  background-color: #c9302c;
+  background-color: #a72920;
 }
 
 #timer {
