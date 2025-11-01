@@ -79,7 +79,7 @@ main {
 
 .workout-header a:hover {
   color: var(--hover);
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* Content */
