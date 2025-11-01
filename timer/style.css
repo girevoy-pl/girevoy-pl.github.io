@@ -10,26 +10,48 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  min-height: 100vh;
+  padding: 10px;
 }
 
+/* Main container */
 .container {
-  background-color: white;
+  background-color: #fff;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 360px;
   text-align: center;
 }
 
+/* Headings */
 h1 {
-  font-size: 24px;
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Timer */
+.timer {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
   margin-bottom: 20px;
 }
 
+/* Sliders */
 .slider-container {
-  margin: 15px 0;
+  margin: 16px 0;
+  text-align: left;
+}
+
+label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #444;
 }
 
 .slider {
@@ -37,99 +59,127 @@ h1 {
   height: 8px;
   background-color: #ddd;
   border-radius: 5px;
-  transition: background 0.3s;
+  appearance: none;
+  outline: none;
 }
 
+/* Chrome / Safari */
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background-color: #4CAF50;
+  width: 22px;
+  height: 22px;
+  background-color: #8B959A;
   border-radius: 50%;
-}
-
-.slider::-moz-range-thumb {
-  -moz-appearance: none;
-  width: 20px;
-  height: 20px;
-  background-color: #4CAF50;
-  border-radius: 50%;
-}
-
-span {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 5px;
-}
-
-#start-btn {
-  /* background-color: #4CAF50; */
-  background-color: #61993B;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
   cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background-color: #6c757a;
+}
+
+/* Firefox */
+.slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background-color: #8B959A;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.slider::-moz-range-thumb:hover {
+  background-color: #6c757a;
+}
+
+/* Buttons */
+button {
   width: 100%;
-  margin-top: 20px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
-#start-btn:hover {
-  background-color: #587f40;
+button:active {
+  transform: scale(0.97);
 }
 
+/* Exercise Button */
 #exercise-btn {
   background-color: #DA6E00;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  cursor: pointer;
-  width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 #exercise-btn:hover {
   background-color: #d05d28;
 }
 
-/* Keep Custom Settings Button */
+/* Keep Settings Button */
 #keep-settings-btn {
   background-color: #DA6E00;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  cursor: pointer;
-  width: 100%;
   margin-top: 10px;
 }
 
 #keep-settings-btn.active {
-  background-color: red;
+  background-color: #BA2721;
   color: white;
-  border: 1px solid #BA2721;
 }
 
 #keep-settings-btn:hover {
   background-color: #a72920;
 }
 
-#keep-settings-btn.pressed {
-  background-color: #BA2721; /* Red when pressed */
+/* Start Button */
+#start-btn {
+  background-color: #61993B;
+  margin-top: 25px;
 }
 
-#keep-settings-btn.pressed:hover {
-  background-color: #a72920;
+#start-btn:hover {
+  background-color: #587f40;
 }
 
+/* Timer text */
 #timer {
-  margin-top: 20px;
-  font-size: 36px;
+  margin-top: 10px;
+  font-size: 34px;
   font-weight: bold;
   color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .container {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .slider::-webkit-slider-thumb,
+  .slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+  }
+
+  label {
+    font-size: 15px;
+  }
+
+  #timer {
+    font-size: 28px;
+  }
 }
