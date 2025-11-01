@@ -215,6 +215,39 @@ const workouts = [
   }
 ];
 
+let wakeLock = null;
+
+// Prevent screen dimming / sleep while the page is open
+async function enableWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      wakeLock = await navigator.wakeLock.request('screen');
+      console.log('Screen Wake Lock activated.');
+
+      // Reacquire wake lock if it’s lost (e.g., when user switches tab)
+      document.addEventListener('visibilitychange', async () => {
+        if (wakeLock !== null && document.visibilityState === 'visible') {
+          wakeLock = await navigator.wakeLock.request('screen');
+        }
+      });
+    } else {
+      console.warn('Wake Lock API not supported on this device.');
+    }
+  } catch (err) {
+    console.error(`${err.name}, ${err.message}`);
+  }
+}
+
+// Release wake lock when user explicitly turns it off
+async function disableWakeLock() {
+  if (wakeLock) {
+    await wakeLock.release();
+    wakeLock = null;
+    console.log('Screen Wake Lock released.');
+  }
+}
+
+// Initialize workout controls
 function initControls() {
   slider.min = 1;
   slider.max = workouts.length;
@@ -222,6 +255,9 @@ function initControls() {
   numberInput.min = 1;
   numberInput.max = workouts.length;
   numberInput.value = 1;
+
+  // Enable screen wake lock on load
+  enableWakeLock();
 }
 
 function showWorkout(index) {
@@ -251,20 +287,20 @@ function showWorkout(index) {
     <div class="workout-content">
       <p class="status">${w.description}</p>
 
-        <div class="workout-meta aligned bordered">
+      <div class="workout-meta aligned bordered">
         <div class="meta-item"><span class="meta-label">Objective:</span> <span class="meta-value">${w.objective}</span></div>
         <div class="meta-item"><span class="meta-label">Level:</span> <span class="meta-value">${w.level || "N/A"}</span></div>
         <div class="meta-item"><span class="meta-label">Weight:</span> <span class="meta-value">${w.weight || "N/A"}</span></div>
         <div class="meta-item"><span class="meta-label">Time:</span> <span class="meta-value">${w.time || "N/A"}</span></div>
-    </div>
+      </div>
 
-    <ul class="exercise-list">${exercisesHTML}</ul>
+      <ul class="exercise-list">${exercisesHTML}</ul>
 
-        ${w.finisher ? `
-            <div class="workout-meta aligned bordered finisher">
-                <div class="meta-item"><span class="meta-label">Finisher:</span> <span class="meta-value">${w.finisher}</span></div>
-            </div>
-    ` : ""}
+      ${w.finisher ? `
+        <div class="workout-meta aligned bordered finisher">
+          <div class="meta-item"><span class="meta-label">Finisher:</span> <span class="meta-value">${w.finisher}</span></div>
+        </div>
+      ` : ""}
     </div>
   `;
 }
