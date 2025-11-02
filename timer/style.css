@@ -1,15 +1,46 @@
+/* Import Roboto font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
+/* ==============================
+   Root Variables
+============================== */
+:root {
+  /* Core Colors */
+  --bg: #F7F7F7;
+  --text: #262625;
+
+  /* Buttons */
+  --btn-exercise: #DA6E00;
+  --btn-exercise-hover: #D05D28;
+  --btn-keep: #DA6E00;
+  --btn-keep-hover: #A72920;
+  --btn-keep-active: #BA2721;
+  --btn-start: #61993B;
+  --btn-start-hover: #587F40;
+
+  /* Slider */
+  --slider-thumb: #8B959A;
+  --slider-thumb-hover: #6c757a;
+  --slider-fill: #262625;
+  --slider-bg: #ddd;
+
+  /* Shadow */
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ==============================
+   Global Styles
+============================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Roboto', "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
-  /* font-family: 'Arial', sans-serif; */
-  font-family: Roboto, "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  background-color: #f7f7f7;
+  background-color: var(--bg);
+  color: var(--text);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,33 +48,38 @@ body {
   padding: 10px;
 }
 
-/* Main container */
+/* ==============================
+   Layout
+============================== */
 .container {
   background-color: #fff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px var(--shadow);
   width: 100%;
   max-width: 360px;
   text-align: center;
 }
 
-/* Headings */
+/* ==============================
+   Typography
+============================== */
 h1 {
   font-size: 22px;
   margin-bottom: 20px;
-  color: #262625;
+  color: var(--text);
 }
 
-/* Timer */
 .timer {
   font-size: 20px;
   font-weight: 600;
-  color: #262625;
+  color: var(--text);
   margin-bottom: 20px;
 }
 
-/* Sliders */
+/* ==============================
+   Sliders
+============================== */
 .slider-container {
   margin: 16px 0;
   text-align: left;
@@ -53,43 +89,41 @@ h1 {
   font-weight: 700; /* "RPM:" bold */
 }
 
-/* Labels share timer text color */
 label {
   display: flex;
   justify-content: space-between;
   font-size: 16px;
   margin-bottom: 6px;
-  color: #262625;
+  color: var(--text);
 }
 
-/* Slider track */
 .slider {
   width: 100%;
   height: 8px;
   appearance: none;
   outline: none;
   border-radius: 5px;
-  background: linear-gradient(to right, #2F3133 0%, #262625 var(--value, 0%), #ddd var(--value, 0%), #ddd 100%);
+  background: linear-gradient(
+    to right,
+    var(--slider-fill) 0%,
+    var(--slider-fill) var(--value, 0%),
+    var(--slider-bg) var(--value, 0%),
+    var(--slider-bg) 100%
+  );
   transition: background 0.2s ease;
 }
 
-/* Update the fill dynamically */
-.slider::-webkit-slider-runnable-track {
-  height: 8px;
-  border-radius: 5px;
-}
+.slider::-webkit-slider-runnable-track,
 .slider::-moz-range-track {
   height: 8px;
   border-radius: 5px;
-  background: transparent;
 }
 
-/* Slider thumb */
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 22px;
   height: 22px;
-  background-color: #8B959A;
+  background-color: var(--slider-thumb);
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.2s ease;
@@ -97,13 +131,13 @@ label {
 }
 
 .slider::-webkit-slider-thumb:hover {
-  background-color: #6c757a;
+  background-color: var(--slider-thumb-hover);
 }
 
 .slider::-moz-range-thumb {
   width: 22px;
   height: 22px;
-  background-color: #8B959A;
+  background-color: var(--slider-thumb);
   border-radius: 50%;
   cursor: pointer;
   border: none;
@@ -111,10 +145,12 @@ label {
 }
 
 .slider::-moz-range-thumb:hover {
-  background-color: #6c757a;
+  background-color: var(--slider-thumb-hover);
 }
 
-/* Buttons */
+/* ==============================
+   Buttons
+============================== */
 button {
   width: 100%;
   padding: 14px 20px;
@@ -122,7 +158,7 @@ button {
   border-radius: 8px;
   font-size: 18px;
   font-weight: 600;
-  color: white;
+  color: var(--text); /* default text color */
   cursor: pointer;
   transition: background 0.2s ease, transform 0.1s ease;
 }
@@ -133,48 +169,50 @@ button:active {
 
 /* Exercise Button */
 #exercise-btn {
-  background-color: #DA6E00;
+  background-color: var(--btn-exercise);
+  color: #fff;
   margin-bottom: 10px;
 }
-
 #exercise-btn:hover {
-  background-color: #d05d28;
+  background-color: var(--btn-exercise-hover);
 }
 
 /* Keep Settings Button */
 #keep-settings-btn {
-  background-color: #DA6E00;
+  background-color: var(--btn-keep);
+  color: #fff;
   margin-top: 10px;
 }
-
-#keep-settings-btn.active {
-  background-color: #BA2721;
-  color: white;
-}
-
 #keep-settings-btn:hover {
-  background-color: #a72920;
+  background-color: var(--btn-keep-hover);
+}
+#keep-settings-btn.active {
+  background-color: var(--btn-keep-active);
 }
 
 /* Start Button */
 #start-btn {
-  background-color: #61993B;
+  background-color: var(--btn-start);
+  color: #fff;
   margin-top: 15px;
 }
-
 #start-btn:hover {
-  background-color: #587f40;
+  background-color: var(--btn-start-hover);
 }
 
-/* Timer text */
+/* ==============================
+   Timer Display
+============================== */
 #timer {
   margin-top: 10px;
   font-size: 34px;
   font-weight: bold;
-  color: #333;
+  color: var(--text);
 }
 
-/* Responsive Design */
+/* ==============================
+   Responsive Design
+============================== */
 @media (max-width: 480px) {
   .container {
     padding: 16px;
