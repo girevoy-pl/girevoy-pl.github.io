@@ -1,39 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
-/* Root Variables */
-:root {
-  /* Colors */
-  --bg: #F7F7F7;
-  --text: #262625;
-  --panel: #fff;
-
-  /* Buttons */
-  --btn-exercise: #DA6E00;
-  --btn-exercise-hover: #D05D28;
-  --btn-keep: #DA6E00;
-  --btn-keep-hover: #A72920;
-  --btn-keep-active: #BA2721;
-  --btn-start: #61993B;
-  --btn-start-hover: #587F40;
-
-  /* Slider */
-  --slider-thumb: #8B959A;
-  --slider-thumb-hover: #6c757a;
-  --slider-bg: #ddd;
-  --active: #8B959A;
-
-  /* Shadow */
-  --shadow: rgba(0, 0, 0, 0.1);
-}
-
-/* Global Styles */
+/* ----------------------------------------------------------
+   GLOBAL RESET & ROOT VARIABLES
+---------------------------------------------------------- */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-family: Roboto, "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
 }
 
+:root {
+  /* Colors */
+  --bg: #f7f7f7;
+  --text: #262625;
+  --white: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --accent-orange: #da6e00;
+  --accent-orange-hover: #d05d28;
+  --accent-orange-active: #ba2721;
+  --accent-green: #61993b;
+  --accent-green-hover: #587f40;
+  --slider-track: #ddd;
+  --slider-fill: #2f3133;
+  --slider-thumb: #8b959a;
+  --slider-thumb-hover: #6c757a;
+
+  /* Layout */
+  --max-width: 520px;
+  --radius: 12px;
+  --transition: 0.2s ease;
+}
+
+/* ----------------------------------------------------------
+   BASE STYLES
+---------------------------------------------------------- */
 html,
 body {
   height: 100%;
@@ -43,62 +42,118 @@ body {
   background: var(--bg);
   color: var(--text);
   display: flex;
-  flex-direction: column;  /* allows footer or layout stacking */
-  align-items: center;
-  justify-content: center; /* centers when there's little content */
-  min-height: 100vh;
-  padding: 10px;
-}
-
-/* Layout */
-main {
-  flex: 1;
-  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* centers main content vertically within body */
-  width: 100%;
-  max-width: 520px;
+  min-height: 100vh;
   padding: 16px;
-  margin: 0 auto;
 }
 
-/* Typography */
+/* ----------------------------------------------------------
+   CONTAINER
+---------------------------------------------------------- */
+.container {
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 10px var(--shadow);
+  width: 100%;
+  max-width: var(--max-width);
+  text-align: center;
+  margin: auto;
+}
+
+/* ----------------------------------------------------------
+   TYPOGRAPHY
+---------------------------------------------------------- */
 h1 {
   font-size: 22px;
   margin-bottom: 20px;
+  color: var(--text);
+  font-weight: 700;
 }
 
+label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------
+   TIMER
+---------------------------------------------------------- */
 .timer {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
 }
 
-/* Sliders */
+#timer {
+  display: block;
+  margin-top: 10px;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ----------------------------------------------------------
+   SLIDERS
+---------------------------------------------------------- */
 .slider-container {
   margin: 16px 0;
   text-align: left;
-  width: 100%;
-}
-
-.slider-container label {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 700;
-  font-size: 16px;
-  margin-bottom: 6px;
-  color: var(--text);
 }
 
 .slider {
   width: 100%;
-  accent-color: var(--active);
   height: 8px;
-  cursor: pointer;
+  appearance: none;
+  outline: none;
+  border-radius: 5px;
+  background: linear-gradient(
+    to right,
+    var(--slider-fill) 0%,
+    var(--slider-fill) var(--value, 0%),
+    var(--slider-track) var(--value, 0%),
+    var(--slider-track) 100%
+  );
+  transition: background var(--transition);
 }
 
-/* Buttons */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  background-color: var(--slider-thumb);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background var(--transition);
+  margin-top: -7px;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  background-color: var(--slider-thumb-hover);
+}
+
+.slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background-color: var(--slider-thumb);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: background var(--transition);
+}
+
+.slider::-moz-range-thumb:hover {
+  background-color: var(--slider-thumb-hover);
+}
+
+/* ----------------------------------------------------------
+   BUTTONS
+---------------------------------------------------------- */
 button {
   width: 100%;
   padding: 14px 20px;
@@ -106,53 +161,48 @@ button {
   border-radius: 8px;
   font-size: 18px;
   font-weight: 600;
-  color: #fff;
+  color: var(--white);
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
+  transition: background var(--transition), transform 0.1s ease;
 }
 
 button:active {
   transform: scale(0.97);
 }
 
-/* Exercise Button */
+/* Primary Exercise Button */
 #exercise-btn {
-  background: var(--btn-exercise);
+  background-color: var(--accent-orange);
   margin-bottom: 10px;
 }
 #exercise-btn:hover {
-  background: var(--btn-exercise-hover);
+  background-color: var(--accent-orange-hover);
 }
 
 /* Keep Settings Button */
 #keep-settings-btn {
-  background: var(--btn-keep);
+  background-color: var(--accent-orange);
   margin-top: 10px;
 }
-#keep-settings-btn:hover {
-  background: var(--btn-keep-hover);
-}
 #keep-settings-btn.active {
-  background: var(--btn-keep-active);
+  background-color: var(--accent-orange-active);
+}
+#keep-settings-btn:hover {
+  background-color: var(--accent-orange-hover);
 }
 
 /* Start Button */
 #start-btn {
-  background: var(--btn-start);
+  background-color: var(--accent-green);
   margin-top: 15px;
 }
 #start-btn:hover {
-  background: var(--btn-start-hover);
+  background-color: var(--accent-green-hover);
 }
 
-/* Timer Display */
-#timer {
-  margin-top: 10px;
-  font-size: 34px;
-  font-weight: 700;
-}
-
-/* Responsive */
+/* ----------------------------------------------------------
+   RESPONSIVE DESIGN
+---------------------------------------------------------- */
 @media (max-width: 480px) {
   .container {
     padding: 16px;
@@ -163,22 +213,22 @@ button:active {
     font-size: 20px;
   }
 
-  button {
-    font-size: 16px;
-    padding: 12px;
-  }
-
   label {
     font-size: 15px;
   }
 
-  #timer {
-    font-size: 28px;
+  button {
+    font-size: 16px;
+    padding: 12px;
   }
 
   .slider::-webkit-slider-thumb,
   .slider::-moz-range-thumb {
     width: 20px;
     height: 20px;
+  }
+
+  #timer {
+    font-size: 28px;
   }
 }
