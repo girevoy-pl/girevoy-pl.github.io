@@ -95,23 +95,28 @@
   }
 
   // ------------------------ RENDER SLIDERS ------------------------
-  function renderRoundInputs(){
+  function renderRoundInputs() {
     roundSettings.innerHTML = '';
-    totalRounds = parseInt(roundsSlider.value,10) || defaultSchedules.C0.length;
-    for(let i=0;i<totalRounds;i++){
-      const cur = schedule[i] || defaultSchedules.C0[i] || {work:60,rest:60};
+    totalRounds = parseInt(roundsSlider.value, 10) || defaultSchedules.C0.length;
+
+    for (let i = 0; i < totalRounds; i++) {
+      const cur = schedule[i] || defaultSchedules.C0[i] || { work: 60, rest: 60 };
       const div = document.createElement('div');
       div.className = 'round-row';
       div.innerHTML = `
-        <strong>R${i+1}</strong>
-        <div class="slider-row">Work: <input type="range" min="0" max="360" value="${cur.work}" id="w${i}">
+        <strong>R${i + 1}</strong>
+        <div class="slider-row">
+          Work:
+          <input type="range" min="0" max="360" step="15" value="${cur.work}" id="w${i}">
           <div class="stepper">
             <button class="dec" data-i="${i}" data-type="work">-</button>
             <input type="number" id="wVal${i}" value="${cur.work}" readonly>
             <button class="inc" data-i="${i}" data-type="work">+</button>
           </div>
         </div>
-        <div class="slider-row">Rest: <input type="range" min="0" max="360" value="${cur.rest}" id="r${i}">
+        <div class="slider-row">
+          Rest:
+          <input type="range" min="0" max="360" step="15" value="${cur.rest}" id="r${i}">
           <div class="stepper">
             <button class="dec" data-i="${i}" data-type="rest">-</button>
             <input type="number" id="rVal${i}" value="${cur.rest}" readonly>
@@ -121,22 +126,35 @@
       `;
       roundSettings.appendChild(div);
 
-      const wRange = $('w'+i), rRange = $('r'+i), wVal = $('wVal'+i), rVal = $('rVal'+i);
-      wRange.addEventListener('input', () => { schedule[i].work = parseInt(wRange.value,10); wVal.value = schedule[i].work; });
-      rRange.addEventListener('input', () => { schedule[i].rest = parseInt(rRange.value,10); rVal.value = schedule[i].rest; });
+      const wRange = $('w' + i),
+            rRange = $('r' + i),
+            wVal = $('wVal' + i),
+            rVal = $('rVal' + i);
+
+      wRange.addEventListener('input', () => {
+        schedule[i].work = parseInt(wRange.value, 10);
+        wVal.value = schedule[i].work;
+      });
+
+      rRange.addEventListener('input', () => {
+        schedule[i].rest = parseInt(rRange.value, 10);
+        rVal.value = schedule[i].rest;
+      });
 
       div.querySelectorAll('.stepper button').forEach(btn => {
         btn.addEventListener('click', () => {
-          const type = btn.dataset.type, idx = parseInt(btn.dataset.i,10);
+          const type = btn.dataset.type,
+                idx = parseInt(btn.dataset.i, 10);
           let val = (type === 'work' ? schedule[idx].work : schedule[idx].rest);
+
           val += btn.classList.contains('inc') ? 15 : -15;
-          if(type === 'work') val = Math.min(Math.max(1,val),360);
-          else val = Math.min(Math.max(0,val),360);
+          val = Math.min(Math.max(type === 'work' ? 1 : 0, val), 360);
+
           schedule[idx][type] = val;
-          $('w'+idx).value = schedule[idx].work;
-          $('r'+idx).value = schedule[idx].rest;
-          $('wVal'+idx).value = schedule[idx].work;
-          $('rVal'+idx).value = schedule[idx].rest;
+          $('w' + idx).value = schedule[idx].work;
+          $('r' + idx).value = schedule[idx].rest;
+          $('wVal' + idx).value = schedule[idx].work;
+          $('rVal' + idx).value = schedule[idx].rest;
         });
       });
     }
