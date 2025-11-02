@@ -47,7 +47,7 @@ body {
 /* CONTAINER */
 .container {
   background-color: var(--white);
-  padding: 20px;
+  padding: 10px;
   border-radius: var(--radius);
   box-shadow: 0 4px 10px var(--shadow);
   width: 100%;
@@ -83,7 +83,7 @@ label {
 #timer {
   display: block;
   margin-top: 0px;
-  font-size: 4.5rem;;
+  font-size: 4.0rem;;
   font-weight: 700;
   color: var(--text);
 }
