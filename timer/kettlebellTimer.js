@@ -62,7 +62,7 @@ keepSettingsBtn.addEventListener('click', () => {
 // Exercise List (Original)
 // -----------------------------
 const exercises = [
-  { name: 'Jumping Jacks', defaultTime: '02:00', defaultRounds: 2, defaultReps: 33 },
+  { name: 'Jumping Jacks', defaultTime: '02:00', defaultRounds: 2, defaultReps: 1 },
   { name: 'Burpees', defaultTime: '02:00', defaultRounds: 2, defaultReps: 16 },
   { name: 'Push-ups', defaultTime: '02:00', defaultRounds: 2, defaultReps: 16 },
   { name: 'Clean 1KB', defaultTime: '03:00', defaultRounds: 4, defaultReps: 17 },
