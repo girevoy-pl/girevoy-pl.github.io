@@ -89,15 +89,15 @@ label {
 }
 
 .roundReps {
-  font-size: 3.0rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 #roundReps {
   display: block;
   margin-top: 0px;
-  font-size: 3.0rem;;
+  font-size: 2.5rem;;
   font-weight: 700;
   color: var(--text);
 }
