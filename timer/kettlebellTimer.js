@@ -1,33 +1,19 @@
-// -----------------------------
-// Sound Setup (Original)
-// -----------------------------
-const beep = new Howl({
-  src: ['beep-sound.mp3'],
-  preload: true
-});
-const longBeep = new Howl({
-  src: ['long-beep-sound.mp3'],
-  preload: true
-});
-const buzz = new Howl({
-  src: ['buzz-sound.mp3'],
-  preload: true
-});
+/* Sound Setup (Original) */
+const beep = new Howl({ src: ['beep-sound.mp3'], preload: true });
+const longBeep = new Howl({ src: ['long-beep-sound.mp3'], preload: true });
+const buzz = new Howl({ src: ['buzz-sound.mp3'], preload: true });
 
-// -----------------------------
-// DOM Elements (Original)
-// -----------------------------
+/* DOM Elements (Original) */
 const minuteSlider = document.getElementById('minute-slider');
 const secondSlider = document.getElementById('second-slider');
 const repsSlider = document.getElementById('reps-slider');
 const roundsSlider = document.getElementById('rounds-slider');
 const prepareSlider = document.getElementById('prepare-slider');
 const timerDisplay = document.getElementById('timer');
+const roundRepsDisplay = document.getElementById('round-reps-display');
 const keepSettingsBtn = document.getElementById('keep-settings-btn');
 
-// -----------------------------
-// Global Variables (Original)
-// -----------------------------
+/* Global Variables (Original) */
 let currentExercise = '';
 let currentRound = 0;
 let remainingTime = 0;
@@ -35,18 +21,19 @@ let preparationBeepCount = 0;
 let timerInterval;
 let customSettingsActive = false;
 
-// -----------------------------
-// Update Timer Display (Original)
-// -----------------------------
-function updateTimerDisplay(time, round, buzzCount = 0) {
+/* Update Timer Display (Original) */
+function updateTimerDisplay(time) {
   const minutesLeft = Math.floor(time / 60);
   const secondsLeft = time % 60;
-  timerDisplay.textContent = `${round} | ${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft} | ${buzzCount}`;
+  timerDisplay.textContent = `${minutesLeft < 10 ? '0' + minutesLeft : minutesLeft}:${secondsLeft < 10 ? '0' + secondsLeft : secondsLeft}`;
 }
 
-// -----------------------------
-// Keep Settings Button Logic
-// -----------------------------
+/* Update Round/Reps Display */
+function updateRoundRpmDisplay(round, buzzCount = 0) {
+  roundRepsDisplay.textContent = `R: ${round} | Reps: ${buzzCount}`;
+}
+
+/* Keep Settings Button Logic */
 keepSettingsBtn.addEventListener('click', () => {
   customSettingsActive = !customSettingsActive;
   if (customSettingsActive) {
@@ -190,7 +177,8 @@ document.getElementById('start-btn').addEventListener('click', function () {
   preparationBeepCount = 0;
 
   timerInterval = setInterval(() => {
-    updateTimerDisplay(remainingTime, currentRound, totalBuzzCount);
+    updateTimerDisplay(remainingTime);
+    updateRoundRpmDisplay(currentRound, totalBuzzCount);
 
     if (isPreparation) {
       if (remainingTime > 0) {
@@ -227,7 +215,8 @@ document.getElementById('start-btn').addEventListener('click', function () {
         longBeep.play();
         clearInterval(timerInterval);
         stopPreventSleep();
-        updateTimerDisplay(0, currentRound, totalBuzzCount);
+        updateTimerDisplay(0);
+        updateRoundRpmDisplay(currentRound, totalBuzzCount);
       }
     }
   }, 1000);
