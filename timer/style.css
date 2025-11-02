@@ -77,13 +77,27 @@ label {
 .timer {
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 #timer {
   display: block;
   margin-top: 0px;
   font-size: 4.0rem;;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.roundReps {
+  font-size: 3.0rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+#roundReps {
+  display: block;
+  margin-top: 0px;
+  font-size: 3.0rem;;
   font-weight: 700;
   color: var(--text);
 }
