@@ -328,7 +328,7 @@
   muteBtn.addEventListener('click', () => {
     muted = !muted;
     muteBtn.classList.toggle('active', muted);
-    muteBtn.textContent = muted ? 'Mute: ON' : 'Mute: OFF';
+    muteBtn.textContent = muted ? 'Muted' : 'Mute';
     muteBtn.setAttribute('aria-pressed', muted);
   });
 
