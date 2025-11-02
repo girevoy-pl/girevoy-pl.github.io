@@ -9,7 +9,7 @@
 :root {
   /* Colors */
   --bg: #f7f7f7;
-  --text: #262625;
+  --text: #222222;
   --white: #ffffff;
   --shadow: rgba(0, 0, 0, 0.1);
   --accent-orange: #da6e00;
@@ -17,10 +17,10 @@
   --accent-orange-active: #ba2721;
   --accent-green: #61993b;
   --accent-green-hover: #587f40;
-  --slider-track: #ddd;
-  --slider-fill: #2f3133;
-  --slider-thumb: #8b959a;
-  --slider-thumb-hover: #6c757a;
+  --slider-track: #CCCCCC;
+  --slider-fill: #4D4D4D;
+  --slider-thumb: #A2A2A2;
+  --slider-thumb-hover: #777777;
 
   /* Layout */
   --max-width: 520px;
