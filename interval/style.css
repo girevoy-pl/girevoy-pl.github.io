@@ -7,7 +7,7 @@
   --text: #262625;
   --panel: #FFF;
   --panel-border: #EEF4F7;
-  --border: #CFD6DF;
+  --border: #CCCDD0;
   --bar-bg: #F6F7FB;
 
   /* Phases */
@@ -16,9 +16,16 @@
   --rest: #61993B;
   --active: #CCCDD0;
 
+  /* Slider Colors */
+  --slider-fill: #CCCDD0;
+  --slider-track: #E1E6ED;
+  --slider-thumb: #CCCDD0;
+  --slider-thumb-hover: #A3A3A6;
+
   /* Layout */
   --row-gap: 10px;
   --max-width: 520px;
+  --transition: 0.2s ease;
 }
 
 /* Global */
@@ -62,7 +69,9 @@ main {
   margin-bottom: 8px;
 }
 
-.phase-label { margin-bottom: 6px; }
+.phase-label { 
+  margin-bottom: 6px;
+}
 
 .digits {
   font-size: 4.5rem;
@@ -117,6 +126,11 @@ main {
   box-sizing: border-box;
 }
 
+.range-row {
+  margin-top: 5px;
+  font-weight: 600;
+}
+
 /* Controls */
 .controls {
   display: flex;
@@ -147,7 +161,7 @@ main {
   color: var(--text);
   text-align: center;
   cursor: pointer;
-  transition: all 0.12s;
+  transition: all 0.12s ease;
   white-space: nowrap;
 }
 
@@ -162,21 +176,83 @@ main {
   flex: 1 1 100%;
 }
 
-/* Range Inputs */
-.range-row {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 5px;
-}
-
-.range-row label {
-  font-weight: 700;
-}
-
+/* Range Inputs - Modern Sliders */
 input[type=range] {
+  -webkit-appearance: none;
   width: 100%;
-  accent-color: var(--active);
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--slider-fill) 0%,
+    var(--slider-fill) var(--value, 0%),
+    var(--slider-track) var(--value, 0%),
+    var(--slider-track) 100%
+  );
+  outline: none;
+  cursor: pointer;
+  transition: background var(--transition), box-shadow var(--transition);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* WebKit Thumb */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--slider-thumb);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.2s;
+  margin-top: -6px;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  background: var(--slider-thumb-hover);
+  transform: scale(1.08);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+input[type=range]:active::-webkit-slider-thumb {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Firefox Thumb */
+input[type=range]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--slider-thumb);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+input[type=range]::-moz-range-thumb:hover {
+  background: var(--slider-thumb-hover);
+  transform: scale(1.08);
+}
+
+input[type=range]::-moz-range-thumb:active {
+  transform: scale(0.95);
+}
+
+/* Hide Firefox track background */
+input[type=range]::-moz-range-track {
+  background: transparent;
+}
+
+/* Focus ring */
+input[type=range]:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--slider-fill);
+  outline-offset: 2px;
+}
+
+input[type=range]:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--slider-fill);
+  outline-offset: 2px;
 }
 
 /* Round Settings */
