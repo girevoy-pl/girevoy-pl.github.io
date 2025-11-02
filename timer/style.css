@@ -29,14 +29,14 @@ body {
 h1 {
   font-size: 22px;
   margin-bottom: 20px;
-  color: #333;
+  color: #262625;
 }
 
 /* Timer */
 .timer {
   font-size: 20px;
   font-weight: 600;
-  color: #333;
+  color: #262625;
   margin-bottom: 20px;
 }
 
@@ -46,13 +46,17 @@ h1 {
   text-align: left;
 }
 
-/* ✅ Labels share timer text color */
+.slider-container label {
+  font-weight: 700; /* "RPM:" bold */
+}
+
+/* Labels share timer text color */
 label {
   display: flex;
   justify-content: space-between;
   font-size: 16px;
   margin-bottom: 6px;
-  color: #333;
+  color: #262625;
 }
 
 /* Slider track */
@@ -62,7 +66,7 @@ label {
   appearance: none;
   outline: none;
   border-radius: 5px;
-  background: linear-gradient(to right, #8B959A 0%, #8B959A var(--value, 0%), #ddd var(--value, 0%), #ddd 100%);
+  background: linear-gradient(to right, #2F3133 0%, #262625 var(--value, 0%), #ddd var(--value, 0%), #ddd 100%);
   transition: background 0.2s ease;
 }
 
