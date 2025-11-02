@@ -8,13 +8,13 @@
   --panel: #FFF;
   --panel-border: #EEF4F7;
   --border: #CFD6DF;
-  --bar-bg: #E7EEF5;
+  --bar-bg: #F6F7FB;
 
   /* Phases */
   --prep: #DA6E00;
   --work: #BA2721;
   --rest: #61993B;
-  --active: #D6D7DA;
+  --active: #CCCDD0;
 
   /* Layout */
   --row-gap: 10px;
