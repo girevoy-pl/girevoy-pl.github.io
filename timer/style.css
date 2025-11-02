@@ -34,25 +34,33 @@
   font-family: 'Roboto', "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
   display: flex;
-  justify-content: center;
+  flex-direction: column;  /* allows footer or layout stacking */
   align-items: center;
+  justify-content: center; /* centers when there's little content */
   min-height: 100vh;
   padding: 10px;
 }
 
 /* Layout */
-.container {
-  background: var(--panel);
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px var(--shadow);
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* centers main content vertically within body */
   width: 100%;
-  max-width: 360px;
-  text-align: center;
+  max-width: 520px;
+  padding: 16px;
+  margin: 0 auto;
 }
 
 /* Typography */
