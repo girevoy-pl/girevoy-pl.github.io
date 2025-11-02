@@ -1,14 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300;900&display=swap");
 
 :root {
-  --bg: #F6F7FB;
-  --text: #22194D;
-  --card-bg: #fff;
-  --border: #ddd;
-  --muted: #555;
+  --bg: #F7F7F7;
+  --text: #222222;
+  --card-bg: #F7F7F7;
+  --border: #CCCCCC;
+  --status: #4D4D4D;
   /* --accent: #5DADD5; */
-  --accent: #8B959A;
-  --hover: #FC1500;
+  --accent: #A2A2A2;
+  --hover: #4D4D4D;
 }
 
 /* Base */
@@ -92,7 +92,7 @@ main {
 .status {
   font-weight: 400;
   font-size: 1.25rem;
-  color: var(--muted);
+  color: var(--status);
   margin-bottom: 1rem;
   line-height: 1.6;
 }
@@ -114,7 +114,7 @@ main {
   padding: 0.5rem 0; /* 🔹 no side padding so it aligns with exercises */
   border-bottom: 1px solid #eee;
   font-size: 1.25rem;
-  color: var(--muted);
+  color: var(--status);
 }
 
 .meta-item:last-child {
@@ -131,7 +131,7 @@ main {
 
 .meta-value {
   flex: 1;
-  color: var(--muted);
+  color: var(--status);
   line-height: 1.6;
   margin-left: -20px; /* move text 4px left */
 }
@@ -206,7 +206,7 @@ ul.exercise-list {
 }
 
 .workout-meta.finisher .meta-value {
-  color: var(--muted);
+  color: var(--status);
 }
 
 /* Generate button */
