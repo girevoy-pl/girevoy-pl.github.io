@@ -188,7 +188,7 @@ button:active {
   background-color: var(--accent-orange-active);
 }
 #keep-settings-btn:hover {
-  background-color: var(--accent-orange-hover);
+  background-color: var(--accent-orange-active);
 }
 
 /* Start Button */
