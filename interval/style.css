@@ -22,6 +22,9 @@
   --slider-thumb: #CCCDD0;
   --slider-thumb-hover: #A3A3A6;
 
+  /* Toggle */
+  --toggle: #A3A3A6;
+
   /* Layout */
   --row-gap: 10px;
   --max-width: 520px;
@@ -219,8 +222,8 @@ input[type=range]::-webkit-slider-thumb {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--slider-thumb);
-  border: 2px solid #fff;
+  background: var(--slider-thumb-hover);
+  border: 2px solid var(--slider-thumb-hover);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.2s;
   margin-top: -6px;
@@ -311,7 +314,7 @@ input[type=range]:focus-visible::-moz-range-thumb {
   height: 32px;
   border: none;
   border-radius: 6px;
-  background: var(--active);
+  background: var(--toggle);
   color: #fff;
   font-weight: 700;
   font-size: 16px;
