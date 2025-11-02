@@ -1,21 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
+/* ==============================
+   Root Variables
+============================== */
 :root {
-  /* 🎨 Color palette */
+  /* Base Colors */
   --bg: #F6F7FB;
   --text: #262625;
-  --border: #cfd6df;
-  --panel: #fff;
-  --panel-border: #eef4f7;
-  --bar-bg: #e7eef5;
+  --panel: #FFF;
+  --panel-border: #EEF4F7;
+  --border: #CFD6DF;
+  --bar-bg: #E7EEF5;
 
-  /* State colors */
+  /* Phases */
   --prep: #DA6E00;
   --work: #BA2721;
   --rest: #61993B;
   --active: #8B959A;
 }
 
+/* Global */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -37,6 +41,7 @@ body {
   min-height: 100vh;
 }
 
+/* Layout */
 main {
   flex: 1;
   display: flex;
@@ -48,7 +53,7 @@ main {
   margin: 0 auto;
 }
 
-/* ====== Shared text styling ====== */
+/* Typography & Indicators */
 .round-indicator,
 .phase-label,
 .digits,
@@ -63,23 +68,10 @@ main {
   color: var(--text);
 }
 
-/* ====== Timer Display ====== */
 .round-indicator {
   font-weight: 800;
   font-size: 1rem;
   margin-bottom: 8px;
-}
-
-.screen {
-  border-radius: 16px;
-  padding: 18px;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 12px;
-  transition: background .25s;
-  cursor: pointer;
-  user-select: none;
-  touch-action: manipulation;
 }
 
 .phase-label {
@@ -97,10 +89,24 @@ main {
 .status {
   font-weight: 600;
   margin-bottom: 12px;
-  font-size: .95rem;
+  font-size: 0.95rem;
 }
 
-/* ====== Progress Bar ====== */
+/* Timer Screen */
+.screen {
+  border-radius: 16px;
+  padding: 18px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 12px;
+  transition: background 0.25s;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  background: transparent;
+}
+
+/* Progress Bar */
 .bar-container {
   width: 100%;
   background: var(--bar-bg);
@@ -113,10 +119,10 @@ main {
 .bar-fill {
   width: 0%;
   height: 100%;
-  transition: width .12s linear;
+  transition: width 0.12s linear;
 }
 
-/* ====== Controls ====== */
+/* Controls */
 .controls {
   display: flex;
   flex-direction: column;
@@ -133,31 +139,26 @@ main {
   justify-content: flex-start;
 }
 
-.controls button.toggle {
-  flex: 1 1 auto;
-  min-width: 80px;
-  padding: 8px 12px;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-/* make preset button span full row */
+/* Make preset button span full row */
 .controls .row:last-child button {
   flex: 1 1 100%;
 }
 
-/* ====== Buttons ====== */
+/* Buttons */
 .toggle {
+  flex: 1 1 auto;
+  min-width: 84px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 10px 14px;
-  font-weight: 700;
   background: var(--panel);
-  cursor: pointer;
-  transition: all .12s;
-  min-width: 84px;
-  text-align: center;
   color: var(--text);
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
 }
 
 .toggle.active {
@@ -166,16 +167,27 @@ main {
   color: #fff;
 }
 
-/* ====== Ranges & Round Settings ====== */
+/* Range Inputs */
+.range-row {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
 .range-row label {
   display: block;
   margin-bottom: 6px;
   font-weight: 700;
 }
 
-input[type=range] {
+input[type='range'] {
   width: 100%;
   accent-color: var(--active);
+}
+
+/* Round Settings */
+.round-settings {
+  width: 100%;
+  margin-top: 8px;
 }
 
 .round-row {
@@ -194,17 +206,17 @@ input[type=range] {
   display: block;
 }
 
+/* Sliders & Steppers */
 .slider-row {
   display: flex;
   gap: 6px;
   align-items: center;
 }
 
-.slider-row input[type=range] {
+.slider-row input[type='range'] {
   flex: 1;
 }
 
-/* ====== Stepper ====== */
 .stepper {
   display: flex;
   gap: 4px;
@@ -232,9 +244,9 @@ input[type=range] {
   padding: 4px;
 }
 
-/* ====== Footer ====== */
+/* Footer */
 .footer {
-  font-size: .85rem;
+  font-size: 0.85rem;
   text-align: center;
   margin-top: auto;
   margin-bottom: 12px;
@@ -245,7 +257,7 @@ input[type=range] {
   margin-top: 6px;
 }
 
-/* ====== Responsive ====== */
+/* Responsive */
 @media (max-width: 520px) {
   .digits {
     font-size: 3.4rem;
