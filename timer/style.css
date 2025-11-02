@@ -1,37 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?familyRoboto:wght@400;500;700&displayswap');
 
 /* Root Variables */
 :root {
-  /* Colors */
-  --bg: #F7F7F7;
+  /* Base Colors */
+  --bg: #F6F7FB;
   --text: #262625;
-  --panel: #fff;
+  --panel: #FFF;
+  --panel-border: #EEF4F7;
+  --border: #CFD6dF;
+  --bar-bg: #E7EEF5;
 
-  /* Buttons */
-  --btn-exercise: #DA6E00;
-  --btn-exercise-hover: #D05D28;
-  --btn-keep: #DA6E00;
-  --btn-keep-hover: #A72920;
-  --btn-keep-active: #BA2721;
-  --btn-start: #61993B;
-  --btn-start-hover: #587F40;
-
-  /* Slider */
-  --slider-thumb: #8B959A;
-  --slider-thumb-hover: #6c757a;
-  --slider-bg: #ddd;
+  /* Phases */
+  --prep: #DA6E00;
+  --work: #BA2721;
+  --rest: #61993B;
   --active: #8B959A;
-
-  /* Shadow */
-  --shadow: rgba(0, 0, 0, 0.1);
 }
 
-/* Global Styles */
+/* Global */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-family: Roboto, "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
 }
 
 html,
@@ -43,11 +34,9 @@ body {
   background: var(--bg);
   color: var(--text);
   display: flex;
-  flex-direction: column;  /* allows footer or layout stacking */
+  flex-direction: column;
   align-items: center;
-  justify-content: center; /* centers when there's little content */
   min-height: 100vh;
-  padding: 10px;
 }
 
 /* Layout */
@@ -56,129 +45,221 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* centers main content vertically within body */
+  padding: 16px;
   width: 100%;
   max-width: 520px;
-  padding: 16px;
   margin: 0 auto;
 }
 
-/* Typography */
-h1 {
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-.timer {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-/* Sliders */
-.slider-container {
-  margin: 16px 0;
-  text-align: left;
-  width: 100%;
-}
-
-.slider-container label {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 700;
-  font-size: 16px;
-  margin-bottom: 6px;
+/* Typography & Indicators */
+.round-indicator,
+.phase-label,
+.digits,
+.status,
+.range-row,
+.round-settings,
+.round-row,
+.slider-row,
+.stepper input,
+.footer,
+.small-hint {
   color: var(--text);
 }
 
-.slider {
+.round-indicator {
+  font-weight: 800;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.phase-label {
+  font-weight: 800;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.digits {
+  font-size: 4.5rem;
+  font-weight: 900;
+  margin: 6px 0;
+}
+
+.status {
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+/* Timer Screen */
+.screen {
+  border-radius: 16px;
+  padding: 18px;
   width: 100%;
-  accent-color: var(--active);
-  height: 8px;
+  text-align: center;
+  margin-bottom: 12px;
+  transition: background 0.25s;
   cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  background: transparent;
+}
+
+/* 
+   Progress Bar
+ */
+.bar-container {
+  width: 100%;
+  background: var(--bar-bg);
+  border-radius: 12px;
+  height: 16px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.bar-fill {
+  width: 0%;
+  height: 100%;
+  transition: width 0.12s linear;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.controls .row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* Make preset button span full row */
+.controls .row:last-child button {
+  flex: 1 1 100%;
 }
 
 /* Buttons */
-button {
-  width: 100%;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #fff;
+.toggle {
+  flex: 1 1 auto;
+  min-width: 84px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
+  transition: all 0.12s;
+  white-space: nowrap;
 }
 
-button:active {
-  transform: scale(0.97);
+.toggle.active {
+  background: var(--active);
+  border-color: var(--active);
+  color: #fff;
 }
 
-/* Exercise Button */
-#exercise-btn {
-  background: var(--btn-exercise);
-  margin-bottom: 10px;
-}
-#exercise-btn:hover {
-  background: var(--btn-exercise-hover);
+/* Range Inputs */
+.range-row {
+  width: 100%;
+  margin-bottom: 12px;
 }
 
-/* Keep Settings Button */
-#keep-settings-btn {
-  background: var(--btn-keep);
-  margin-top: 10px;
-}
-#keep-settings-btn:hover {
-  background: var(--btn-keep-hover);
-}
-#keep-settings-btn.active {
-  background: var(--btn-keep-active);
-}
-
-/* Start Button */
-#start-btn {
-  background: var(--btn-start);
-  margin-top: 15px;
-}
-#start-btn:hover {
-  background: var(--btn-start-hover);
-}
-
-/* Timer Display */
-#timer {
-  margin-top: 10px;
-  font-size: 34px;
+.range-row label {
+  display: block;
+  margin-bottom: 6px;
   font-weight: 700;
 }
 
+input[type='range'] {
+  width: 100%;
+  accent-color: var(--active);
+}
+
+/* Round Settings */
+.round-settings {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.round-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: var(--panel);
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  margin-bottom: 8px;
+}
+
+.round-row strong {
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Sliders & Steppers */
+.slider-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.slider-row input[type='range'] {
+  flex: 1;
+}
+
+.stepper {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.stepper button {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: var(--active);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.stepper input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px;
+}
+
+/* Footer */
+.footer {
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: 12px;
+}
+
+.small-hint {
+  font-size: 0.8rem;
+  margin-top: 6px;
+}
+
 /* Responsive */
-@media (max-width: 480px) {
-  .container {
-    padding: 16px;
-    border-radius: 10px;
-  }
-
-  h1 {
-    font-size: 20px;
-  }
-
-  button {
-    font-size: 16px;
-    padding: 12px;
-  }
-
-  label {
-    font-size: 15px;
-  }
-
-  #timer {
-    font-size: 28px;
-  }
-
-  .slider::-webkit-slider-thumb,
-  .slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
+@media (max-width: 520px) {
+  .digits {
+    font-size: 3.4rem;
   }
 }
