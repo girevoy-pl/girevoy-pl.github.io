@@ -257,6 +257,22 @@ input[type='range'] {
   margin-top: 6px;
 }
 
+/* Ensure consistent width alignment */
+#screen.screen,
+.range-row,
+.round-row {
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* Maintain equal spacing below the preset button */
+.controls .row:last-child {
+  margin-bottom: 10px; /* Same as .controls .row gap */
+}
+
 /* Responsive */
 @media (max-width: 520px) {
   .digits {
