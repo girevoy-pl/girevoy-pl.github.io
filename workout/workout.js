@@ -22,7 +22,7 @@ const workouts = [
       { name: "Switch Sides", url: null },
       { name: "Alt. Clean & Jerk", url: "https://youtu.be/Xk4czNl5jks?t=118" }
     ],
-    { finisher: "Heavy suitcase carry, 1 min per side", url: "https://youtu.be/Xk4czNl5jks?t=146" }
+    finisher: { text:  "Heavy suitcase carry, 1 min per side", url: "https://youtu.be/Xk4czNl5jks?t=146" }
   },
   {
     trainingID: 2,
@@ -40,7 +40,7 @@ const workouts = [
       { name: "10rep - Push Up / Modified Burpee", url: "https://www.youtube.com/watch?v=example_pushup" },
       { name: "1min  - Rest", url: null }
     ],
-    { finisher: "Suitcase Walk", url: null }
+    finisher: { text:  "Suitcase Walk", url: null }
   },
   {
     trainingID: 3,
@@ -83,7 +83,7 @@ const workouts = [
       { name: "Round 2 - 5rep - Burpee", url: "https://www.youtube.com/watch?v=example_snatchright" },
       { name: "Round 2 - 1 min   - Rest", url: null }
     ],
-    { finisher: "1 min per site - Clean & Jerk", url: null }
+    finisher: { text: "1 min per site - Clean & Jerk", url: null }
   },
   {
     trainingID: 5,
@@ -110,7 +110,7 @@ const workouts = [
       { name: "Round 3 - 1 min - Clean Right, Rack Squat & Press Flow", url: "https://www.youtube.com/watch?v=example_snatchright" },
       { name: "Round 3 - 1 min - Rest", url: null }
     ],
-    { finisher: "10 Burpees | Cool Down: Walk it off!", url: null }
+    finisher: { text:  "10 Burpees | Cool Down: Walk it off!", url: null }
   },
   {
     trainingID: 6,
@@ -129,7 +129,7 @@ const workouts = [
       { name: "1 min - Snatch (right)", url: "https://www.youtube.com/watch?v=example_snatchright" },
       { name: "1 min - Rest", url: null }
     ],
-    { finisher: "Farmer's Carry, 2 min.", url: null }
+    finisher: { text:  "Farmer's Carry, 2 min.", url: null }
   },
   {
     trainingID: 7,
@@ -146,7 +146,7 @@ const workouts = [
       { name: "Superset 3 - 10x16kg, 8x20kg, 6x24kg - Renegade Row + Dips", url: "https://www.youtube.com/watch?v=example_cleanjerkright" },
       { name: "Superset 4 - 10x16kg, 8x20kg, 6x24kg - Snatch + Burpee", url: "https://www.youtube.com/watch?v=example_snatchleft" }
     ],
-    { finisher: "Cool Down: 5 min fast walk on treadmill.", url: null }
+    finisher: { text:  "Cool Down: 5 min fast walk on treadmill.", url: null }
   },
   {
     trainingID: 8,
@@ -191,7 +191,7 @@ const workouts = [
       { name: "Superset 2 - Strict Press per side", url: "https://www.youtube.com/watch?v=example_snatchleft" },
       { name: "Superset 2 - 1 min - Rest", url: "https://www.youtube.com/watch?v=example_snatchleft" }
     ],
-    { finisher: "25x Military Burpees.", url: null }
+    finisher: { text:  "25x Military Burpees.", url: null }
   },
   {
     trainingID: 10,
