@@ -33,7 +33,7 @@
 
   let presetKeys = ['C0','C1','C2','C3','C4','C5','C6','C7'], currentPreset = 0;
 
-  let schedule = [], totalRounds = 3, roundIndex = 0, reverseMode = false, muted = false,
+  let schedule = [], totalRounds = defaultSchedules.C0.length, roundIndex = 0, reverseMode = false, muted = false,
       halfwayEnabled = true, loopMode = false;
   let phase = 'prep', phaseSeconds = parseInt(prepSlider.value,10) || 10,
       phaseTotal = phaseSeconds, running = false, lastTick = null,
@@ -97,7 +97,7 @@
   // ------------------------ RENDER SLIDERS ------------------------
   function renderRoundInputs(){
     roundSettings.innerHTML = '';
-    totalRounds = Math.max(3, parseInt(roundsSlider.value,10) || 3);
+    totalRounds = parseInt(roundsSlider.value,10) || defaultSchedules.C0.length;
     for(let i=0;i<totalRounds;i++){
       const cur = schedule[i] || defaultSchedules.C0[i] || {work:60,rest:60};
       const div = document.createElement('div');
@@ -144,7 +144,7 @@
 
   function readSchedule(){
     schedule = [];
-    totalRounds = Math.max(3, parseInt(roundsSlider.value,10) || 3);
+    totalRounds = parseInt(roundsSlider.value,10) || defaultSchedules.C0.length;
     for(let i=0;i<totalRounds;i++){
       const w = $('w'+i), r = $('r'+i);
       schedule.push({
