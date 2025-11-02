@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-:root{
-  --bg:#F6F7FB;
-  --text:#262625;
+:root {
+  --bg: #F6F7FB;
+  --text: #262625;
   /* --prep:#FFAC1C; */
-  --prep:#DA6E00;
+  --prep: #DA6E00;
   /* --work:#FC1500; */
-  --work:#BA2721;
+  --work: #BA2721;
   /* --rest:#69FC00; */
-  --rest:#61993B;
+  --rest: #61993B;
   /* --active:#5DADD5; */
-  --active:#8B959A;
+  --active: #8B959A;
 }
 
 * {
@@ -27,7 +27,7 @@ body {
 
 body {
   background: var(--bg);
-  color: var(--text);
+  color: #262625; /* ✅ all text uses #262625 */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,6 +49,7 @@ main {
   font-weight: 800;
   font-size: 1rem;
   margin-bottom: 8px;
+  color: #262625; /* ✅ ensure text color */
 }
 
 .screen {
@@ -57,28 +58,32 @@ main {
   width: 100%;
   text-align: center;
   margin-bottom: 12px;
-  transition: background 0.25s;
+  transition: background .25s;
   cursor: pointer;
   user-select: none;
   touch-action: manipulation;
+  color: #262625; /* ✅ ensure text color */
 }
 
 .phase-label {
   font-weight: 800;
   font-size: 1.1rem;
   margin-bottom: 6px;
+  color: #262625; /* ✅ */
 }
 
 .digits {
   font-size: 4.5rem;
   font-weight: 900;
   margin: 6px 0;
+  color: #262625; /* ✅ */
 }
 
 .status {
   font-weight: 600;
   margin-bottom: 12px;
-  font-size: 0.95rem;
+  font-size: .95rem;
+  color: #262625; /* ✅ */
 }
 
 .bar-container {
@@ -93,50 +98,31 @@ main {
 .bar-fill {
   width: 0%;
   height: 100%;
-  transition: width 0.12s linear;
+  transition: width .12s linear;
 }
 
-/* ---------- BUTTONS SECTION ---------- */
 .controls {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 10px; /* space between rows */
   width: 100%;
-  max-width: 400px;
+  max-width: 400px; /* optional max width */
   margin: 0 auto;
 }
 
 .controls .row {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 8px; /* space between buttons */
+  flex-wrap: wrap; /* allows wrapping on small screens */
   justify-content: flex-start;
 }
 
-/* 🔧 Normalize button appearance on iOS/Safari and force black text */
-button,
-.toggle {
-  -webkit-appearance: none; /* removes iOS blue accent */
-  appearance: none;
-  color: #000; /* black text */
-  background: #fff; /* white background */
-  border: 1px solid #cfd6df;
-  border-radius: 999px;
-  padding: 10px 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.12s;
-  min-width: 84px;
-  text-align: center;
+.controls button.toggle {
+  flex: 1 1 auto; /* buttons grow/shrink as needed */
+  min-width: 80px; /* ensures buttons are not too small */
+  padding: 8px 12px;
   font-size: 14px;
   white-space: nowrap;
-}
-
-/* For specific toggle layout buttons */
-.controls button.toggle {
-  flex: 1 1 auto;
-  min-width: 80px;
-  padding: 8px 12px;
 }
 
 /* Optional: make preset button span full row */
@@ -144,23 +130,36 @@ button,
   flex: 1 1 100%;
 }
 
-/* Active button state */
+.toggle {
+  border: 1px solid #cfd6df;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 700;
+  background: #fff;
+  cursor: pointer;
+  transition: all .12s;
+  min-width: 84px;
+  text-align: center;
+  color: #262625; /* ✅ buttons text color */
+}
+
 .toggle.active {
   background: var(--active);
   border-color: var(--active);
   color: #fff;
 }
 
-/* ---------- RANGES & SLIDERS ---------- */
 .range-row {
   width: 100%;
   margin-bottom: 12px;
+  color: #262625; /* ✅ */
 }
 
 .range-row label {
   display: block;
   margin-bottom: 6px;
   font-weight: 700;
+  color: #262625; /* ✅ */
 }
 
 input[type=range] {
@@ -168,10 +167,10 @@ input[type=range] {
   accent-color: var(--active);
 }
 
-/* ---------- ROUND SETTINGS ---------- */
 .round-settings {
   width: 100%;
   margin-top: 8px;
+  color: #262625; /* ✅ */
 }
 
 .round-row {
@@ -183,24 +182,26 @@ input[type=range] {
   border-radius: 10px;
   border: 1px solid #eef4f7;
   margin-bottom: 8px;
+  color: #262625; /* ✅ */
 }
 
 .round-row strong {
   margin-bottom: 4px;
   display: block;
+  color: #262625; /* ✅ */
 }
 
 .slider-row {
   display: flex;
   gap: 6px;
   align-items: center;
+  color: #262625; /* ✅ */
 }
 
 .slider-row input[type=range] {
   flex: 1;
 }
 
-/* ---------- STEPPER BUTTONS ---------- */
 .stepper {
   display: flex;
   gap: 4px;
@@ -226,12 +227,12 @@ input[type=range] {
   border: 1px solid #cfd6df;
   border-radius: 6px;
   padding: 4px;
+  color: #262625; /* ✅ */
 }
 
-/* ---------- FOOTER ---------- */
 .footer {
-  font-size: 0.85rem;
-  color: #666;
+  font-size: .85rem;
+  color: #262625; /* ✅ */
   text-align: center;
   margin-top: auto;
   margin-bottom: 12px;
@@ -239,15 +240,12 @@ input[type=range] {
 
 .small-hint {
   font-size: 0.8rem;
-  color: #666;
+  color: #262625; /* ✅ */
   margin-top: 6px;
 }
 
-/* ---------- RESPONSIVE ---------- */
 @media (max-width: 520px) {
   .digits {
     font-size: 3.4rem;
   }
 }
-.small-hint{font-size:0.8rem;color:#666;margin-top:6px}
-@media(max-width:520px){.digits{font-size:3.4rem}}
