@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
+  /* 🎨 Color palette */
   --bg: #F6F7FB;
   --text: #262625;
-  /* --prep:#FFAC1C; */
+  --border: #cfd6df;
+  --panel: #fff;
+  --panel-border: #eef4f7;
+  --bar-bg: #e7eef5;
+
+  /* State colors */
   --prep: #DA6E00;
-  /* --work:#FC1500; */
   --work: #BA2721;
-  /* --rest:#69FC00; */
   --rest: #61993B;
-  /* --active:#5DADD5; */
   --active: #8B959A;
 }
 
@@ -27,7 +30,7 @@ body {
 
 body {
   background: var(--bg);
-  color: #262625; /* ✅ all text uses #262625 */
+  color: var(--text);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,11 +48,26 @@ main {
   margin: 0 auto;
 }
 
+/* ====== Shared text styling ====== */
+.round-indicator,
+.phase-label,
+.digits,
+.status,
+.range-row,
+.round-settings,
+.round-row,
+.slider-row,
+.stepper input,
+.footer,
+.small-hint {
+  color: var(--text);
+}
+
+/* ====== Timer Display ====== */
 .round-indicator {
   font-weight: 800;
   font-size: 1rem;
   margin-bottom: 8px;
-  color: #262625; /* ✅ ensure text color */
 }
 
 .screen {
@@ -62,33 +80,30 @@ main {
   cursor: pointer;
   user-select: none;
   touch-action: manipulation;
-  color: #262625; /* ✅ ensure text color */
 }
 
 .phase-label {
   font-weight: 800;
   font-size: 1.1rem;
   margin-bottom: 6px;
-  color: #262625; /* ✅ */
 }
 
 .digits {
   font-size: 4.5rem;
   font-weight: 900;
   margin: 6px 0;
-  color: #262625; /* ✅ */
 }
 
 .status {
   font-weight: 600;
   margin-bottom: 12px;
   font-size: .95rem;
-  color: #262625; /* ✅ */
 }
 
+/* ====== Progress Bar ====== */
 .bar-container {
   width: 100%;
-  background: #e7eef5;
+  background: var(--bar-bg);
   border-radius: 12px;
   height: 16px;
   overflow: hidden;
@@ -101,46 +116,48 @@ main {
   transition: width .12s linear;
 }
 
+/* ====== Controls ====== */
 .controls {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* space between rows */
+  gap: 10px;
   width: 100%;
-  max-width: 400px; /* optional max width */
+  max-width: 400px;
   margin: 0 auto;
 }
 
 .controls .row {
   display: flex;
-  gap: 8px; /* space between buttons */
-  flex-wrap: wrap; /* allows wrapping on small screens */
+  gap: 8px;
+  flex-wrap: wrap;
   justify-content: flex-start;
 }
 
 .controls button.toggle {
-  flex: 1 1 auto; /* buttons grow/shrink as needed */
-  min-width: 80px; /* ensures buttons are not too small */
+  flex: 1 1 auto;
+  min-width: 80px;
   padding: 8px 12px;
   font-size: 14px;
   white-space: nowrap;
 }
 
-/* Optional: make preset button span full row */
+/* make preset button span full row */
 .controls .row:last-child button {
   flex: 1 1 100%;
 }
 
+/* ====== Buttons ====== */
 .toggle {
-  border: 1px solid #cfd6df;
+  border: 1px solid var(--border);
   border-radius: 999px;
   padding: 10px 14px;
   font-weight: 700;
-  background: #fff;
+  background: var(--panel);
   cursor: pointer;
   transition: all .12s;
   min-width: 84px;
   text-align: center;
-  color: #262625; /* ✅ buttons text color */
+  color: var(--text);
 }
 
 .toggle.active {
@@ -149,17 +166,11 @@ main {
   color: #fff;
 }
 
-.range-row {
-  width: 100%;
-  margin-bottom: 12px;
-  color: #262625; /* ✅ */
-}
-
+/* ====== Ranges & Round Settings ====== */
 .range-row label {
   display: block;
   margin-bottom: 6px;
   font-weight: 700;
-  color: #262625; /* ✅ */
 }
 
 input[type=range] {
@@ -167,41 +178,33 @@ input[type=range] {
   accent-color: var(--active);
 }
 
-.round-settings {
-  width: 100%;
-  margin-top: 8px;
-  color: #262625; /* ✅ */
-}
-
 .round-row {
   display: flex;
   flex-direction: column;
   gap: 6px;
   padding: 10px;
-  background: #fff;
+  background: var(--panel);
   border-radius: 10px;
-  border: 1px solid #eef4f7;
+  border: 1px solid var(--panel-border);
   margin-bottom: 8px;
-  color: #262625; /* ✅ */
 }
 
 .round-row strong {
   margin-bottom: 4px;
   display: block;
-  color: #262625; /* ✅ */
 }
 
 .slider-row {
   display: flex;
   gap: 6px;
   align-items: center;
-  color: #262625; /* ✅ */
 }
 
 .slider-row input[type=range] {
   flex: 1;
 }
 
+/* ====== Stepper ====== */
 .stepper {
   display: flex;
   gap: 4px;
@@ -224,15 +227,14 @@ input[type=range] {
 .stepper input {
   width: 50px;
   text-align: center;
-  border: 1px solid #cfd6df;
+  border: 1px solid var(--border);
   border-radius: 6px;
   padding: 4px;
-  color: #262625; /* ✅ */
 }
 
+/* ====== Footer ====== */
 .footer {
   font-size: .85rem;
-  color: #262625; /* ✅ */
   text-align: center;
   margin-top: auto;
   margin-bottom: 12px;
@@ -240,10 +242,10 @@ input[type=range] {
 
 .small-hint {
   font-size: 0.8rem;
-  color: #262625; /* ✅ */
   margin-top: 6px;
 }
 
+/* ====== Responsive ====== */
 @media (max-width: 520px) {
   .digits {
     font-size: 3.4rem;
