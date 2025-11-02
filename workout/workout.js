@@ -9,20 +9,20 @@ const workouts = [
   {
     trainingID: 1,
     title: "30 Minute Full-Body Kettlebell Workout",
-    titleUrl: "https://www.youtube.com/watch?v=example_fullbody",
+    titleUrl: "https://youtu.be/Xk4czNl5jks?t=32",
     description: "For today's 30 minute, full-body workout, you only need two things: Yourself and a kettlebell.",
-    objective: "INTERVALL | 40/20 | 4 Rounds",
+    objective: "INTERVALL | 40/20 | 4 Rounds | 2xL & 2xR",
     level: "Intermediate",
     weight: "20kg",
     time: "30m",
     exercises: [
-      { name: "Hang Row L", url: "https://www.youtube.com/watch?v=example_row" },
-      { name: "Jerk L", url: "https://www.youtube.com/watch?v=example_jerk" },
-      { name: "Half Snatch L", url: "https://www.youtube.com/watch?v=example_snatch" },
+      { name: "Hang Row L", url: "https://youtu.be/Xk4czNl5jks?t=47" },
+      { name: "Jerk L", url: "https://youtu.be/Xk4czNl5jks?t=60" },
+      { name: "Half Snatch L", url: "https://youtu.be/Xk4czNl5jks?t=75" },
       { name: "Switch Sides", url: null },
-      { name: "Alt. Clean & Jerk", url: "https://www.youtube.com/watch?v=example_cleanjerk" }
+      { name: "Alt. Clean & Jerk", url: "https://youtu.be/Xk4czNl5jks?t=118" }
     ],
-    finisher: "Heavy suitcase carry, 1 min per side"
+    { finisher: "Heavy suitcase carry, 1 min per side", url: "https://youtu.be/Xk4czNl5jks?t=146" }
   },
   {
     trainingID: 2,
@@ -40,7 +40,7 @@ const workouts = [
       { name: "10rep - Push Up / Modified Burpee", url: "https://www.youtube.com/watch?v=example_pushup" },
       { name: "1min  - Rest", url: null }
     ],
-    finisher: "Suitcase Walk"
+    { finisher: "Suitcase Walk", url: null }
   },
   {
     trainingID: 3,
@@ -83,7 +83,7 @@ const workouts = [
       { name: "Round 2 - 5rep - Burpee", url: "https://www.youtube.com/watch?v=example_snatchright" },
       { name: "Round 2 - 1 min   - Rest", url: null }
     ],
-    finisher: "1 min per site - Clean & Jerk"
+    { finisher: "1 min per site - Clean & Jerk", url: null }
   },
   {
     trainingID: 5,
@@ -110,7 +110,7 @@ const workouts = [
       { name: "Round 3 - 1 min - Clean Right, Rack Squat & Press Flow", url: "https://www.youtube.com/watch?v=example_snatchright" },
       { name: "Round 3 - 1 min - Rest", url: null }
     ],
-    finisher: "10 Burpees | Cool Down: Walk it off!"
+    { finisher: "10 Burpees | Cool Down: Walk it off!", url: null }
   },
   {
     trainingID: 6,
@@ -129,7 +129,7 @@ const workouts = [
       { name: "1 min - Snatch (right)", url: "https://www.youtube.com/watch?v=example_snatchright" },
       { name: "1 min - Rest", url: null }
     ],
-    finisher: "Farmer's Carry, 2 min."
+    { finisher: "Farmer's Carry, 2 min.", url: null }
   },
   {
     trainingID: 7,
@@ -146,7 +146,7 @@ const workouts = [
       { name: "Superset 3 - 10x16kg, 8x20kg, 6x24kg - Renegade Row + Dips", url: "https://www.youtube.com/watch?v=example_cleanjerkright" },
       { name: "Superset 4 - 10x16kg, 8x20kg, 6x24kg - Snatch + Burpee", url: "https://www.youtube.com/watch?v=example_snatchleft" }
     ],
-    finisher: "Cool Down: 5 min fast walk on treadmill."
+    { finisher: "Cool Down: 5 min fast walk on treadmill.", url: null }
   },
   {
     trainingID: 8,
@@ -191,7 +191,7 @@ const workouts = [
       { name: "Superset 2 - Strict Press per side", url: "https://www.youtube.com/watch?v=example_snatchleft" },
       { name: "Superset 2 - 1 min - Rest", url: "https://www.youtube.com/watch?v=example_snatchleft" }
     ],
-    finisher: "25x Military Burpees."
+    { finisher: "25x Military Burpees.", url: null }
   },
   {
     trainingID: 10,
@@ -298,9 +298,17 @@ function showWorkout(index) {
 
       ${w.finisher ? `
         <div class="workout-meta aligned bordered finisher">
-          <div class="meta-item"><span class="meta-label">Finisher:</span> <span class="meta-value">${w.finisher}</span></div>
+          <div class="meta-item">
+            <span class="meta-label">Finisher:</span> 
+            <span class="meta-value">
+              ${w.finisher.url
+                ? `<a href="${w.finisher.url}" target="_blank" rel="noopener noreferrer">${w.finisher.text}</a>`
+                : w.finisher.text
+              }
+            </span>
+          </div>
         </div>
-      ` : ""}
+`       : ""}
     </div>
   `;
 }
