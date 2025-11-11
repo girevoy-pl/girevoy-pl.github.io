@@ -14,12 +14,12 @@
   --prep: #DA6E00;
   --work: #BA2721;
   --rest: #61993B;
-  --active: #CCCDD0;
+  --active: #C5BED4; /*#CCCDD0;*/
 
   /* Slider Colors */
-  --slider-fill: #746395; /*#CCCDD0;*/
-  --slider-track: #746395; /*#E1E6ED;*/
-  --slider-thumb: #746395;
+  --slider-fill: #C5BED4; /*#CCCDD0;*/
+  --slider-track: #C5BED4; /*#E1E6ED;*/
+  --slider-thumb: #8172A0;
   --slider-thumb-hover: #746395;
 
   /* Toggle */
