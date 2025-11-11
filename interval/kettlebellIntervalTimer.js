@@ -95,28 +95,33 @@
   }
 
 function updatePhaseUI() {
-  // Update screen color and label based on phase
+  // Update background and label
   if (phase === 'prep') {
     screen.dataset.color = 'prep';
     screen.style.background = 'var(--prep)';
     barFill.style.background = 'var(--prep)';
-    phaseLabel.textContent = 'GET READY - tap the timer to start / pause';
+    phaseLabel.textContent = 'Tap the timer to start / pause';
+    roundIndicator.style.fontSize = '1.25rem'; // 🟢 regular size
   } else if (phase === 'work') {
     screen.dataset.color = 'work';
     screen.style.background = 'var(--work)';
     barFill.style.background = 'var(--work)';
     phaseLabel.textContent = 'WORK';
+    roundIndicator.style.fontSize = '2.5rem'; // 🟢 enlarged during work
   } else if (phase === 'rest') {
     screen.dataset.color = 'rest';
     screen.style.background = 'var(--rest)';
     barFill.style.background = 'var(--rest)';
     phaseLabel.textContent = 'REST';
+    roundIndicator.style.fontSize = '2.5rem'; // 🟢 enlarged during rest
   } else if (phase === 'done') {
     screen.dataset.color = 'done';
     screen.style.background = 'var(--rest)';
     barFill.style.background = 'var(--rest)';
     phaseLabel.textContent = 'COMPLETE';
+    roundIndicator.style.fontSize = '2.5rem'; // 🟢 enlarged on completion
   }
+
   digits.textContent = fmt(phaseSeconds);
   updateBar();
   updateRoundIndicator();
@@ -286,7 +291,7 @@ function updatePhaseUI() {
       if (phaseColor === 'prep') {
         screen.style.background = 'var(--prep)';
         barFill.style.background = 'var(--prep)';
-        phaseLabel.textContent = 'GET READY - tap the timer to start / pause';
+        phaseLabel.textContent = 'Tap the timer to start / pause';
       } else if (phaseColor === 'work') {
         screen.style.background = 'var(--work)';
         barFill.style.background = 'var(--work)';
