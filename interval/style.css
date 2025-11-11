@@ -85,8 +85,8 @@ main {
 /* Typography */
 .round-indicator {
   font-weight: 800;
-  font-size: 1.25rem;
-  margin-bottom: 6px;
+  font-size: 1.90rem;
+  margin-bottom: 2px;
 }
 
 .phase-label {
@@ -96,7 +96,7 @@ main {
 }
 
 .digits {
-  font-size: 6.00rem;
+  font-size: 6.50rem;
   font-weight: 900;
   margin: 1px 0;
 }
