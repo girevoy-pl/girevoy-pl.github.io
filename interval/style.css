@@ -85,7 +85,7 @@ main {
 /* Typography */
 .round-indicator {
   font-weight: 800;
-  font-size: 1.90rem;
+  font-size: 1.25rem;
   margin-bottom: 2px;
 }
 
@@ -96,7 +96,7 @@ main {
 }
 
 .digits {
-  font-size: 6.50rem;
+  font-size: 7.00rem;
   font-weight: 900;
   margin: 1px 0;
 }
