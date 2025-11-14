@@ -983,8 +983,8 @@ input, select, textarea {
 			background-image: url("images/bg_9x16.jpg");
 			background-size: auto 100%;   /* maintain height */
 			background-repeat: repeat-x;  /* horizontal repeat if needed */
-			background-position: 0 bottom; /* fixed starting position */
-			width: 2208px;
+			background-position: 0 top; /* fixed starting position */
+			width: 2048px;
 
 			/* Remove any animation */
 			animation: none !important;
