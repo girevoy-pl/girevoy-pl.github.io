@@ -1,14 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300;900&display=swap");
 
 :root {
-  --bg: #F7F7F7;
-  --text: #222222;
-  --card-bg: #F7F7F7;
-  --border: #CCCCCC;
-  --status: #4D4D4D;
-  /* --accent: #5DADD5; */
-  --accent: #A2A2A2;
-  --hover: #4D4D4D;
+  --bg: #F6F7FB;
+  --text: #22194D;
+  --card-bg: #fff;
+  --border: #ddd;
+  --muted: #555;
+  --accent: #5DADD5;
+  --hover: #FC1500;
 }
 
 /* Base */
@@ -42,6 +41,10 @@ main {
   margin: 0 auto;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* Workout display */
 #workout-display {
   width: 100%;
@@ -49,6 +52,7 @@ main {
   border-radius: 16px;
   border: 1px solid var(--border);
   overflow: hidden;
+  margin-top: 16px;
   margin-bottom: 20px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
@@ -80,7 +84,7 @@ main {
 
 .workout-header a:hover {
   color: var(--hover);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 /* Content */
@@ -92,7 +96,7 @@ main {
 .status {
   font-weight: 400;
   font-size: 1.25rem;
-  color: var(--status);
+  color: var(--muted);
   margin-bottom: 1rem;
   line-height: 1.6;
 }
@@ -114,7 +118,7 @@ main {
   padding: 0.5rem 0; /* 🔹 no side padding so it aligns with exercises */
   border-bottom: 1px solid #eee;
   font-size: 1.25rem;
-  color: var(--status);
+  color: var(--muted);
 }
 
 .meta-item:last-child {
@@ -131,12 +135,18 @@ main {
 
 .meta-value {
   flex: 1;
-  color: var(--status);
+  color: var(--muted);
   line-height: 1.6;
   margin-left: -20px; /* move text 4px left */
 }
 
 /* Exercise list */
+.exercise-list {
+  /*max-height: 360px;*/
+  overflow: hidden;     /* ✅ Stops the page from scrolling */
+  position: relative;
+}
+
 ul.exercise-list {
   list-style: none;
   padding: 0;
@@ -155,6 +165,23 @@ ul.exercise-list {
 
 .exercise-item:last-child {
   border-bottom: none;
+}
+
+.exercise-item.active {
+  border-radius: 8px;
+  box-shadow: 0 0 0 3px currentColor inset;
+}
+
+.exercise-item.active .exercise-desc {
+  font-weight: 900;
+}
+
+.exercise-item.done {
+  display: none;
+}
+
+.exercise-item.active .exercise-time {
+  color: #22194D !important;   /* ✅ Always visible */
 }
 
 .exercise-time {
@@ -188,6 +215,7 @@ ul.exercise-list {
   border-color: transparent;
 }
 
+
 /* Finisher aligned with exercise list */
 .workout-meta.finisher {
   border-top: 1px solid #ddd;
@@ -206,7 +234,7 @@ ul.exercise-list {
 }
 
 .workout-meta.finisher .meta-value {
-  color: var(--status);
+  color: var(--muted);
 }
 
 /* Generate button */
@@ -222,17 +250,176 @@ ul.exercise-list {
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.05);
 }
 
 #generate-btn:hover {
-  background: var(--accent);
+  background: #8E81AA;
+  /*background: var(--accent);*/
   color: #fff;
   box-shadow: 0 5px 12px rgba(0,0,0,0.1);
 }
 
-/* Controls */
+/* Guided section (between Generate and Start/Pause) */
+
+.guided {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.guided-timer {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+
+.guided-list-wrapper {
+  max-height: 180px;
+  overflow-y: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guided-list {
+  list-style: none;
+  width: 100%;
+  padding: 10px 12px;
+}
+
+.guided-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+
+.guided-label {
+  font-size: 0.85rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  min-width: 70px;
+  text-align: center;
+  background: #f4f4f4;
+  color: var(--text);
+}
+
+/* default look if no specific weight color applies */
+.guided-label.now {
+  border-width: 2px;
+}
+
+.guided-label.next {
+  opacity: 0.9;
+}
+
+/* 🎨 Weight-based colors for NOW/NEXT labels */
+.guided-label.weight-8 {
+  background: #EA899A;      /* pink */
+  border-color: #EA899A;
+  color: #22194D;
+}
+
+.guided-label.weight-12 {
+  background: #2271B3;      /* blue-ish */
+  border-color: #2271B3;
+  color: #22194D;
+}
+
+.guided-label.weight-16 {
+  background: #EC7C26;      /* orange */
+  border-color: #EC7C26;
+  color: #22194D;
+}
+
+.guided-label.weight-20 {
+  background: #8E81AA;      /* violet */
+  border-color: #8E81AA;
+  color: #22194D;
+}
+
+.guided-label.weight-24 {
+  background: #4C9141;      /* green */
+  border-color: #4C9141;
+  color: #22194D;
+}
+
+.guided-label.weight-28 {
+  background: #ff7a00;      /* vivid orange */
+  border-color: #ff7a00;
+  color: #fff;
+}
+
+.guided-label.weight-32 {
+  background: #CC0605;      /* red */
+  border-color: #CC0605;
+  color: #fff;
+}
+
+.guided-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.guided-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.guided-meta {
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+/* Guided Start / Pause row */
+
+.guided-controls {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.guided-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #f4f4f4;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.guided-btn:hover:enabled {
+  background: #8E81AA;
+  /*background: var(--accent);*/
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  transform: translateY(-1px);
+}
+
+.guided-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Controls (slider + stepper) */
 .controls {
   width: 100%;
   display: flex;
@@ -240,6 +427,7 @@ ul.exercise-list {
   align-items: center;
   gap: 16px;
   margin-bottom: 20px;
+  margin-top: 4px;
 }
 
 .range-row {
@@ -329,6 +517,16 @@ a:hover {
   border-color: transparent;
 }
 
+/* Guided mode: hide meta + status + big exercise list */
+body.guided-active .status,
+body.guided-active .workout-meta {
+  opacity: 0.25;
+}
+
+body.guided-active {
+  overflow: hidden;
+}
+
 /* 📱 Mobile optimization */
 @media (max-width: 600px) {
   main {
@@ -340,7 +538,8 @@ a:hover {
   }
 
   .meta-item,
-  .exercise-item {
+  .exercise-item,
+  .guided-item {
     padding: 0.4rem 0;
   }
 
@@ -350,8 +549,9 @@ a:hover {
   }
 
   .exercise-desc,
-  .meta-value {
-    font-size: 1.1rem;
+  .meta-value,
+  .guided-name {
+    font-size: 3.05rem;
   }
 
   .exercise-time {
@@ -366,5 +566,14 @@ a:hover {
 
   .range-label {
     font-size: 1.1rem;
+  }
+
+  .guided-timer {
+    font-size: 1.7rem;
+  }
+
+  .guided-btn {
+    font-size: 1rem;
+    padding: 10px 12px;
   }
 }
