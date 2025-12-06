@@ -472,7 +472,8 @@ const guidedState = {
   steps: [], // { type: 'work' | 'rest', name, url, round, duration }
   currentStepIndex: 0,
   remainingSeconds: 0,
-  timerId: null
+  timerId: null,
+  isPrep: false
 };
 
 // Prevent screen dimming / sleep while the page is open
@@ -692,6 +693,21 @@ function renderGuidedList() {
 
   let html = '';
 
+    if (guidedState.isPrep) {
+    guidedList.innerHTML = `
+        <li class="guided-item guided-now">
+        <span class="guided-label now">Prep</span>
+        <div class="guided-body">
+            <div class="guided-name">Get Ready</div>
+            <div class="guided-meta">Starting in ${formatTime(guidedState.remainingSeconds)}</div>
+        </div>
+        </li>
+    `;
+
+    updateGuidedTimerDisplay();
+    return;
+    }
+
   if (now) {
     const nowWeightClass = getWeightColorClass(now.weight);
     html += `
@@ -777,9 +793,36 @@ function centerGuidedRows() {
 function startStepTimer() {
   clearInterval(guidedState.timerId);
 
+  // ✅ PREP MODE
+  if (guidedState.isPrep) {
+    guidedState.timerId = setInterval(() => {
+      if (guidedState.paused) return;
+
+      guidedState.remainingSeconds -= 1;
+      updateGuidedTimerDisplay();
+      renderGuidedList();
+
+      // ✅ 3-2-1 sounds during prep
+      handleFinalCountdownBeep(guidedState.remainingSeconds);
+
+      if (guidedState.remainingSeconds <= 0) {
+        clearInterval(guidedState.timerId);
+
+        guidedState.isPrep = false;
+        guidedState.remainingSeconds = 0;
+
+        // ✅ Start first REAL exercise with start beep
+        playStartBeep();
+        startStepTimer();
+      }
+    }, 1000);
+
+    return;
+  }
+
+  // ✅ NORMAL MODE (unchanged logic)
   const current = guidedState.steps[guidedState.currentStepIndex];
   if (!current) {
-    // no more steps – workout complete
     guidedState.remainingSeconds = 0;
     updateGuidedTimerDisplay();
     renderGuidedList();
@@ -791,11 +834,10 @@ function startStepTimer() {
     return;
   }
 
-  // New step start: set duration & play "start" sound for WORK
   if (!guidedState.remainingSeconds || guidedState.remainingSeconds <= 0) {
     guidedState.remainingSeconds = current.duration;
     if (current.type === 'work') {
-      playStartBeep();   // ✅ distinct start sound
+      playStartBeep();
     }
   }
 
@@ -811,13 +853,11 @@ function startStepTimer() {
     const step = guidedState.steps[guidedState.currentStepIndex];
     const half = Math.floor(step.duration / 2);
 
-    // 🔔 Halfway beep
     if (guidedState.remainingSeconds === half) {
       playBeep();
       vibratePattern();
     }
 
-    // 🔔 3-2-1 final beeps
     handleFinalCountdownBeep(guidedState.remainingSeconds);
 
     if (guidedState.remainingSeconds <= 0) {
@@ -885,7 +925,10 @@ function startGuidedWorkout() {
   guidedState.currentWorkoutIndex = currentIndex;
   guidedState.steps = buildGuidedSteps(workout);
   guidedState.currentStepIndex = 0;
-  guidedState.remainingSeconds = 0;   // ✅ let startStepTimer decide & play start beep
+
+  // ✅ 7-second PREP countdown before first exercise
+  guidedState.remainingSeconds = 7;
+  guidedState.isPrep = true;
 
   document.body.classList.add('guided-active');
   guidedContainer.classList.remove('hidden');
