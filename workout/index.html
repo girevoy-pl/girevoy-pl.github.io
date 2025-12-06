@@ -12,30 +12,45 @@
 </head>
 <body>
   <main>
-    <!-- Generate workout button -->
-    <button id="generate-btn" class="generate">Generate Workout</button>
+  <!-- Generate workout button -->
+  <button id="generate-btn" class="generate">Generate Workout</button>
 
-    <!-- Workout card -->
-    <div id="workout-display" class="screen">
-      <div class="round-indicator">#1</div>
-      <h2 class="phase-label">Press Generate or select a workout</h2>
-      <p class="status">Your workout will appear here.</p>
+  <!-- ✅ Guided NOW / NEXT auto-scroll section -->
+  <section id="guided-container" class="guided hidden">
+    <div id="guided-timer" class="guided-timer">00:00</div>
+
+    <div id="guided-list-wrapper" class="guided-list-wrapper">
+      <ul id="guided-list" class="guided-list"></ul>
+    </div>
+  </section>
+
+  <!-- ✅ Start / Pause row -->
+  <div class="guided-controls">
+    <button id="start-guided-btn" class="guided-btn">Start Guided Workout</button>
+    <button id="pause-btn" class="guided-btn" disabled>Pause</button>
+  </div>
+
+  <!-- Workout card -->
+  <div id="workout-display" class="screen">
+    <div class="round-indicator">#1</div>
+    <h2 class="phase-label">Press Generate or select a workout</h2>
+    <p class="status">Your workout will appear here.</p>
+  </div>
+
+  <!-- Slider + stepper controls -->
+  <div class="controls">
+    <div class="range-row">
+      <label for="workout-slider" class="range-label">Select Workout</label>
+      <input type="range" id="workout-slider" min="1" value="1" />
     </div>
 
-    <!-- Slider + stepper controls -->
-    <div class="controls">
-      <div class="range-row">
-        <label for="workout-slider" class="range-label">Select Workout</label>
-        <input type="range" id="workout-slider" min="1" value="1" />
-      </div>
-
-      <div class="stepper">
-        <button id="minus-btn" aria-label="decrease">−</button>
-        <input type="number" id="workout-number" value="1" min="1" />
-        <button id="plus-btn" aria-label="increase">+</button>
-      </div>
+    <div class="stepper">
+      <button id="minus-btn" aria-label="decrease">−</button>
+      <input type="number" id="workout-number" value="1" min="1" />
+      <button id="plus-btn" aria-label="increase">+</button>
     </div>
-  </main>
+  </div>
+</main>
 
   <footer class="footer">Workout Generator • Stay consistent 🔥</footer>
 
