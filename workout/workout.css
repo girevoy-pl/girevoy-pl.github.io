@@ -551,7 +551,7 @@ body.guided-active {
   /* ✅ Compact & readable text */
   .meta-value,
   .exercise-desc {
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     line-height: 1.3;
   }
 
