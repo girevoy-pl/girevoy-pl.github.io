@@ -463,6 +463,8 @@ const workouts = [
 ];
 
 let wakeLock = null;
+let audioCtx = null;
+let scrollY = 0;
 
 // Guided workout state
 const guidedState = {
@@ -521,57 +523,52 @@ function handleFinalCountdownBeep(remaining) {
   }
 }
 
-// Utility: simple beep using Web Audio
-// Utility: simple beep using Web Audio
-function playBeep() {
-  try {
+function initAudio() {
+  if (!audioCtx) {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-
-    const ctx = new AudioContext();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.value = 880;        // general beep
-    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start();
-    osc.stop(ctx.currentTime + 0.2);
-
-    osc.onended = () => ctx.close();
-  } catch (err) {
-    console.warn('Beep failed:', err);
+    audioCtx = new AudioContext();
   }
 }
 
-// ✅ NEW: slightly different sound indicating EXERCISE START
-function playStartBeep() {
+function playTone(freq = 880, duration = 0.2, volume = 0.25) {
   try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
+    if (!audioCtx) return;
 
-    const ctx = new AudioContext();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
 
     osc.type = 'sine';
-    osc.frequency.value = 700;        // a bit lower, softer start tone
-    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+    osc.frequency.value = freq;
+    gain.gain.value = volume;
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+    gain.connect(audioCtx.destination);
 
     osc.start();
-    osc.stop(ctx.currentTime + 0.25);
-
-    osc.onended = () => ctx.close();
+    osc.stop(audioCtx.currentTime + duration);
   } catch (err) {
-    console.warn('Start beep failed:', err);
+    console.warn('Tone failed:', err);
   }
+}
+
+function playBeep() {
+  playTone(880, 0.2, 0.2);
+}
+
+function playStartBeep() {
+  playTone(700, 0.25, 0.25);
+}
+
+function lockScroll() {
+  scrollY = window.scrollY;
+  document.body.style.top = `-${scrollY}px`;
+  document.body.classList.add('guided-active');
+}
+
+function unlockScroll() {
+  document.body.classList.remove('guided-active');
+  document.body.style.top = '';
+  window.scrollTo(0, scrollY);
 }
 
 // Utility: vibration
@@ -681,6 +678,30 @@ function updateGuidedTimerDisplay() {
   const eStr = total > 0 ? `${current}/${total}` : '-/-';
 
   guidedTimer.textContent = `R: ${rStr} | E: ${eStr} | ${time}`;
+}
+
+function updateProgressBar() {
+  const bar = document.getElementById('guided-progress-bar');
+  if (!bar) return;
+
+  const step = guidedState.steps[guidedState.currentStepIndex];
+  if (!step || guidedState.isPrep) {
+    bar.style.width = '0%';
+    bar.style.background = '#ccc';
+    return;
+  }
+
+  const percent =
+    100 - (guidedState.remainingSeconds / step.duration) * 100;
+
+  bar.style.width = `${Math.min(100, Math.max(0, percent))}%`;
+
+  // ✅ Match guided-label color
+  const guidedNowLabel = document.querySelector('.guided-label.now');
+  if (guidedNowLabel) {
+    bar.style.background =
+      getComputedStyle(guidedNowLabel).backgroundColor;
+  }
 }
 
 // Render guided NOW / NEXT list
@@ -793,16 +814,19 @@ function centerGuidedRows() {
 function startStepTimer() {
   clearInterval(guidedState.timerId);
 
-  // ✅ PREP MODE
+  /* =========================
+     ✅ PREP MODE (7s countdown)
+     ========================= */
   if (guidedState.isPrep) {
     guidedState.timerId = setInterval(() => {
       if (guidedState.paused) return;
 
       guidedState.remainingSeconds -= 1;
       updateGuidedTimerDisplay();
+      updateProgressBar();
       renderGuidedList();
 
-      // ✅ 3-2-1 sounds during prep
+      // ✅ 3-2-1 beeps during prep
       handleFinalCountdownBeep(guidedState.remainingSeconds);
 
       if (guidedState.remainingSeconds <= 0) {
@@ -811,7 +835,7 @@ function startStepTimer() {
         guidedState.isPrep = false;
         guidedState.remainingSeconds = 0;
 
-        // ✅ Start first REAL exercise with start beep
+        // ✅ Start first real exercise with start tone
         playStartBeep();
         startStepTimer();
       }
@@ -820,11 +844,16 @@ function startStepTimer() {
     return;
   }
 
-  // ✅ NORMAL MODE (unchanged logic)
+  /* =========================
+     ✅ NORMAL MODE (Work/Rest)
+     ========================= */
   const current = guidedState.steps[guidedState.currentStepIndex];
+
+  // ✅ Workout finished
   if (!current) {
     guidedState.remainingSeconds = 0;
     updateGuidedTimerDisplay();
+    updateProgressBar();
     renderGuidedList();
     pauseBtn.disabled = true;
     pauseBtn.textContent = 'Pause';
@@ -834,14 +863,17 @@ function startStepTimer() {
     return;
   }
 
+  // ✅ New step start (set duration + play start tone if WORK)
   if (!guidedState.remainingSeconds || guidedState.remainingSeconds <= 0) {
     guidedState.remainingSeconds = current.duration;
+
     if (current.type === 'work') {
       playStartBeep();
     }
   }
 
   updateGuidedTimerDisplay();
+  updateProgressBar();
   renderGuidedList();
 
   guidedState.timerId = setInterval(() => {
@@ -849,15 +881,18 @@ function startStepTimer() {
 
     guidedState.remainingSeconds -= 1;
     updateGuidedTimerDisplay();
+    updateProgressBar();
 
     const step = guidedState.steps[guidedState.currentStepIndex];
     const half = Math.floor(step.duration / 2);
 
+    // ✅ Halfway beep
     if (guidedState.remainingSeconds === half) {
       playBeep();
       vibratePattern();
     }
 
+    // ✅ Final 3-2-1 beeps
     handleFinalCountdownBeep(guidedState.remainingSeconds);
 
     if (guidedState.remainingSeconds <= 0) {
@@ -930,7 +965,7 @@ function startGuidedWorkout() {
   guidedState.remainingSeconds = 7;
   guidedState.isPrep = true;
 
-  document.body.classList.add('guided-active');
+  lockScroll();
   guidedContainer.classList.remove('hidden');
 
   pauseBtn.disabled = false;
@@ -955,7 +990,7 @@ function stopGuidedWorkout() {
   guidedList.innerHTML = '';
   pauseBtn.disabled = true;
   pauseBtn.textContent = 'Pause';
-  document.body.classList.remove('guided-active');
+  unlockScroll();
   guidedContainer.classList.add('hidden');
 }
 
@@ -1056,6 +1091,9 @@ function updateControls(value) {
     stopGuidedWorkout();
   }
 }
+
+document.addEventListener('touchstart', initAudio, { once: true });
+document.addEventListener('click', initAudio, { once: true });
 
 // Event listeners
 slider.addEventListener("input", e => updateControls(e.target.value));
