@@ -549,6 +549,17 @@ body.guided-active .workout-meta {
   opacity: 0.25;
 }
 
+/* ✅ Plus / Minus hover color */
+#minus-btn:hover,
+#plus-btn:hover {
+  background: #8E81AA;
+  color: #fff;
+}
+
+/* ✅ Slider accent color */
+#workout-slider {
+  accent-color: #8E81AA;
+}
 
 /* 📱 Mobile optimization */
 @media (max-width: 600px) {
