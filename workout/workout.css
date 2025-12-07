@@ -545,31 +545,37 @@ body.guided-active {
 
   .meta-label {
     min-width: 85px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 
-  .exercise-desc,
+  /* ✅ Compact & readable text */
   .meta-value,
+  .exercise-desc {
+    font-size: 0.9rem;
+    line-height: 1.3;
+  }
+
+  /* ✅ Keep guided title slightly larger */
   .guided-name {
     font-size: 1.1rem;
   }
 
   .exercise-time {
-    font-size: 1.1rem;
+    font-size: 1rem;
     min-width: 36px;
   }
 
   #generate-btn {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     padding: 12px;
   }
 
   .range-label {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 
   .guided-timer {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
 
   .guided-btn {
