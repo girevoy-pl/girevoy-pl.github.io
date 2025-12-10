@@ -263,7 +263,7 @@ ul.exercise-list {
 #start-guided-btn,
 #pause-btn {
   width: 100%;
-  height: 56px;
+  height: 36px;
   padding: 0;
   display: flex;
   align-items: center;
@@ -361,9 +361,9 @@ ul.exercise-list {
 
 .guided-timer {
   text-align: center;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 900;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .guided-list-wrapper {
@@ -538,166 +538,140 @@ ul.exercise-list {
   margin-top: auto;
 }
 
-/* ============================================================
-   ✅ MOBILE + LANDSCAPE OPTIMIZATION (APPEND AT BOTTOM)
-   Preferred orientation: LANDSCAPE
-============================================================ */
-
-/* ✅ General mobile tightening */
-@media (max-width: 768px) {
-  main {
-    padding: 4px;
-  }
-
-  .workout-header h2 {
-    font-size: 1.4rem;
-  }
-
-  .status {
-    font-size: 1.05rem;
-  }
-
-  .meta-item,
-  .exercise-desc,
-  .exercise-time,
-  .exercise-round,
-  .exercise-rep {
-    font-size: 1.05rem;
-  }
-
-  #generate-btn,
-  #start-guided-btn,
-  #pause-btn {
-    height: 52px;
-    font-size: 1rem;
-  }
-}
+/* ===============================
+   ✅ MOBILE + LANDSCAPE OPTIMIZATION
+================================ */
 
 /* ============================================================
-   ✅ LANDSCAPE MODE (PRIMARY TARGET)
+   ✅ MOBILE LANDSCAPE – FONT SCALING + SCROLL + CONTROLS COMPRESSION
 ============================================================ */
 @media (max-width: 900px) and (orientation: landscape) {
 
+  /* ✅ ENABLE SCROLLING WHERE IT ACTUALLY MATTERS */
   body {
     overflow: hidden;
   }
 
   main {
     height: 100vh;
-    justify-content: flex-start;
-  }
-
-  /* ✅ Guided container uses full viewport */
-  .guided {
-    flex-grow: 1;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
   }
 
-  .guided-timer {
-    font-size: 1.6rem;
-    margin-bottom: 4px;
+  /* ✅ EXERCISE LIST MUST SCROLL */
+  .exercise-list {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .guided-progress {
-    height: 5px;
-    margin-bottom: 6px;
+  ul.exercise-list {
+    overflow-y: auto;
+    max-height: none;
   }
 
-  /* ✅ Guided list wrapper becomes FULL VIEW HEIGHT */
-  .guided-list-wrapper {
-    max-height: none !important;
-    height: calc(100vh - 220px); /* Timer + buttons + padding */
-    overflow: visible !important;
-    border-radius: 0;
-    border-left: none;
-    border-right: none;
-  }
+  /* ===================================================
+     ✅ UNIFIED FONT SCALING (THIS FIXES YOUR CORE ISSUE)
+  =================================================== */
 
-  .guided-list {
-    padding: 6px;
-  }
-
-  /* ✅ Exercise rows become more compact for landscape */
   .exercise-item.flight-row {
-    grid-template-columns:
-      48px   /* ROUND */
-      48px   /* EXERCISE */
-      36px   /* LEFT */
-      36px   /* RIGHT */
-      52px   /* REPS */
+    grid-template-columns: 
+      44px   /* round */
+      44px   /* index */
+      32px   /* left */
+      32px   /* right */
+      44px   /* reps */
       1fr;
-    column-gap: 6px;
-    padding: 4px 0;
+    padding: 3px 0;
   }
 
+  /* ✅ FORCE EVERY CELL TO SCALE IDENTICALLY */
   .exercise-time,
-  .exercise-desc,
   .exercise-round,
   .exercise-rep,
   .sideL,
-  .sideR {
-    font-size: 1rem;
-    padding: 4px 8px;
-    height: 34px;
+  .sideR,
+  .exercise-desc {
+    font-size: 0.95rem !important;
+    height: 32px;
+    padding: 4px 6px;
   }
 
-  /* ✅ Guided controls pinned nicely at bottom */
+  /* ✅ PREVENT SIDE CELLS FROM OVERFLOWING */
+  .sideL,
+  .sideR {
+    min-width: 32px;
+    max-width: 32px;
+    padding: 0;
+  }
+
+  /* ✅ DESCRIPTION MUST FLEX CLEANLY */
+  .exercise-desc {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ===================================================
+     ✅ CONTROLS SECTION COMPRESSION
+  =================================================== */
+
+  .controls {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .controls .range-label {
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  .controls #workout-slider {
+    height: 16px;
+  }
+
+  .controls .stepper {
+    grid-template-columns: 44px 1fr 44px;
+    gap: 6px;
+  }
+
+  .controls #workout-number {
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  #minus-btn,
+  #plus-btn {
+    width: 44px;
+    height: 42px;
+    font-size: 1.25rem;
+  }
+
+  #generate-btn,
+  #start-guided-btn,
+  #pause-btn {
+    height: 36px;
+    font-size: 0.95rem;
+  }
+
+  /* ===================================================
+     ✅ GUIDED CONTROLS DO NOT BLOCK SCROLL
+  =================================================== */
+
   .guided-controls {
     position: sticky;
-    bottom: 6px;
+    bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom);
     background: var(--bg);
-    padding-top: 6px;
-    padding-bottom: 6px;
     z-index: 10;
   }
-
-  #pause-btn {
-    height: 52px;
-  }
 }
 
-/* ============================================================
-   ✅ PORTRAIT FALLBACK (SECONDARY)
-============================================================ */
-@media (max-width: 600px) and (orientation: portrait) {
-
-  .guided-list-wrapper {
-    max-height: 50vh;
-    overflow-y: auto;
-  }
-
-  .exercise-item.flight-row {
-    grid-template-columns:
-      56px
-      56px
-      40px
-      40px
-      56px
-      1fr;
-  }
-
-  .guided-timer {
-    font-size: 1.4rem;
-  }
-
-  .guided-controls {
-    margin-top: 8px;
-  }
-}
-
-/* ============================================================
-   ✅ SAFE AREA SUPPORT (iPhone with notch)
-============================================================ */
+/* ✅ SAFE AREA SUPPORT */
 @supports (padding: env(safe-area-inset-bottom)) {
-  main {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .guided-controls {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  main { padding-bottom: env(safe-area-inset-bottom); }
+  .guided-controls { padding-bottom: env(safe-area-inset-bottom); }
 }
 
 /* ============================================================
