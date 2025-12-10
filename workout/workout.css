@@ -547,46 +547,43 @@ ul.exercise-list {
 ============================================================ */
 @media (max-width: 900px) and (orientation: landscape) {
 
-  /* ✅ ENABLE SCROLLING WHERE IT ACTUALLY MATTERS */
+  /* ✅ RESTORE PAGE SCROLL PROPERLY */
   body {
-    overflow: hidden;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
   }
 
   main {
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    min-height: 100vh;
+    overflow: visible;
   }
 
-  /* ✅ EXERCISE LIST MUST SCROLL */
-  .exercise-list {
-    flex: 1;
-    overflow-y: auto;
+  /* ✅ EXERCISE LIST OWNS ITS OWN SCROLL */
+  .exercise-list,
+  ul.exercise-list {
+    max-height: 58vh;
+    overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
   }
 
-  ul.exercise-list {
-    overflow-y: auto;
-    max-height: none;
-  }
-
   /* ===================================================
-     ✅ UNIFIED FONT SCALING (THIS FIXES YOUR CORE ISSUE)
+     ✅ GRID FIX — PREVENT ALL OVERLAP
   =================================================== */
 
   .exercise-item.flight-row {
-    grid-template-columns: 
-      44px   /* round */
-      44px   /* index */
-      32px   /* left */
-      32px   /* right */
-      44px   /* reps */
-      1fr;
+    display: grid;
+    grid-template-columns:
+      minmax(40px, 40px)   /* round */
+      minmax(40px, 40px)   /* index */
+      minmax(32px, 32px)   /* left */
+      minmax(32px, 32px)   /* right */
+      minmax(40px, 40px)   /* reps */
+      minmax(0, 1fr);     /* description */
+    column-gap: 6px;
     padding: 3px 0;
   }
 
-  /* ✅ FORCE EVERY CELL TO SCALE IDENTICALLY */
+  /* ✅ HARD SIZE LOCK — ALL CELLS SCALE IDENTICALLY */
   .exercise-time,
   .exercise-round,
   .exercise-rep,
@@ -594,32 +591,38 @@ ul.exercise-list {
   .sideR,
   .exercise-desc {
     font-size: 0.95rem !important;
-    height: 32px;
+    height: 30px;
     padding: 4px 6px;
+    min-width: 0 !important;
+    max-width: 100%;
   }
 
-  /* ✅ PREVENT SIDE CELLS FROM OVERFLOWING */
+  /* ✅ PREVENT SIDE CELLS FROM PUSHING GRID */
   .sideL,
-  .sideR {
-    min-width: 32px;
-    max-width: 32px;
-    padding: 0;
+  .sideR,
+  .exercise-round,
+  .exercise-rep,
+  .exercise-time {
+    width: 100% !important;
   }
 
-  /* ✅ DESCRIPTION MUST FLEX CLEANLY */
+  /* ✅ DESCRIPTION MUST NEVER DOMINATE */
   .exercise-desc {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    justify-content: flex-start;
   }
 
   /* ===================================================
-     ✅ CONTROLS SECTION COMPRESSION
+     ✅ CONTROLS COMPRESSION (NO SCROLL BLOCKING)
   =================================================== */
 
   .controls {
+    max-height: 26vh;
+    overflow: hidden;
     gap: 6px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .controls .range-label {
@@ -628,35 +631,35 @@ ul.exercise-list {
   }
 
   .controls #workout-slider {
-    height: 16px;
+    height: 14px;
   }
 
   .controls .stepper {
-    grid-template-columns: 44px 1fr 44px;
+    grid-template-columns: 40px 1fr 40px;
     gap: 6px;
   }
 
   .controls #workout-number {
-    height: 42px;
+    height: 40px;
     font-size: 1rem;
   }
 
   #minus-btn,
   #plus-btn {
-    width: 44px;
-    height: 42px;
-    font-size: 1.25rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
   }
 
   #generate-btn,
   #start-guided-btn,
   #pause-btn {
-    height: 36px;
+    height: 40px;
     font-size: 0.95rem;
   }
 
   /* ===================================================
-     ✅ GUIDED CONTROLS DO NOT BLOCK SCROLL
+     ✅ GUIDED CONTROLS STAY PINNED WITHOUT BLOCKING SCROLL
   =================================================== */
 
   .guided-controls {
