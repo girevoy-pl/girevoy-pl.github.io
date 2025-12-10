@@ -444,7 +444,7 @@ ul.exercise-list {
 ================================ */
 @media (max-width: 900px) and (orientation: landscape) {
 
-  /* ✅ NEVER CAP PAGE HEIGHT */
+  /* ✅ PAGE MUST ALWAYS SCROLL */
   html, body {
     height: auto !important;
     min-height: 100vh !important;
@@ -452,28 +452,28 @@ ul.exercise-list {
     overflow-x: hidden !important;
   }
 
-  /* ✅ MAIN MUST NEVER CLIP */
+  /* ✅ MAIN NEVER CLIPS */
   main {
     min-height: auto !important;
     height: auto !important;
     overflow: visible !important;
   }
 
-  /* ✅ EXERCISE LIST SCROLLS INTERNALLY (NOT THE PAGE) */
+  /* ✅ EXERCISE LIST MUST NOT OWN A SCROLLBAR */
   .exercise-list,
   ul.exercise-list {
-    max-height: 50vh;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* ✅ GUIDED LIST STILL SCROLLS INTERNALLY (INTENTIONAL) */
+  .guided-list-wrapper {
+    max-height: 45vh;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* ✅ GUIDED LIST SCROLLS INTERNALLY */
-  .guided-list-wrapper {
-    max-height: 45vh;
-    overflow-y: auto !important;
-  }
-
-  /* ✅ KEEP GRID TIGHT BUT DO NOT SHRINK CONTENT AWAY */
+  /* ✅ GRID COMPRESSION ONLY (NO CLIPPING) */
   .exercise-item.flight-row {
     grid-template-columns:
       minmax(40px, 40px)
@@ -503,7 +503,7 @@ ul.exercise-list {
     text-overflow: ellipsis;
   }
 
-  /* ✅ CONTROLS MUST NOT CLIP CONTENT */
+  /* ✅ CONTROLS NEVER BLOCK SCROLL */
   .controls {
     max-height: none !important;
     overflow: visible !important;
@@ -511,7 +511,6 @@ ul.exercise-list {
     margin-bottom: 8px;
   }
 
-  /* ✅ BUTTONS SCALE BUT NEVER BLOCK SCROLL */
   #generate-btn,
   #start-guided-btn,
   #pause-btn {
