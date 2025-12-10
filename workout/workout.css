@@ -444,21 +444,36 @@ ul.exercise-list {
 ================================ */
 @media (max-width: 900px) and (orientation: landscape) {
 
-  body {
+  /* ✅ NEVER CAP PAGE HEIGHT */
+  html, body {
+    height: auto !important;
+    min-height: 100vh !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
   }
 
+  /* ✅ MAIN MUST NEVER CLIP */
   main {
-    min-height: 100vh;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
-  /* Exercise list owns its scroll */
+  /* ✅ EXERCISE LIST SCROLLS INTERNALLY (NOT THE PAGE) */
   .exercise-list,
   ul.exercise-list {
-    max-height: 58vh;
+    max-height: 50vh;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
 
+  /* ✅ GUIDED LIST SCROLLS INTERNALLY */
+  .guided-list-wrapper {
+    max-height: 45vh;
+    overflow-y: auto !important;
+  }
+
+  /* ✅ KEEP GRID TIGHT BUT DO NOT SHRINK CONTENT AWAY */
   .exercise-item.flight-row {
     grid-template-columns:
       minmax(40px, 40px)
@@ -468,7 +483,7 @@ ul.exercise-list {
       minmax(40px, 40px)
       minmax(0, 1fr);
     column-gap: 6px;
-    padding: 3px 0;
+    padding: 4px 0;
   }
 
   .exercise-time,
@@ -478,8 +493,8 @@ ul.exercise-list {
   .sideR,
   .exercise-desc {
     font-size: 0.9rem;
-    height: 30px;
-    padding: 3px 4px;
+    height: 32px;
+    padding: 4px 6px;
   }
 
   .exercise-desc {
@@ -488,23 +503,18 @@ ul.exercise-list {
     text-overflow: ellipsis;
   }
 
+  /* ✅ CONTROLS MUST NOT CLIP CONTENT */
   .controls {
-    max-height: 26vh;
+    max-height: none !important;
+    overflow: visible !important;
     gap: 6px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
-  .controls .range-label {
-    font-size: 0.95rem;
-    margin-bottom: 2px;
-  }
-
-  .controls .stepper {
-    grid-template-columns: 40px 1fr 40px;
-    gap: 6px;
-  }
-
-  .controls #workout-number {
+  /* ✅ BUTTONS SCALE BUT NEVER BLOCK SCROLL */
+  #generate-btn,
+  #start-guided-btn,
+  #pause-btn {
     height: 40px;
     font-size: 0.95rem;
   }
@@ -516,15 +526,13 @@ ul.exercise-list {
     font-size: 1.2rem;
   }
 
-  #generate-btn,
-  #start-guided-btn,
-  #pause-btn {
-    height: 40px;
-    font-size: 0.95rem;
-  }
-
-  .guided-list-wrapper {
-    max-height: 50vh;
+  /* ✅ STICKY GUIDED CONTROLS WITHOUT PAGE LOCK */
+  .guided-controls {
+    position: sticky;
+    bottom: 0;
+    background: var(--bg);
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 10;
   }
 }
 
