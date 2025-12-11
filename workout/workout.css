@@ -178,7 +178,7 @@ ul.exercise-list {
 .sideL,
 .sideR,
 .exercise-desc {
-  font-size: clamp(0.85rem, 3vw, 1.1rem);
+  font-size: clamp(1.5rem, 3vw, 1.5rem);
   font-weight: 900;
   height: 34px;
   background: #f4f4f4;
@@ -267,6 +267,22 @@ ul.exercise-list {
 .exercise-item.active.flight-row .exercise-rep,
 .exercise-item.active.flight-row .exercise-desc {
   background-color: var(--weight-bg, #f4f4f4);
+}
+
+  .exercise-time,
+  .exercise-round {
+    height: 32px;
+    font-size: 1.1rem;
+    padding: 4px 6px;
+}
+
+  .sideL,
+  .sideR,
+  .exercise-rep 
+  .exercise-desc {
+    font-size: 1.5rem;
+    height: 32px;
+    padding: 4px 6px;
 }
 
 /* ===============================
@@ -476,11 +492,11 @@ ul.exercise-list {
   /* ✅ GRID COMPRESSION ONLY (NO CLIPPING) */
   .exercise-item.flight-row {
     grid-template-columns:
-      minmax(40px, 40px)
-      minmax(40px, 40px)
-      minmax(32px, 32px)
-      minmax(32px, 32px)
-      minmax(40px, 40px)
+      minmax(40px, 32px)
+      minmax(40px, 32px)
+      minmax(40px, 22px)
+      minmax(40px, 22px)
+      minmax(40px, 22px)
       minmax(0, 1fr);
     column-gap: 6px;
     padding: 4px 0;
@@ -497,7 +513,25 @@ ul.exercise-list {
     padding: 4px 6px;
   }
 
+  .sideL, .sideR {
+    font-size: clamp(1.05rem, 2.8vw, 1.45rem) !important;
+    font-weight: 900;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .exercise-rep {
+    font-size: clamp(1.05rem, 2.8vw, 1.45rem) !important;
+    font-weight: 900;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .exercise-desc {
+    font-size: clamp(1.05rem, 2.8vw, 1.45rem) !important;
+    font-weight: 900;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
