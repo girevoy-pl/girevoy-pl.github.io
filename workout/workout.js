@@ -559,33 +559,22 @@ const ExerciseListModule = (() => {
     container.innerHTML = `<ul class="exercise-list">${html}</ul>`;
   }
 
-  function syncHighlight(steps, stepIndex) {
+  // ✅ New logic: do NOT try to track done items by index.
+  // The list is already being pruned (completed exercise removed),
+  // so the FIRST remaining item is always the current exercise.
+  function syncHighlight() {
     const items = document.querySelectorAll('.exercise-item');
-    if (!items.length || !steps || !steps.length) return;
+    if (!items.length) return;
 
-    // Count completed WORK steps
-    let completedWorkCount = 0;
-    for (let i = 0; i < stepIndex; i++) {
-      if (steps[i].type === 'work') completedWorkCount++;
-    }
-
-    items.forEach((li, i) => {
-      li.classList.remove('active');
+    items.forEach((li) => {
+      li.classList.remove('active', 'done');
       li.style.color = '';
-      if (i < completedWorkCount) {
-        li.classList.add('done');
-      } else {
-        li.classList.remove('done');
-      }
     });
 
-    const currentStep = steps[stepIndex];
-    if (!currentStep || currentStep.type !== 'work') return;
-
-    const activeItem = items[completedWorkCount];
-    if (!activeItem) return;
-
-    activeItem.classList.add('active');
+    const first = items[0];
+    if (first) {
+      first.classList.add('active');
+    }
   }
 
   return { init, render, syncHighlight };
@@ -835,13 +824,103 @@ function computeExerciseProgress() {
 
 // Update timer text: R: X | E: A/B | MM:SS
 function updateGuidedTimerDisplay() {
-  const { round, current, total } = computeExerciseProgress();
+  const steps = guidedState.steps || [];
+
+  if (!steps.length) {
+    guidedTimer.innerHTML = 'R: - | E: -/- | 00:00<br>C: - | N: —';
+    return;
+  }
+
   const time = formatTime(guidedState.remainingSeconds);
 
-  const rStr = round != null ? round : '-';
-  const eStr = total > 0 ? `${current}/${total}` : '-/-';
+  // ===== TOTAL EXERCISES (only WORK steps) =====
+  let totalWork = 0;
+  for (let i = 0; i < steps.length; i++) {
+    if (steps[i].type === 'work') totalWork++;
+  }
 
-  guidedTimer.textContent = `R: ${rStr} | E: ${eStr} | ${time}`;
+  // ===== FIND CURRENT EXERCISE (work-centric) =====
+  let currentWorkIndex = -1; // index in steps[] of the current exercise
+  let logicalIndex = guidedState.currentStepIndex;
+
+  if (logicalIndex < 0) logicalIndex = 0;
+  if (logicalIndex >= steps.length) logicalIndex = steps.length - 1;
+
+  const logicalStep = steps[logicalIndex];
+
+  if (guidedState.isPrep) {
+    // During prep we are before the first exercise
+    currentWorkIndex = -1;
+  } else if (logicalStep && logicalStep.type === 'work') {
+    // We are on a work step
+    currentWorkIndex = logicalIndex;
+  } else {
+    // We are on a rest / other step: show the last work step as "current"
+    for (let i = logicalIndex - 1; i >= 0; i--) {
+      if (steps[i].type === 'work') {
+        currentWorkIndex = i;
+        break;
+      }
+    }
+  }
+
+  // ===== DETERMINE CURRENT EXERCISE NAME & NUMBER =====
+  let currentName = '—';
+  let currentNumber = 0;
+  let round = null;
+
+  if (guidedState.isPrep) {
+    currentName = 'Get Ready';
+    currentNumber = 0;
+  } else if (currentWorkIndex >= 0) {
+    const currentStep = steps[currentWorkIndex];
+    currentName = currentStep.name || '—';
+    round = currentStep.round != null ? currentStep.round : null;
+
+    // Count how many work steps are up to and including currentWorkIndex
+    let count = 0;
+    for (let i = 0; i <= currentWorkIndex; i++) {
+      if (steps[i].type === 'work') count++;
+    }
+    currentNumber = count;
+  } else {
+    // We haven't started the first exercise yet (after prep but before first work)
+    currentName = '—';
+    currentNumber = 0;
+  }
+
+  // ===== FIND NEXT EXERCISE (next WORK step) =====
+  let nextWorkStep = null;
+  if (guidedState.isPrep) {
+    // Next after prep is the first work step
+    for (let i = 0; i < steps.length; i++) {
+      if (steps[i].type === 'work') {
+        nextWorkStep = steps[i];
+        break;
+      }
+    }
+  } else if (currentWorkIndex >= 0) {
+    for (let i = currentWorkIndex + 1; i < steps.length; i++) {
+      if (steps[i].type === 'work') {
+        nextWorkStep = steps[i];
+        break;
+      }
+    }
+  }
+
+  const nextName = nextWorkStep ? nextWorkStep.name : '—';
+
+  // ===== ROUND / EXERCISE STRING =====
+  if (round == null && nextWorkStep && nextWorkStep.round != null) {
+    round = nextWorkStep.round;
+  }
+  const rStr = round != null ? round : '-';
+  const eStr = totalWork > 0 ? `${currentNumber}/${totalWork}` : '-/-';
+
+  // ===== RENDER (multiline) =====
+  guidedTimer.innerHTML =
+    `R: ${rStr} | E: ${eStr} | ${time}<br>` +
+    `C: ${currentName} | N: ${nextName}`;
 }
 
 function updateProgressBar() {
@@ -850,34 +929,53 @@ function updateProgressBar() {
 
   const step = guidedState.steps[guidedState.currentStepIndex];
 
-  // Prep mode or no step
+  // PREP or no step → neutral
   if (!step || guidedState.isPrep) {
     bar.style.width = '0%';
-    bar.style.background = '#ccc';
+    bar.style.background = '#F4F4F4';
     return;
   }
 
-  const percent =
-    100 - (guidedState.remainingSeconds / step.duration) * 100;
-
+  const percent = 100 - (guidedState.remainingSeconds / step.duration) * 100;
   bar.style.width = `${Math.min(100, Math.max(0, percent))}%`;
 
-  // FORCE COLOR = ACTIVE EXERCISE DESC BACKGROUND
-  const activeExercise = document.querySelector(
-    '.exercise-item.active.flight-row .exercise-desc'
-  );
+  // REST → force neutral color
+  if (step.type === 'rest') {
+    bar.style.background = '#F6F7FB';
+    return;
+  }
 
-  if (activeExercise) {
-    bar.style.background =
-      getComputedStyle(activeExercise).backgroundColor;
+  // WORK → use active exercise highlight color
+  const active = document.querySelector('.exercise-item.active .exercise-desc');
+  if (active) {
+    bar.style.background = getComputedStyle(active).backgroundColor;
+  } else {
+    bar.style.background = '#F6F7FB';
   }
 }
 
 function syncExerciseHighlight() {
-  ExerciseListModule.syncHighlight(
-    guidedState.steps,
-    guidedState.currentStepIndex
-  );
+  const items = document.querySelectorAll('.exercise-item');
+  if (!items.length) return;
+
+  const step = guidedState.steps[guidedState.currentStepIndex];
+
+  // ✅ CLEAR ALL STATES FIRST
+  items.forEach(li => {
+    li.classList.remove('active');
+    li.style.color = '';
+  });
+
+  // ✅ IF CURRENT STEP IS REST → DO NOT HIGHLIGHT ANYTHING
+  if (!step || step.type === 'rest') {
+    return;
+  }
+
+  // ✅ CURRENT STEP IS WORK → HIGHLIGHT FIRST REMAINING ITEM ONLY
+  const first = items[0];
+  if (first) {
+    first.classList.add('active');
+  }
 }
 
 /* ============================================================
@@ -1017,13 +1115,21 @@ function startStepTimer() {
     handleFinalCountdownBeep(guidedState.remainingSeconds);
 
     if (guidedState.remainingSeconds <= 0) {
-      clearInterval(guidedState.timerId);
-      playBeep();
-      vibratePattern();
+    clearInterval(guidedState.timerId);
+    playBeep();
+    vibratePattern();
 
-      guidedState.currentStepIndex += 1;
-      guidedState.remainingSeconds = 0;
-      startStepTimer();
+    const finishedStep =
+        guidedState.steps[guidedState.currentStepIndex];
+
+    // ✅ REMOVE COMPLETED WORK EXERCISE FROM LIST
+    if (finishedStep?.type === 'work') {
+        removeCompletedExerciseFromGuidedList();
+    }
+
+    guidedState.currentStepIndex += 1;
+    guidedState.remainingSeconds = 0;
+    startStepTimer();
     }
   }, 1000);
 }
@@ -1042,6 +1148,9 @@ function startGuidedWorkout() {
   const workout = workouts[currentIndex];
   if (!workout) return;
 
+  // ✅ FORCE WAKE LOCK ON EVERY START
+  enableWakeLock();
+
   guidedState.active = true;
   guidedState.paused = false;
   guidedState.currentWorkoutIndex = currentIndex;
@@ -1052,17 +1161,14 @@ function startGuidedWorkout() {
   guidedState.remainingSeconds = 7;
   guidedState.isPrep = true;
 
-  /* ✅✅✅ NEW: HIDE NORMAL WORKOUT SCREEN */
   display.style.display = 'none';
 
-  /* ✅✅✅ NEW: REMOVE SCROLLBAR FROM GUIDED LIST WRAPPER */
   const wrapper = document.querySelector('.guided-list-wrapper');
   if (wrapper) {
     wrapper.style.overflow = 'visible';
     wrapper.style.maxHeight = 'none';
   }
 
-  // Show ul.exercise-list under progress bar
   if (guidedList) {
     ExerciseListModule.init(guidedList);
     ExerciseListModule.render(workout);
@@ -1077,6 +1183,17 @@ function startGuidedWorkout() {
   updateGuidedTimerDisplay();
   updateProgressBar();
   startStepTimer();
+}
+
+function removeCompletedExerciseFromGuidedList() {
+  const items = guidedList.querySelectorAll('.exercise-item');
+  if (!items.length) return;
+
+  // Remove the FIRST item only (represents completed work step)
+  const first = items[0];
+  if (first) {
+    first.remove();
+  }
 }
 
 // Stop/clear guided workout state (used when changing workouts or leaving)
@@ -1166,6 +1283,7 @@ function initControls() {
 ============================================================ */
 document.addEventListener('touchstart', initAudio, { once: true });
 document.addEventListener('click', initAudio, { once: true });
+document.addEventListener("DOMContentLoaded", enableWakeLock);
 
 slider.addEventListener("input", e => updateControls(e.target.value));
 numberInput.addEventListener("change", e => updateControls(e.target.value));
