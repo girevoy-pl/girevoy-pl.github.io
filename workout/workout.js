@@ -57,7 +57,7 @@ const workouts = [
       { round: 4, weight: 20, load: 1, side: 'R', name: "Half Snatch", url: "https://youtu.be/Xk4czNl5jks?t=109", rep:null, duration: 40, rest: 20 },
       //{ round: 4, weight: null, load: null, side: null, name: "Switch Sides", url: null, rep:null, duration: 5, rest: 0 },
       { round: 4, weight: 20, load: 1, side: 'R', name: "Alt. Clean & Jerk", url: "https://youtu.be/Xk4czNl5jks?t=119", rep:null, duration: 40, rest: 20 },
-      { round: 4, weight: 20, load: 1, side: 'LR', name: "Heavy suitcasse carry", url: "https://youtu.be/Xk4czNl5jks?t=149", rep:null, duration: 120, rest: 20 }
+      { round: 4, weight: 20, load: 1, side: 'LR', name: "Heavy suitcasse carry/side", url: "https://youtu.be/Xk4czNl5jks?t=149", rep:null, duration: 120, rest: 20 }
     ],
     finisher: "Heavy suitcase carry, 1 min per side", finisherload: 1, finisherside: 'LR', finisherweight:null, finisherrep: null, finisherduration: 120, finisherrest: 0
   },
@@ -84,7 +84,7 @@ const workouts = [
       { round: 2, weight: 12, load: 1, side: 'R', name: "Goblet Squat", url: "https://youtu.be/6JWTccTm2xU?t=665", rep: 20, duration: 90, rest: 0 },
       { round: 2, weight: 12, load: 1, side: 'R', name: "DH Swing", url: "https://youtu.be/6JWTccTm2xU?t=756", rep: 25, duration: 90, rest: 0 },
       { round: 2, weight: null, load: null, side: null, name: "Push Up / Modified Burpee", url: "https://youtu.be/6JWTccTm2xU?t=818", rep: 10, duration: 60, rest: 0 },
-      { round: 2, weight: 12, load: 1, side: 'LR', name: "Suitcase Walk", url: "https://youtu.be/6JWTccTm2xU?t=892", rep: null, duration: 90, rest: 0 }
+      { round: 2, weight: 12, load: 1, side: 'LR', name: "Suitcase Walk/side", url: "https://youtu.be/6JWTccTm2xU?t=892", rep: null, duration: 90, rest: 0 }
     ],
     finisher: "Suitcase Walk", finisherweight: null,  finisherurl: null, finisherrep: null, finisherduration: 60, finisherrest: 0
   },
@@ -198,12 +198,12 @@ const workouts = [
     reps: null,
     exercises: [
       { round: 1, weight: 16, load: 1, side: 'L', name: "Power Clean", url: "https://youtu.be/cwuyJ71LKqc?t=145", rep:null, duration: 120, rest: 10 },
-      { round: 1, weight: 16, load: 1, side: 'LR', name: "DH Swing", url: "https://youtu.be/cwuyJ71LKqc?t=296", rep:40, duration: 60, rest: 10 },
+      { round: 1, weight: 16, load: 1, side: null, name: "DH Swing", url: "https://youtu.be/cwuyJ71LKqc?t=296", rep:40, duration: 60, rest: 10 },
       { round: 1, weight: 16, load: 1, side: 'L', name: "Power Clean, Squat & DH Press Flow", url: "https://youtu.be/cwuyJ71LKqc?t=387", rep:null, duration: 120, rest: null },
       { round: 1, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
 
       { round: 2, weight: 16, load: 1, side: 'L', name: "Power Clean", url: "https://youtu.be/cwuyJ71LKqc?t=145", rep:null, duration: 120, rest: 10 },
-      { round: 2, weight: 16, load: 1, side: 'LR', name: "DH Swing", url: "https://youtu.be/cwuyJ71LKqc?t=296", rep:40, duration: 60, rest: 10 },
+      { round: 2, weight: 16, load: 1, side: null, name: "DH Swing", url: "https://youtu.be/cwuyJ71LKqc?t=296", rep:40, duration: 60, rest: 10 },
       { round: 2, weight: 16, load: 1, side: 'L', name: "Power Clean, Squat & DH Press Flow", url: "https://youtu.be/cwuyJ71LKqc?t=387", rep:null, duration: 120, rest: null },
       { round: 2, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
 
@@ -212,14 +212,14 @@ const workouts = [
       { round: 3, weight: 16, load: 1, side: 'LR', name: "H2H Swing", url: "https://youtu.be/cwuyJ71LKqc?t=1105", rep:null, duration: 120, rest: 10 },
       { round: 3, weight: 16, load: 1, side: 'L', name: "Clean Left, Rack Squat & Press Flow ", url: "https://youtu.be/cwuyJ71LKqc?t=1229", rep:null, duration: 60, rest: null },
       { round: 3, weight: 16, load: 1, side: 'R', name: "Clean Right, Rack Squat & Press Flow", url: "https://youtu.be/cwuyJ71LKqc?t=1229", rep:null, duration: 60, rest: null },
-      { round: 3, weight: 16, load: 1, side: 'R', name: "Burpees", url: "https://youtu.be/cwuyJ71LKqc?t=1389", rep:10, duration: 30, rest: null }
+      { round: 3, weight: 16, load: 1, side: 'R', name: "Burpees", url: "https://youtu.be/cwuyJ71LKqc?t=1389", rep:10, duration: 30, rest: null },
     ],
     finisher: "10 Burpees | Cool Down: Walk it off!", finisherweight: null, finisherurl: null, rep: 10, finisherduration: 30, finisherrest: 0 
   },
   {
     trainingID: 6,
     title: "It checks ALL the boxes",
-    titleUrl: "https://www.youtube.com/watch?v=5aWCIXwRNYg",
+    titleUrl: "https://youtu.be/5aWCIXwRNYg?t=33",
     description: "It's a full body workout that builds core-strength, overall strength, cardio, stamina and vaporizes calories.",
     objective: "2 rounds for 6min, 4 rounds for 6 min with 1 - AMSP - as many reps as possible",
     type: null,
@@ -229,41 +229,41 @@ const workouts = [
     rounds: "6",
     reps: null,
     exercises: [
-      { round: 1, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge/side", url: "https://youtu.be/5aWCIXwRNYg?t=57", rep:3, duration: 45, rest: null },
-      { round: 1, weight: 16, load: 1, side: 'LR', name: "Row/side", url: "https://youtu.be/5aWCIXwRNYg?t=81", rep:3, duration: 45, rest: null },
-      { round: 1, weight: 16, load: 1, side: 'LR', name: "Rack Squat/side", url: "https://youtu.be/5aWCIXwRNYg?t=97", rep:3, duration: 45, rest: null },
-      { round: 1, weight: 16, load: 1, side: 'LR', name: "Press/side", url: "https://youtu.be/5aWCIXwRNYg?t=122", rep:3, duration: 45, rest: null },
+      { round: 1, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge/side", url: "https://youtu.be/5aWCIXwRNYg?t=57", rep:3, duration: 60, rest: null },
+      { round: 1, weight: 16, load: 1, side: 'LR', name: "Row/side", url: "https://youtu.be/5aWCIXwRNYg?t=81", rep:3, duration: 60, rest: null },
+      { round: 1, weight: 16, load: 1, side: 'LR', name: "Rack Squat/side", url: "https://youtu.be/5aWCIXwRNYg?t=97", rep:3, duration: 60, rest: null },
+      { round: 1, weight: 16, load: 1, side: 'LR', name: "Press/side", url: "https://youtu.be/5aWCIXwRNYg?t=122", rep:3, duration: 60, rest: null },
       { round: 1, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
 
-      { round: 2, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge/side", url: "https://youtu.be/5aWCIXwRNYg?t=57", rep:3, duration: 45, rest: null },
-      { round: 2, weight: 16, load: 1, side: 'LR', name: "Row/side", url: "https://youtu.be/5aWCIXwRNYg?t=81", rep:3, duration: 45, rest: null },
-      { round: 2, weight: 16, load: 1, side: 'LR', name: "Rack Squat/side", url: "https://youtu.be/5aWCIXwRNYg?t=97", rep:3, duration: 45, rest: null },
-      { round: 2, weight: 16, load: 1, side: 'LR', name: "Press/side", url: "https://youtu.be/5aWCIXwRNYg?t=122", rep:3, duration: 45, rest: null },
+      { round: 2, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge/side", url: "https://youtu.be/5aWCIXwRNYg?t=57", rep:3, duration: 60, rest: null },
+      { round: 2, weight: 16, load: 1, side: 'LR', name: "Row/side", url: "https://youtu.be/5aWCIXwRNYg?t=81", rep:3, duration: 60, rest: null },
+      { round: 2, weight: 16, load: 1, side: 'LR', name: "Rack Squat/side", url: "https://youtu.be/5aWCIXwRNYg?t=97", rep:3, duration: 60, rest: null },
+      { round: 2, weight: 16, load: 1, side: 'LR', name: "Press/side", url: "https://youtu.be/5aWCIXwRNYg?t=122", rep:3, duration: 60, rest: null },
       { round: 2, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
 
-      { round: 3, weight: 16, load: 2, side: 'LR', name: "Reverse Lunge", url: "https://youtu.be/5aWCIXwRNYg?t=159", rep:3, duration: 30, rest: null },
-      { round: 3, weight: 16, load: 2, side: 'LR', name: "Gorilla Row", url: "https://youtu.be/5aWCIXwRNYg?t=184", rep:3, duration: 30, rest: null },
-      { round: 3, weight: 16, load: 2, side: 'LR', name: "Front Squat", url: "https://youtu.be/5aWCIXwRNYg?t=204", rep:3, duration: 30, rest: null },
-      { round: 3, weight: 16, load: 2, side: 'LR', name: "Press", url: "https://youtu.be/5aWCIXwRNYg?t=229", rep:3, duration: 30, rest: null },
+      { round: 3, weight: 16, load: 2, side: 'LR', name: "Reverse Lunge", url: "https://youtu.be/5aWCIXwRNYg?t=159", rep:3, duration: 60, rest: null },
+      { round: 3, weight: 16, load: 2, side: 'LR', name: "Gorilla Row", url: "https://youtu.be/5aWCIXwRNYg?t=184", rep:3, duration: 60, rest: null },
+      { round: 3, weight: 16, load: 2, side: 'LR', name: "Front Squat", url: "https://youtu.be/5aWCIXwRNYg?t=204", rep:3, duration: 60, rest: null },
+      { round: 3, weight: 16, load: 2, side: 'LR', name: "Press", url: "https://youtu.be/5aWCIXwRNYg?t=229", rep:3, duration: 60, rest: null },
       { round: 3, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 15, rest: null },
 
-      { round: 4, weight: 16, load: 2, side: 'LR', name: "Reverse Lunge", url: "https://youtu.be/5aWCIXwRNYg?t=159", rep:3, duration: 30, rest: null },
-      { round: 4, weight: 16, load: 2, side: 'LR', name: "Gorilla Row", url: "https://youtu.be/5aWCIXwRNYg?t=184", rep:3, duration: 30, rest: null },
-      { round: 4, weight: 16, load: 2, side: 'LR', name: "Front Squat", url: "https://youtu.be/5aWCIXwRNYg?t=204", rep:3, duration: 30, rest: null },
-      { round: 4, weight: 16, load: 2, side: 'LR', name: "Press", url: "https://youtu.be/5aWCIXwRNYg?t=229", rep:3, duration: 30, rest: null },
+      { round: 4, weight: 16, load: 2, side: 'LR', name: "Reverse Lunge", url: "https://youtu.be/5aWCIXwRNYg?t=159", rep:3, duration: 60, rest: null },
+      { round: 4, weight: 16, load: 2, side: 'LR', name: "Gorilla Row", url: "https://youtu.be/5aWCIXwRNYg?t=184", rep:3, duration: 60, rest: null },
+      { round: 4, weight: 16, load: 2, side: 'LR', name: "Front Squat", url: "https://youtu.be/5aWCIXwRNYg?t=204", rep:3, duration: 60, rest: null },
+      { round: 4, weight: 16, load: 2, side: 'LR', name: "Press", url: "https://youtu.be/5aWCIXwRNYg?t=229", rep:3, duration: 60, rest: null },
       { round: 4, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 15, rest: null },
 
-      { round: 5, weight: 16, load: 2, side: 'LR', name: "Reverse Lunge", url: "https://youtu.be/5aWCIXwRNYg?t=159", rep:3, duration: 30, rest: null },
-      { round: 5, weight: 16, load: 2, side: 'LR', name: "Gorilla Row", url: "https://youtu.be/5aWCIXwRNYg?t=184", rep:3, duration: 30, rest: null },
-      { round: 5, weight: 16, load: 2, side: 'LR', name: "Front Squat", url: "https://youtu.be/5aWCIXwRNYg?t=204", rep:3, duration: 30, rest: null },
-      { round: 5, weight: 16, load: 2, side: 'LR', name: "Press", url: "https://youtu.be/5aWCIXwRNYg?t=229", rep:3, duration: 30, rest: null },
+      { round: 5, weight: 16, load: 2, side: 'LR', name: "Reverse Lunge", url: "https://youtu.be/5aWCIXwRNYg?t=159", rep:3, duration: 60, rest: null },
+      { round: 5, weight: 16, load: 2, side: 'LR', name: "Gorilla Row", url: "https://youtu.be/5aWCIXwRNYg?t=184", rep:3, duration: 60, rest: null },
+      { round: 5, weight: 16, load: 2, side: 'LR', name: "Front Squat", url: "https://youtu.be/5aWCIXwRNYg?t=204", rep:3, duration: 60, rest: null },
+      { round: 5, weight: 16, load: 2, side: 'LR', name: "Press", url: "https://youtu.be/5aWCIXwRNYg?t=229", rep:3, duration: 60, rest: null },
       { round: 5, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 15, rest: null },
 
-      { round: 6, weight: 16, load: 2, side: 'LR', name: "Reverse Lunge", url: "https://youtu.be/5aWCIXwRNYg?t=159", rep:3, duration: 30, rest: null },
-      { round: 6, weight: 16, load: 2, side: 'LR', name: "Gorilla Row", url: "https://youtu.be/5aWCIXwRNYg?t=184", rep:3, duration: 30, rest: null },
-      { round: 6, weight: 16, load: 2, side: 'LR', name: "Front Squat", url: "https://youtu.be/5aWCIXwRNYg?t=204", rep:3, duration: 30, rest: null },
-      { round: 6, weight: 16, load: 2, side: 'LR', name: "Press", url: "https://youtu.be/5aWCIXwRNYg?t=229", rep:3, duration: 30, rest: null },
-      { round: 6, weight: 16, load: 2, side: 'LR', name: "2KB Farmer walk", url: "https://youtu.be/5aWCIXwRNYg?t=249", rep:null, duration: 120, rest: null }
+      { round: 6, weight: 16, load: 2, side: 'LR', name: "Reverse Lunge", url: "https://youtu.be/5aWCIXwRNYg?t=159", rep:3, duration: 60, rest: null },
+      { round: 6, weight: 16, load: 2, side: 'LR', name: "Gorilla Row", url: "https://youtu.be/5aWCIXwRNYg?t=184", rep:3, duration: 60, rest: null },
+      { round: 6, weight: 16, load: 2, side: 'LR', name: "Front Squat", url: "https://youtu.be/5aWCIXwRNYg?t=204", rep:3, duration: 60, rest: null },
+      { round: 6, weight: 16, load: 2, side: 'LR', name: "Press", url: "https://youtu.be/5aWCIXwRNYg?t=229", rep:3, duration: 60, rest: null },
+      { round: 6, weight: 16, load: 2, side: 'LR', name: "Farmer walk", url: "https://youtu.be/5aWCIXwRNYg?t=249", rep:null, duration: 120, rest: null }
     ],
     finisher: "2min - Farmer's Carry", finisherweight: 16, finisherrep:null, finisherduration: 120, finisherrest: null
   },
@@ -300,31 +300,31 @@ const workouts = [
       { round: 2, weight: null, load: null, side: null, name: "Military Burpee", url: "https://youtu.be/ccLQXBTmwVY?t=192", rep:10, duration: 60, rest: 10 },
       { round: 2, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
 
-      { round: 1, weight: 16, load: 2, side: 'LR', name: "2KB Jerk", url: "https://youtu.be/ccLQXBTmwVY?t=76", rep:10, duration: null, rest: 10 },
-      { round: 1, weight: null, load: null, side: null, name: "Pull Up", url: "https://youtu.be/ccLQXBTmwVY?t=90", rep:10, duration: null, rest: 10 },
-      { round: 1, weight: 20, load: 2, side: 'LR', name: "2KB Half Snatch", url: "https://youtu.be/ccLQXBTmwVY?t=100", rep:8, duration: 45, rest: 10 },
-      { round: 1, weight: null, load: null, side: null, name: "Deficit Push Up", url: "https://youtu.be/ccLQXBTmwVY?t=123", rep:8, duration: 60, rest: 10 },
-      { round: 1, weight: 24, load: 1, side: 'LR', name: "Renegade Row per side", url: "https://youtu.be/ccLQXBTmwVY?t=145", rep:8, duration: 45, rest: 10 },
-      { round: 1, weight: null, load: null, side: null, name: "Dips", url: "https://youtu.be/ccLQXBTmwVY?t=169", rep:8, duration: 45, rest: 20 },
-      { round: 1, weight: 20, load: 1, side: 'LR', name: "1KB Snatch pear side", url: "https://youtu.be/ccLQXBTmwVY?t=186", rep:10, duration: 60, rest: 10 },
-      { round: 1, weight: null, load: null, side: null, name: "Military Burpee", url: "https://youtu.be/ccLQXBTmwVY?t=192", rep:10, duration: 60, rest: 10 },
-      { round: 1, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
+      { round: 3, weight: 16, load: 2, side: 'LR', name: "2KB Jerk", url: "https://youtu.be/ccLQXBTmwVY?t=76", rep:10, duration: null, rest: 10 },
+      { round: 3, weight: null, load: null, side: null, name: "Pull Up", url: "https://youtu.be/ccLQXBTmwVY?t=90", rep:10, duration: null, rest: 10 },
+      { round: 3, weight: 20, load: 2, side: 'LR', name: "2KB Half Snatch", url: "https://youtu.be/ccLQXBTmwVY?t=100", rep:8, duration: 45, rest: 10 },
+      { round: 3, weight: null, load: null, side: null, name: "Deficit Push Up", url: "https://youtu.be/ccLQXBTmwVY?t=123", rep:8, duration: 60, rest: 10 },
+      { round: 3, weight: 24, load: 1, side: 'LR', name: "Renegade Row per side", url: "https://youtu.be/ccLQXBTmwVY?t=145", rep:8, duration: 45, rest: 10 },
+      { round: 3, weight: null, load: null, side: null, name: "Dips", url: "https://youtu.be/ccLQXBTmwVY?t=169", rep:8, duration: 45, rest: 20 },
+      { round: 3, weight: 20, load: 1, side: 'LR', name: "1KB Snatch pear side", url: "https://youtu.be/ccLQXBTmwVY?t=186", rep:10, duration: 60, rest: 10 },
+      { round: 3, weight: null, load: null, side: null, name: "Military Burpee", url: "https://youtu.be/ccLQXBTmwVY?t=192", rep:10, duration: 60, rest: 10 },
+      { round: 3, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
 
-      { round: 1, weight: 16, load: 2, side: 'LR', name: "2KB Jerk", url: "https://youtu.be/ccLQXBTmwVY?t=76", rep:10, duration: null, rest: 10 },
-      { round: 1, weight: null, load: null, side: null, name: "Pull Up", url: "https://youtu.be/ccLQXBTmwVY?t=90", rep:10, duration: null, rest: 10 },
-      { round: 1, weight: 20, load: 2, side: 'LR', name: "2KB Half Snatch", url: "https://youtu.be/ccLQXBTmwVY?t=100", rep:8, duration: 45, rest: 10 },
-      { round: 1, weight: null, load: null, side: null, name: "Deficit Push Up", url: "https://youtu.be/ccLQXBTmwVY?t=123", rep:8, duration: 60, rest: 10 },
-      { round: 1, weight: 24, load: 1, side: 'LR', name: "Renegade Row per side", url: "https://youtu.be/ccLQXBTmwVY?t=145", rep:8, duration: 45, rest: 10 },
-      { round: 1, weight: null, load: null, side: null, name: "Dips", url: "https://youtu.be/ccLQXBTmwVY?t=169", rep:8, duration: 45, rest: 10 },
-      { round: 1, weight: 20, load: 1, side: 'LR', name: "1KB Snatch pear side", url: "https://youtu.be/ccLQXBTmwVY?t=186", rep:10, duration: 60, rest: 10 },
-      { round: 1, weight: null, load: null, side: null, name: "Military Burpee", url: "https://youtu.be/ccLQXBTmwVY?t=192", rep:10, duration: 60, rest: 10 }
+      { round: 4, weight: 16, load: 2, side: 'LR', name: "2KB Jerk", url: "https://youtu.be/ccLQXBTmwVY?t=76", rep:10, duration: null, rest: 10 },
+      { round: 4, weight: null, load: null, side: null, name: "Pull Up", url: "https://youtu.be/ccLQXBTmwVY?t=90", rep:10, duration: null, rest: 10 },
+      { round: 4, weight: 20, load: 2, side: 'LR', name: "2KB Half Snatch", url: "https://youtu.be/ccLQXBTmwVY?t=100", rep:8, duration: 45, rest: 10 },
+      { round: 4, weight: null, load: null, side: null, name: "Deficit Push Up", url: "https://youtu.be/ccLQXBTmwVY?t=123", rep:8, duration: 60, rest: 10 },
+      { round: 4, weight: 24, load: 1, side: 'LR', name: "Renegade Row per side", url: "https://youtu.be/ccLQXBTmwVY?t=145", rep:8, duration: 45, rest: 10 },
+      { round: 4, weight: null, load: null, side: null, name: "Dips", url: "https://youtu.be/ccLQXBTmwVY?t=169", rep:8, duration: 45, rest: 10 },
+      { round: 4, weight: 20, load: 1, side: 'LR', name: "1KB Snatch pear side", url: "https://youtu.be/ccLQXBTmwVY?t=186", rep:10, duration: 60, rest: 10 },
+      { round: 4, weight: null, load: null, side: null, name: "Military Burpee", url: "https://youtu.be/ccLQXBTmwVY?t=192", rep:10, duration: 60, rest: 10 }
     ],
     finisher: "Cool Down: 5 min fast walk on treadmill.", finisherweight: null, finisherrep:null, finisherduration: 300, finisherrest: null
   },
   {
     trainingID: 8,
     title: "Get stronger, anywhere, anytime!",
-    titleUrl: "https://www.youtube.com/watch?v=cwuyJ71LKqc",
+    titleUrl: null,
     description: "Follow-along designed to melt calories, build strength and kick start your fat loss journey",
     objective: "Warm Up",
     type: null,
@@ -374,7 +374,7 @@ const workouts = [
       {round: 1, weight: 16, load: 1, side: 'LR', name: "Jerk per side", url: "https://youtu.be/RYrATCQJnY0?t=47", rep:3, duration: 30, rest: null },
       {round: 1, weight: 16, load: 1, side: 'LR', name: "Snatch per side", url: "https://youtu.be/RYrATCQJnY0?t=66", rep:3, duration: 30, rest: null },
       
-      {round: 1, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 30, rest: null },
+      {round: 1, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
       
       {round: 1, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge per side", url: "https://youtu.be/RYrATCQJnY0?t=84", rep:3, duration: 30, rest: null },
       {round: 1, weight: 16, load: 1, side: 'LR', name: "Rack Squat per side", url: "https://youtu.be/RYrATCQJnY0?t=106", rep:3, duration: 30, rest: null },
@@ -384,7 +384,7 @@ const workouts = [
       {round: 2, weight: 16, load: 1, side: 'LR', name: "Jerk per side", url: "https://youtu.be/RYrATCQJnY0?t=47", rep:3, duration: 30, rest: null },
       {round: 2, weight: 16, load: 1, side: 'LR', name: "Snatch per side", url: "https://youtu.be/RYrATCQJnY0?t=66", rep:3, duration: 30, rest: null },
       
-      {round: 2, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 30, rest: null },
+      {round: 2, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
       
       {round: 2, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge per side", url: "https://youtu.be/RYrATCQJnY0?t=84", rep:3, duration: 30, rest: null },
       {round: 2, weight: 16, load: 1, side: 'LR', name: "Rack Squat per side", url: "https://youtu.be/RYrATCQJnY0?t=106", rep:3, duration: 30, rest: null },
@@ -394,7 +394,7 @@ const workouts = [
       {round: 3, weight: 16, load: 1, side: 'LR', name: "Jerk per side", url: "https://youtu.be/RYrATCQJnY0?t=47", rep:3, duration: 30, rest: null },
       {round: 3, weight: 16, load: 1, side: 'LR', name: "Snatch per side", url: "https://youtu.be/RYrATCQJnY0?t=66", rep:3, duration: 30, rest: null },
       
-      {round: 3, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 30, rest: null },
+      {round: 3, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
       
       {round: 3, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge per side", url: "https://youtu.be/RYrATCQJnY0?t=84", rep:3, duration: 30, rest: null },
       {round: 3, weight: 16, load: 1, side: 'LR', name: "Rack Squat per side", url: "https://youtu.be/RYrATCQJnY0?t=106", rep:3, duration: 30, rest: null },
@@ -404,7 +404,7 @@ const workouts = [
       {round: 4, weight: 16, load: 1, side: 'LR', name: "Jerk per side", url: "https://youtu.be/RYrATCQJnY0?t=47", rep:3, duration: 30, rest: null },
       {round: 4, weight: 16, load: 1, side: 'LR', name: "Snatch per side", url: "https://youtu.be/RYrATCQJnY0?t=66", rep:3, duration: 30, rest: null },
       
-      {round: 4, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 30, rest: null },
+      {round: 4, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
       
       {round: 4, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge per side", url: "https://youtu.be/RYrATCQJnY0?t=84", rep:3, duration: 30, rest: null },
       {round: 4, weight: 16, load: 1, side: 'LR', name: "Rack Squat per side", url: "https://youtu.be/RYrATCQJnY0?t=106", rep:3, duration: 30, rest: null },
@@ -414,7 +414,7 @@ const workouts = [
       {round: 5, weight: 16, load: 1, side: 'LR', name: "Jerk per side", url: "https://youtu.be/RYrATCQJnY0?t=47", rep:3, duration: 30, rest: null },
       {round: 5, weight: 16, load: 1, side: 'LR', name: "Snatch per side", url: "https://youtu.be/RYrATCQJnY0?t=66", rep:3, duration: 30, rest: null },
       
-      {round: 5, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 30, rest: null },
+      {round: 5, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
       
       {round: 5, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge per side", url: "https://youtu.be/RYrATCQJnY0?t=84", rep:3, duration: 30, rest: null },
       {round: 5, weight: 16, load: 1, side: 'LR', name: "Rack Squat per side", url: "https://youtu.be/RYrATCQJnY0?t=106", rep:3, duration: 30, rest: null },
@@ -424,7 +424,7 @@ const workouts = [
       {round: 6, weight: 16, load: 1, side: 'LR', name: "Jerk per side", url: "https://youtu.be/RYrATCQJnY0?t=47", rep:3, duration: 30, rest: null },
       {round: 6, weight: 16, load: 1, side: 'LR', name: "Snatch per side", url: "https://youtu.be/RYrATCQJnY0?t=66", rep:3, duration: 30, rest: null },
       
-      {round: 6, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 30, rest: null },
+      {round: 6, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
       
       {round: 6, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge per side", url: "https://youtu.be/RYrATCQJnY0?t=84", rep:3, duration: 30, rest: null },
       {round: 6, weight: 16, load: 1, side: 'LR', name: "Rack Squat per side", url: "https://youtu.be/RYrATCQJnY0?t=106", rep:3, duration: 30, rest: null },
@@ -444,7 +444,7 @@ const workouts = [
       {round: 8, weight: 16, load: 1, side: 'LR', name: "Jerk per side", url: "https://youtu.be/RYrATCQJnY0?t=47", rep:3, duration: 30, rest: null },
       {round: 8, weight: 16, load: 1, side: 'LR', name: "Snatch per side", url: "https://youtu.be/RYrATCQJnY0?t=66", rep:3, duration: 30, rest: null },
       
-      {round: 8, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 30, rest: null },
+      {round: 8, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
       
       {round: 8, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge per side", url: "https://youtu.be/RYrATCQJnY0?t=84", rep:3, duration: 30, rest: null },
       {round: 8, weight: 16, load: 1, side: 'LR', name: "Rack Squat per side", url: "https://youtu.be/RYrATCQJnY0?t=106", rep:3, duration: 30, rest: null },
@@ -454,7 +454,7 @@ const workouts = [
       {round: 9, weight: 16, load: 1, side: 'LR', name: "Jerk per side", url: "https://youtu.be/RYrATCQJnY0?t=47", rep:3, duration: 30, rest: null },
       {round: 9, weight: 16, load: 1, side: 'LR', name: "Snatch per side", url: "https://youtu.be/RYrATCQJnY0?t=66", rep:3, duration: 30, rest: null },
       
-      {round: 9, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 30, rest: null },
+      {round: 9, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
       
       {round: 9, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge per side", url: "https://youtu.be/RYrATCQJnY0?t=84", rep:3, duration: 30, rest: null },
       {round: 9, weight: 16, load: 1, side: 'LR', name: "Rack Squat per side", url: "https://youtu.be/RYrATCQJnY0?t=106", rep:3, duration: 30, rest: null },
@@ -464,12 +464,12 @@ const workouts = [
       {round: 10, weight: 16, load: 1, side: 'LR', name: "Jerk per side", url: "https://youtu.be/RYrATCQJnY0?t=47", rep:3, duration: 30, rest: null },
       {round: 10, weight: 16, load: 1, side: 'LR', name: "Snatch per side", url: "https://youtu.be/RYrATCQJnY0?t=66", rep:3, duration: 30, rest: null },
       
-      {round: 10, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 30, rest: null },
+      {round: 10, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
       
       {round: 10, weight: 16, load: 1, side: 'LR', name: "Reverse Lunge per side", url: "https://youtu.be/RYrATCQJnY0?t=84", rep:3, duration: 30, rest: null },
       {round: 10, weight: 16, load: 1, side: 'LR', name: "Rack Squat per side", url: "https://youtu.be/RYrATCQJnY0?t=106", rep:3, duration: 30, rest: null },
       {round: 10, weight: 16, load: 1, side: 'LR', name: "Strict Press per side", url: "https://youtu.be/RYrATCQJnY0?t=129", rep:3, duration: 30, rest: null },
-      
+
       {round: 10, weight: 16, load: 1, side: 'LR', name: "Military burpees", url: "https://youtu.be/RYrATCQJnY0?t=157", rep:25, duration: 120, rest: null }
     ],
     finisher: "25x Military Burpees.", finisherweight: null, finisherrep:25, finisherduration: null, finisherrest: null 
@@ -499,7 +499,7 @@ const workouts = [
       { round: 2, weight: 16, load: 1, side: 'R', name: "Farmers carry", url: "https://youtu.be/-M1MGrzVp8A?t=492", rep:null, duration: 45, rest: null  },
       { round: 2, weight: 16, load: 1, side: 'LR', name: "High pulls each side", url: "https://youtu.be/-M1MGrzVp8A?t=557", rep:5, duration: 45, rest: null  },
       { round: 2, weight: 16, load: 1, side: 'LR', name: "Swings each side", url: "https://youtu.be/-M1MGrzVp8A?t=650", rep:10, duration: 45, rest: null  },
-      { round: 1, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
+      { round: 2, weight: null, load: null, side: null, name: "Rest", url: null, rep:null, duration: 60, rest: null },
 
       { round: 3, weight: 16, load: 1, side: 'L', name: "Snatch", url: "https://youtu.be/-M1MGrzVp8A?t=731", rep:15, duration: 45, rest: null  },
       { round: 3, weight: 16, load: 1, side: 'R', name: "Snatch", url: "https://youtu.be/-M1MGrzVp8A?t=790", rep:15, duration: 45, rest: null  },
