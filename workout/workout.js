@@ -876,7 +876,8 @@ function updateGuidedTimerDisplay() {
   const steps = guidedState.steps || [];
 
   if (!steps.length) {
-    guidedTimer.innerHTML = 'R: - | E: -/- | 00:00<br>C: - | N: —';
+    //guidedTimer.innerHTML = ' R: - | E: -/-<br>00:00<br>C: - | N: —';
+    guidedTimer.innerHTML = '00:00<br>` + C: - <br>` + `N: —';
     return;
   }
 
@@ -968,8 +969,10 @@ function updateGuidedTimerDisplay() {
 
   // ===== RENDER (multiline) =====
   guidedTimer.innerHTML =
-    `R: ${rStr} | E: ${eStr} | ${time}<br>` +
-    `C: ${currentName} | N: ${nextName}`;
+    //`R: ${rStr} | E: ${eStr}<br>` +
+    ` ${time}<br>` +
+    `C: ${currentName}<br>` +
+    `N: ${nextName}`;
 }
 
 function updateProgressBar() {
